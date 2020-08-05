@@ -1,3 +1,3 @@
-Vue.component('k-button', {
-    template: `<button>hi</button>`
+Vue.component('g-button',{
+    template: `<button class="g-button">hi</button>`
 })

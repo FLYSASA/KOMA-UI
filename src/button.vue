@@ -1,15 +1,23 @@
 <template>
-  <button class="g-button"></button>
+  <div></div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+    };
+  },
 
+  components: {},
+
+  computed: {},
+
+  mounted: {},
+
+  methods: {}
 }
 
 </script>
-<style lang="less">
-.g-button {
-    padding: 0 1em;
-}
+<style lang='less' scoped>
 </style>
