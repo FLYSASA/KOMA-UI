@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koma-UI</title>
     <style>
-        *{margin: 0; padding: 0; box-sizing: border-box;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --button-height: 32px;
             --font-size: 14px;
@@ -16,17 +22,25 @@
             --border-color: #999;
             --border-color-hover: #666;
         }
+
         #app {
             margin: 20px;
         }
     </style>
     <style>
+        .icon {
+            width: 1em; height: 1em;
+        }
     </style>
 </head>
+
 <body>
     <div id="app">
-        <g-button></g-button>
+        <g-button icon="loading" icon-position="right">加载</g-button>
+        <g-button icon="loading">设置</g-button>
     </div>
     <script src="./src/app.js"></script>
+    <script src="//at.alicdn.com/t/font_1122871_u2mcngzlv2.js"></script>
 </body>
+
 </html>
