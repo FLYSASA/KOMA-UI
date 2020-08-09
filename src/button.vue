@@ -1,8 +1,6 @@
 <template>
   <button class="g-button" :class="{[`icon-${iconPosition}`]: true}">
-    <svg v-if="icon" class="icon">
-      <use :xlink:href="`#i-${icon}`"></use>
-    </svg>
+    <g-icon v-if="icon" :name="icon"></g-icon>
     <div class="content">
       <slot></slot>
     </div>
@@ -18,7 +16,10 @@
       },
       iconPosition: {
         type: String,
-        default: 'left'
+        default: 'left',
+        validator(val){
+          return ['left', 'right'].includes(val)
+        }
       }
     }
   }
