@@ -7,7 +7,9 @@
 <script>
 	export default {
 		props: {
-			name: {}
+			name: {
+				type: String
+			}
 		},
 		data() {
 			return {};
