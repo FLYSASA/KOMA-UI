@@ -14,3 +14,51 @@ new Vue({
         loading2: true
     }
 })
+
+import chai, { use } from 'chai';
+const expect = chai.expect
+
+// 单元测试
+{
+    const Constructor = Vue.extend(Button)
+    const button = new Constructor({
+        propsData: {
+            icon: 'shezhi'
+        }
+    })
+    // 将button挂载至div上
+    button.$mount('#test');
+    let useElement = button.$el.querySelector('use')
+    let href = useElement.getAttribute('xlink:href')
+
+    expect(href).to.equal('#i-shezhi') 
+}
+
+{
+    const Constructor = Vue.extend(Button)
+    const button = new Constructor({
+        propsData: {
+            icon: 'shezhi',
+            loading: true
+        }
+    })
+    button.$mount()
+    let useElement = button.$el.querySelector('use')
+    let href= useElement.getAttribute('xlink:href')
+
+    expect(href).to.equal('#i-loading')
+}
+
+{
+    const Constructor = Vue.extend(Button)
+    const button = new Constructor({
+        propsData: {
+            icon: 'shezhi',
+            loading: true
+        }
+    })
+    button.$mount()
+    let el = button.$el.querySelector('svg')
+    let order = window.getComputedStyle(el)
+    console.log(order)
+}
