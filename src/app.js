@@ -16,7 +16,9 @@ new Vue({
 })
 
 import chai, { use } from 'chai';
+import spies from 'chai-spies';
 const expect = chai.expect
+chai.use(spies)
 
 // 单元测试
 // icon测试
@@ -94,7 +96,7 @@ const expect = chai.expect
     gbutton.$destroy()
 }
 
-// 测试点击事件，点击事件不需要渲染在页面上
+// 测试点击事件，点击事件不需要渲染在页面上  mock
 {
     const Constructor = Vue.extend(Button)
     const gbutton = new Constructor({
@@ -104,12 +106,16 @@ const expect = chai.expect
         }
     })
     gbutton.$mount()
-    // 监听click事件
-    gbutton.$on('click', function(){
+
+    let spy = chai.spy(function(){
         console.log(1)
     })
+    // 监听click事件
+    gbutton.$on('click', spy)
     let button  = gbutton.$el
     button.click()
+    // 期望间谍函数被调用
+    expect(spy).to.have.been.called()
     
     gbutton.$el.remove()
     gbutton.$destroy()
