@@ -15,58 +15,108 @@ new Vue({
     }
 })
 
-import chai, {use} from 'chai';
+import chai, { use } from 'chai';
+import spies from 'chai-spies';
 const expect = chai.expect
+chai.use(spies)
 
-try {
-    // 单元测试
-    {
-        const Constructor = Vue.extend(Button)
-        const button = new Constructor({
-            propsData: {
-                icon: 'shezhi'
-            }
-        })
-        // 将button挂载至div上
-        button.$mount('#test');
-        let useElement = button.$el.querySelector('use')
-        let href = useElement.getAttribute('xlink:href')
-
-        expect(href).to.equal('#i-shezhi')
-    }
-
-    {
-        const Constructor = Vue.extend(Button)
-        const button = new Constructor({
-            propsData: {
-                icon: 'shezhi',
-                loading: true
-            }
-        })
-        button.$mount()
-        let useElement = button.$el.querySelector('use')
-        let href = useElement.getAttribute('xlink:href')
-
-        expect(href).to.equal('#i-loading')
-    }
-
-    {
-        const Constructor = Vue.extend(Button)
-        const button = new Constructor({
-            propsData: {
-                icon: 'shezhi',
-                loading: true
-            }
-        })
-        button.$mount()
-        let el = button.$el.querySelector('svg')
-        let order = window.getComputedStyle(el)
-        console.log(order)
-    }
-} catch (error) {
-    window.errors  = [error]  //捕捉测试用例错误，并打印
-} finally {
-    window.errors && window.errors.forEach((error) => {
-        console.log(error.message)
+// 单元测试
+// icon测试
+{
+    const Constructor = Vue.extend(Button)
+    const gbutton = new Constructor({
+        propsData: {
+            icon: 'shezhi'
+        }
     })
+    // 将button挂载至div上
+    gbutton.$mount('#test');
+    let useElement = gbutton.$el.querySelector('use')
+    let href = useElement.getAttribute('xlink:href')
+
+    expect(href).to.equal('#i-shezhi')
+    gbutton.$el.remove()
+    gbutton.$destroy()
+}
+// loading测试
+{
+    const Constructor = Vue.extend(Button)
+    const gbutton = new Constructor({
+        propsData: {
+            icon: 'shezhi',
+            loading: true
+        }
+    })
+    gbutton.$mount()
+    let useElement = gbutton.$el.querySelector('use')
+    let href= useElement.getAttribute('xlink:href')
+
+    expect(href).to.equal('#i-loading')
+    gbutton.$el.remove()
+    gbutton.$destroy()
+}
+// icon order测试
+{
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    const Constructor = Vue.extend(Button)
+    const gbutton = new Constructor({
+        propsData: {
+            icon: 'shezhi',
+            loading: true
+        }
+    })
+    gbutton.$mount(div)
+    let el = gbutton.$el.querySelector('svg')
+    let {order} = window.getComputedStyle(el)
+    
+    expect(order).to.equal('1')
+    gbutton.$el.remove()
+    gbutton.$destroy()
+}
+
+// icon position测试
+{
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    const Constructor = Vue.extend(Button)
+    const gbutton = new Constructor({
+        propsData: {
+            icon: 'shezhi',
+            iconPosition: 'right',
+            loading: true
+        }
+    })
+    gbutton.$mount(div)
+    let el = gbutton.$el.querySelector('svg')
+    let {order} = window.getComputedStyle(el)
+    
+    expect(order).to.equal('2')
+    gbutton.$el.remove()
+    gbutton.$destroy()
+}
+
+// 测试点击事件，点击事件不需要渲染在页面上  mock
+{
+    const Constructor = Vue.extend(Button)
+    const gbutton = new Constructor({
+        propsData: {
+            icon: 'shezhi',
+            iconPosition: 'right',
+        }
+    })
+    gbutton.$mount()
+
+    let spy = chai.spy(function(){
+        console.log(1)
+    })
+    // 监听click事件
+    gbutton.$on('click', spy)
+    let button  = gbutton.$el
+    button.click()
+    // 期望间谍函数被调用
+    expect(spy).to.have.been.called()
+    
+    gbutton.$el.remove()
+    gbutton.$destroy()
 }
