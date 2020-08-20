@@ -4,6 +4,7 @@
   "description": "一基于VUE\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C基于Vue的UI框架",
   "main": "index.js",
   "scripts": {
+    "start": "npx parcel index.html --no-cache",
     "dev-test": "parcel watch test/* --no-cache & karma start",
     "test": "parcel build test/* --no-minify && karma start --single-run"
   },
