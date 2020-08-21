@@ -9,7 +9,12 @@
 </template>
 
 <script>
+  // 单独引入g-icon，以免用户使用过程中出错
+  import Icon from './icon';
   export default {
+    components: {
+      'g-icon': Icon
+    },
     props: {
       icon:{
         type: String,
