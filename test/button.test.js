@@ -24,12 +24,12 @@ describe('Button', () => {
     const Constructor = Vue.extend(Button)
     const vm = new Constructor({
       propsData: {
-        icon: 'settings',
+        icon: 'shezhi',
         loading: true
       }
     }).$mount()
     const useElements = vm.$el.querySelectorAll('use')
-    expect(useElements.length).to.equal(2)
+    expect(useElements.length).to.equal(1)
     expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
     vm.$destroy()
   })
@@ -43,7 +43,7 @@ describe('Button', () => {
       }
     }).$mount(div)
     const icon = vm.$el.querySelector('svg')
-    expect(getComputedStyle(icon).order).to.eq('2')
+    expect(getComputedStyle(icon).order).to.eq('1')
     vm.$el.remove()
     vm.$destroy()
   })

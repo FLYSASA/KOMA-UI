@@ -4,7 +4,7 @@
   "description": "一基于VUE\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C基于Vue的UI框架",
   "main": "index.js",
   "scripts": {
-    "dev-test": "parcel watch test/* --no-cache & karma start",
+    "dev-test": "parcel watch test/* --no-cache && karma start",
     "test": "parcel build test/* --no-cache --no-minify && karma start --single-run"
   },
   "repository": {
@@ -33,6 +33,7 @@
     "karma-chai": "^0.1.0",
     "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "^3.1.0",
+    "karma-cli": "^2.0.0",
     "karma-mocha": "^2.0.1",
     "karma-sinon-chai": "^2.0.2",
     "less": "^3.12.2",
