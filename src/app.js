@@ -96,7 +96,8 @@ chai.use(spies)
     gbutton.$destroy()
 }
 
-// 测试点击事件，点击事件不需要渲染在页面上  mock
+// 测试点击事件，点击事件不需要渲染在页面上  
+// mock
 {
     const Constructor = Vue.extend(Button)
     const gbutton = new Constructor({
