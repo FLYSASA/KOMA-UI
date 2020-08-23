@@ -1,7 +1,7 @@
 {
   "name": "koma-ui",
   "version": "0.0.3",
-  "description": "一基于VUE\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C基于Vue的UI框架",
+  "description": "一个基于Vue的UI框架",
   "main": "dist/index.js",
   "scripts": {
     "dev-test": "parcel watch test/* --no-cache && karma start",
