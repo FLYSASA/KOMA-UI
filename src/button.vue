@@ -12,6 +12,7 @@
   // 单独引入g-icon，以免用户使用过程中出错
   import Icon from './icon';
   export default {
+    name: 'KomaButton',
     components: {
       'g-icon': Icon
     },

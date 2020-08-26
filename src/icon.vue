@@ -7,6 +7,7 @@
 <script>
 	import './svg';
 	export default {
+		name:'KomaIcon',
 		props: {
 			name: {
 				type: String

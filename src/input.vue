@@ -1,9 +1,12 @@
 <template>
-   <div></div>
+   <div>
+      <input type="text"></input>
+   </div>
 </template>
 
 <script>
 export default {
+   name: 'komaInput',
    data () {
       return {
 
