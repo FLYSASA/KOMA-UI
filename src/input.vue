@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="wrapper">
       <input type="text"></input>
    </div>
 </template>
@@ -23,5 +23,7 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-
+   .wrapper {
+      
+   }
 </style>
