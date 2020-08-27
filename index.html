@@ -31,7 +31,11 @@
 
 <body>
     <div id="app">
-        <g-input></g-input>
+        <div style="margin-bottom: 10px">
+            <g-input value="哈哈" error="该字段不合法"></g-input>
+            <g-input value="哈哈" readonly></g-input>
+            <g-input value="嘻嘻" disabled></g-input>
+        </div>
         <g-button @click="loading2 = !loading2"  icon="download" icon-position="right" :loading="loading2">加载</g-button>
         <g-button @click="loading1 = !loading1" :loading="loading1" icon="download">设置</g-button>
         <g-button @click="loading1 = !loading1" :loading="loading1">点击</g-button>
