@@ -1,14 +1,9 @@
 <template>
    <div class="wrapper" :class="{error}">
-      <input :value="value" :disabled="disabled" :readonly="readonly" type="text"
-         @change="$emit('change', $event)"
-         @blur="$emit('change', $event)"
-         @input="$emit('change', $event)"
-         @focus="$emit('change', $event)"
-      />
+      <input :value="value" :disabled="disabled" :readonly="readonly" type="text"/>
       <template v-if="error">
-         <g-icon name="error" class="icon-error"></g-icon>
-         <span class="error-msg">{{error}}</span>
+         <g-icon name="error" class="icon-error" v-if="error"></g-icon>
+         <span class="errorMessage">{{error}}</span>
       </template>
    </div>
 </template>
@@ -19,7 +14,7 @@ export default {
    name: 'KomaInput',
    components: {
       'g-icon': Icon
-   },
+    },
    props: {
       value: {
          type: String
@@ -33,8 +28,7 @@ export default {
          default: false
       },
       error: {
-         type: String,
-         default: ''
+         type: String
       }
    },
    data () {
@@ -94,7 +88,7 @@ export default {
          .icon-error {
             fill: @red;
          }
-         .error-msg {
+         .errorMessage {
             color:@red;
          }
       }
