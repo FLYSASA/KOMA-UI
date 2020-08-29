@@ -14,5 +14,10 @@ new Vue({
     data: {
         loading1: true,
         loading2: true
+    },
+    methods: {
+        inputChange(e){
+            console.log('触发change', e.target.value)            
+        }
     }
 })
