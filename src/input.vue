@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Icon from './icon';
+import Icon from './icon.vue';
 export default {
    name: 'KomaInput',
    components: {
@@ -36,11 +36,6 @@ export default {
 
       };
    },
-
-   components: {},
-
-   watch: {},
-
    computed: {},
 
    methods: {}
