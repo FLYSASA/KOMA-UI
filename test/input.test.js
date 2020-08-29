@@ -49,8 +49,8 @@ describe('Input', () => {
         error: '报错了'
       }
     }).$mount()
-    // const inputElement = vm.$el.querySelector('use')
-    // expect(inputElement.getAttribute('xlink:href')).to.equal('#i-error')
+    const inputElement = vm.$el.querySelector('use')
+    expect(inputElement.getAttribute('xlink:href')).to.equal('#i-error')
     const errorMessage = vm.$el.querySelector('.errorMessage')
     expect(errorMessage.innerText).to.equal('报错了')
     vm.$destroy()
