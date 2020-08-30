@@ -9,51 +9,71 @@ describe('Input', () => {
   it('存在.', () => {
     expect(Input).to.exist
   })
-  it('可以接收 value', () => {
-    const Constructor = Vue.extend(Input)
-    const vm = new Constructor({
-      propsData: {
-        value: 'test'
-      }
-    }).$mount()
-    const inputElement = vm.$el.querySelector('input')
-    expect(inputElement.value).to.equal('test')
-    vm.$destroy()
+
+  describe('props', () => {
+    const Constructor = Vue.extend(Input);
+    let vm;
+    afterEach(() => {
+      vm.$destroy()
+    })
+    it('可以接收 value', () => {
+      vm = new Constructor({
+        propsData: {
+          value: 'test'
+        }
+      }).$mount()
+      const inputElement = vm.$el.querySelector('input')
+      expect(inputElement.value).to.equal('test')
+    })
+    it('可以接收 disabled', () => {
+      vm = new Constructor({
+        propsData: {
+          disabled: true
+        }
+      }).$mount()
+      const inputElement = vm.$el.querySelector('input')
+      expect(inputElement.disabled).to.equal(true)
+    })
+    it('可以接收 readonly', () => {
+      vm = new Constructor({
+        propsData: {
+          readonly: true
+        }
+      }).$mount()
+      const inputElement = vm.$el.querySelector('input')
+      expect(inputElement.readOnly).to.equal(true)
+    })
+    it('可以接收 error', () => {
+      vm = new Constructor({
+        propsData: {
+          error: '你错了'
+        }
+      }).$mount()
+      const useElement = vm.$el.querySelector('use')
+      expect(useElement.getAttribute('xlink:href')).to.equal('#i-error')
+      const errorMessage = vm.$el.querySelector('.errorMessage')
+      expect(errorMessage.innerText).to.equal('你错了')
+    })
   })
-  it('可以接收 disabled', () => {
-    const Constructor = Vue.extend(Input)
-    const vm = new Constructor({
-      propsData: {
-        disabled: true
-      }
-    }).$mount()
-    const inputElement = vm.$el.querySelector('input')
-    expect(inputElement.disabled).to.equal(true)
-    vm.$destroy()
+
+  describe('事件', ()=>{
+    const Constructor = Vue.extend(Input);
+    let vm;
+    afterEach(() => {
+      vm.$destroy()
+    })
+    it('支持 change/input/blur/focus 事件', ()=>{
+      ['change', 'input', 'blur', 'focus'].forEach((eventName) => {
+        vm = new Constructor({}).$mount()
+        const callback = sinon.fake();
+        vm.$on(eventName, callback);
+        // 触发对应的事件
+        const event = new Event(eventName);
+        const inputElement = vm.$el.querySelector('input')
+        inputElement.dispatchEvent(event)
+        expect(callback).to.have.been.calledWith(event)
+      })
+    })
   })
-  it('可以接收 readonly', () => {
-    const Constructor = Vue.extend(Input)
-    const vm = new Constructor({
-      propsData: {
-        readonly: true
-      }
-    }).$mount()
-    const inputElement = vm.$el.querySelector('input')
-    expect(inputElement.readOnly).to.equal(true)
-    vm.$destroy()
-  })
-  it('可以接收 error', () => {
-    const Constructor = Vue.extend(Input)
-    const vm = new Constructor({
-      propsData: {
-        error: '你错了'
-      }
-    }).$mount()
-    const inputElement = vm.$el.querySelector('use')
-    expect(inputElement.getAttribute('xlink:href')).to.equal('#i-error')
-    const errorMessage = vm.$el.querySelector('.errorMessage')
-    expect(errorMessage.innerText).to.equal('你错了')
-    vm.$destroy()
-  })
-  
+
 })

@@ -18,6 +18,12 @@ new Vue({
     message: 'hi'
   },
   created(){
+    setTimeout(()=>{
+      // 手动触发输入框的change事件
+      const event = new Event('change');
+      const inputElement = this.$el.querySelector('input')
+      inputElement.dispatchEvent(event)
+    }, 1000)
   },
   methods: {
     inputChange (e) {
