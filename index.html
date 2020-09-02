@@ -35,7 +35,9 @@
             <!-- <g-input value="哈哈" error="该字段不合法"></g-input>
             <g-input value="哈哈" readonly></g-input>
             <g-input value="嘻嘻" disabled></g-input> -->
-            <g-input value="嘻嘻" @change="inputChange"></g-input>
+            <g-input v-model="message" @change="inputChange"></g-input>
+            <span>{{message}}</span>
+            <button @click="message += 1">+1</button>
         </div>
         <g-button @click="loading2 = !loading2"  icon="download" icon-position="right" :loading="loading2">加载</g-button>
         <g-button @click="loading1 = !loading1" :loading="loading1" icon="download">设置</g-button>
