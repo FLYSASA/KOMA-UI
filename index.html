@@ -32,20 +32,25 @@
 <body>
 	<div id="app">
 		<!-- row & col -->
-		<g-row>
-			<g-col span="12">1</g-col>
-			<g-col></g-col>
-			<g-col span="12">2</g-col>
-			<g-col span="12">2</g-col>
-		</g-row>
-		<g-row>
-			<g-col span="2">1</g-col>
-			<g-col span="22">2</g-col>
-		</g-row>
-		<g-row>
-			<g-col span="6">1</g-col>
-			<g-col span="18">2</g-col>
-		</g-row>
+		<div style="border: 1px solid black;">
+			<g-row gutter="10">
+				<g-col span="8">1</g-col>
+				<g-col span="8">2</g-col>
+				<g-col span="8">3</g-col>
+			</g-row>
+			<g-row>
+				<g-col span="2">1</g-col>
+				<g-col span="20" offset="2">2</g-col>
+			</g-row>
+			<g-row>
+				<g-col span="2" offset="4">1</g-col>
+				<g-col span="15" offset="3">2</g-col>
+			</g-row>
+			<g-row>
+				<g-col span="6">1</g-col>
+				<g-col span="18">2</g-col>
+			</g-row>
+		</div>
 		<!-- input -->
 		<div style="margin-bottom: 10px">
 			<!-- <g-input value="哈哈" error="该字段不合法"></g-input>

@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" :style="computedStyle">
     <slot></slot>
   </div>
 </template>
@@ -7,12 +7,23 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: {
+    gutter: {
+      type: [Number, String]
+    }
+  },
   data () {
     return {
     };
   },
-  computed: {},
+  computed: {
+    computedStyle(){
+    console.log(this.gutter)
+      return  {
+        margin: `0 -${this.gutter/2}px`
+      }
+    }
+  },
   created () {},
   methods: {}
 }
@@ -21,6 +32,6 @@ export default {
 <style lang='less' scoped>
     .row {
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
     }
 </style>
