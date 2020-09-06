@@ -2,56 +2,73 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koma-UI</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Koma-UI</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
 
-        :root {
-            --button-height: 32px;
-            --font-size: 14px;
-            --button-bg: white;
-            --button-active-bg: #eee;
-            --border-radius: 4px;
-            --color: #333;
-            --border-color: #999;
-            --border-color-hover: #666;
-        }
+		:root {
+			--button-height: 32px;
+			--font-size: 14px;
+			--button-bg: white;
+			--button-active-bg: #eee;
+			--border-radius: 4px;
+			--color: #333;
+			--border-color: #999;
+			--border-color-hover: #666;
+		}
 
-        #app {
-            margin: 20px;
-        }
-    </style>
+		#app {
+			margin: 20px;
+		}
+	</style>
 </head>
 
 <body>
-    <div id="app">
-        <div style="margin-bottom: 10px">
-            <!-- <g-input value="哈哈" error="该字段不合法"></g-input>
+	<div id="app">
+		<!-- row & col -->
+		<g-row>
+			<g-col span="12">1</g-col>
+			<g-col></g-col>
+			<g-col span="12">2</g-col>
+			<g-col span="12">2</g-col>
+		</g-row>
+		<g-row>
+			<g-col span="2">1</g-col>
+			<g-col span="22">2</g-col>
+		</g-row>
+		<g-row>
+			<g-col span="6">1</g-col>
+			<g-col span="18">2</g-col>
+		</g-row>
+		<!-- input -->
+		<div style="margin-bottom: 10px">
+			<!-- <g-input value="哈哈" error="该字段不合法"></g-input>
             <g-input value="哈哈" readonly></g-input>
             <g-input value="嘻嘻" disabled></g-input> -->
-            <g-input v-model="message" @change="inputChange"></g-input>
-            <span>{{message}}</span>
-            <button @click="message += 1">+1</button>
-        </div>
-        <g-button @click="loading2 = !loading2"  icon="download" icon-position="right" :loading="loading2">加载</g-button>
-        <g-button @click="loading1 = !loading1" :loading="loading1" icon="download">设置</g-button>
-        <g-button @click="loading1 = !loading1" :loading="loading1">点击</g-button>
-        <g-button-group>
-            <g-button icon="left">后退</g-button>
-            <g-button>更多</g-button>
-            <g-button icon="right" icon-position="right">前进</g-button>
-        </g-button-group>
+			<g-input v-model="message" @change="inputChange"></g-input>
+			<span>{{message}}</span>
+			<button @click="message += 1">+1</button>
+		</div>
+		<!-- button -->
+		<g-button @click="loading2 = !loading2" icon="download" icon-position="right" :loading="loading2">加载</g-button>
+		<g-button @click="loading1 = !loading1" :loading="loading1" icon="download">设置</g-button>
+		<g-button @click="loading1 = !loading1" :loading="loading1">点击</g-button>
+		<g-button-group>
+			<g-button icon="left">后退</g-button>
+			<g-button>更多</g-button>
+			<g-button icon="right" icon-position="right">前进</g-button>
+		</g-button-group>
 
-        <div id="test"></div>
-    </div>
-    <script src="./src/app.js"></script>
-    <!-- <script src="//at.alicdn.com/t/font_1122871_u2mcngzlv2.js"></script> -->
+		<div id="test"></div>
+	</div>
+	<script src="./src/app.js"></script>
+	<!-- <script src="//at.alicdn.com/t/font_1122871_u2mcngzlv2.js"></script> -->
 </body>
 
 </html>
