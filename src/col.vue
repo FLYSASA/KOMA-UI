@@ -1,10 +1,8 @@
 <template>
   <div class="col" 
-    :class="[ span && `col-${span}`, offset && `offset-${offset}`]"
-    :style="computedStyle">
-    <div style="border: 1px solid red;height: 100%;">
+    :class="colClass"
+    :style="computedColStyle">
       <slot></slot>
-    </div>
   </div>
 </template>
 
@@ -25,12 +23,19 @@ export default {
     };
   },
   computed: {
-    computedStyle(){
+    colClass(){
+      const { span, offset } = this
+      return [ 
+        span && `col-${span}`, 
+        offset && `offset-${offset}`
+      ]
+    },
+    computedColStyle(){
       console.log(this.gutter);
       return {
         // 不能直接这么写， padding: `0 ${this.gutter}px`
-        paddingLeft: `${this.gutter}px`,
-        paddingRight: `${this.gutter}px`,
+        paddingLeft: `${this.gutter/2}px`,
+        paddingRight: `${this.gutter/2}px`,
       }
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="row" :style="computedStyle">
+  <div class="row" :style="computedRowStyle">
     <slot></slot>
   </div>
 </template>
@@ -19,18 +19,16 @@ export default {
     };
   },
   computed: {
-    computedStyle(){
+    computedRowStyle(){
         return  {
-          margin: `0 -${this.gutter}px`
+          margin: `0 -${this.gutter/2}px`
         }
       }
   },
   created () {
-    console.log('父', 'created')
   },
   mounted () {
     this.$children.forEach((vm) => {
-      console.log(vm,this.gutter)
       vm.gutter = this.gutter
     })
   },
