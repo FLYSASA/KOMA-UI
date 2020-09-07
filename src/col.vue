@@ -1,6 +1,7 @@
 <template>
   <div class="col" 
-    :class="[ span && `col-${span}`, offset && `offset-${offset}`]">
+    :class="[ span && `col-${span}`, offset && `offset-${offset}`]"
+    :style="computedStyle">
     <div style="border: 1px solid red;height: 100%;">
       <slot></slot>
     </div>
@@ -16,13 +17,20 @@ export default {
     },
     offset: {
       type: [String, Number]
-    }
+    },
   },
   data () {
     return {
+      gutter: 0,
     };
   },
-  computed: {},
+  computed: {
+    computedStyle(){
+      return {
+        padding: `0 -${this.gutter}/2px`
+      }
+    },
+  },
   created () {
   },
   methods: {}
@@ -32,9 +40,7 @@ export default {
 <style lang='less'>
 .col{
   height: 100px;
-  // background: gray;
   width: 50%;
-  padding: 0 10px;
   // &.col-1{
   //   width: 1/24%;
   // }

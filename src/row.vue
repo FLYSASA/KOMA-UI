@@ -6,11 +6,13 @@
 
 <script>
 export default {
+  name: 'KomaRow',
   components: {},
   props: {
     gutter: {
-      type: [Number, String]
-    }
+      type: [Number, String],
+      default: 0
+    },
   },
   data () {
     return {
@@ -18,13 +20,14 @@ export default {
   },
   computed: {
     computedStyle(){
-    console.log(this.gutter)
-      return  {
-        margin: `0 -${this.gutter/2}px`
+        return  {
+          margin: `0 -${this.gutter}px`
+        }
       }
-    }
   },
-  created () {},
+  created () {
+    console.log(this.$children)
+  },
   methods: {}
 }
 
@@ -32,6 +35,6 @@ export default {
 <style lang='less' scoped>
     .row {
       display: flex;
-      // flex-wrap: wrap;
+      flex-wrap: wrap;
     }
 </style>
