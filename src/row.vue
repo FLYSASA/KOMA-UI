@@ -1,5 +1,5 @@
 <template>
-  <div class="row" :style="computedRowStyle">
+  <div class="row" :style="computedRowStyle" :class="rowClass">
     <slot></slot>
   </div>
 </template>
@@ -13,6 +13,12 @@ export default {
       type: [Number, String],
       default: 0
     },
+    align: {
+      type: String,
+      validator(val){
+        return ['left', 'right', 'center'].includes(val)
+      }
+    }
   },
   data () {
     return {
@@ -20,10 +26,14 @@ export default {
   },
   computed: {
     computedRowStyle(){
-        return  {
-          margin: `0 -${this.gutter/2}px`
-        }
+      return  {
+        margin: `0 -${this.gutter/2}px`
       }
+    },
+    rowClass(){
+      let {align} = this
+      return [align && `align-${align}`]
+    }
   },
   created () {
   },
@@ -40,5 +50,14 @@ export default {
     .row {
       display: flex;
       flex-wrap: wrap;
+      &.align-left {
+        justify-content: flex-start;
+      }
+      &.align-right {
+        justify-content: flex-end;
+      }
+      &.align-center {
+        justify-content: center;
+      }
     }
 </style>

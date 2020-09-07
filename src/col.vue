@@ -31,7 +31,6 @@ export default {
       ]
     },
     computedColStyle(){
-      console.log(this.gutter);
       return {
         // 不能直接这么写， padding: `0 ${this.gutter}px`
         paddingLeft: `${this.gutter/2}px`,
@@ -49,7 +48,6 @@ export default {
 <style lang='less'>
 .col{
   height: 100px;
-  width: 50%;
   // &.col-1{
   //   width: 1/24%;
   // }
