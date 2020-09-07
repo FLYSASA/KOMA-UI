@@ -26,7 +26,13 @@ export default {
       }
   },
   created () {
-    console.log(this.$children)
+    console.log('父', 'created')
+  },
+  mounted () {
+    this.$children.forEach((vm) => {
+      console.log(vm,this.gutter)
+      vm.gutter = this.gutter
+    })
   },
   methods: {}
 }

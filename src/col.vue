@@ -26,13 +26,17 @@ export default {
   },
   computed: {
     computedStyle(){
+      console.log(this.gutter);
       return {
-        padding: `0 -${this.gutter}/2px`
+        // 不能直接这么写， padding: `0 ${this.gutter}px`
+        paddingLeft: `${this.gutter}px`,
+        paddingRight: `${this.gutter}px`,
       }
     },
   },
   created () {
   },
+  mounted () {},
   methods: {}
 }
 
