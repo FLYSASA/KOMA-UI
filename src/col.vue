@@ -98,7 +98,7 @@ export default {
     }
     .offset-loop(24)
   }
-  @media (min-width: 577px) and (max-width: 768px) {
+  @media (min-width: 577px) {
     .col {
       @class: col-ipad-;
       .col-loop(@n) when (@n>0){
@@ -110,7 +110,7 @@ export default {
       .col-loop(24);
     }
   }
-  @media (min-width: 769px) and (max-width: 992px) {
+  @media (min-width: 769px) {
     .col {
       @class: col-narrow-pc-;
       .col-loop(@n) when (@n>0){
@@ -122,7 +122,7 @@ export default {
       .col-loop(24);
     }
   }
-  @media (min-width: 993px) and (max-width: 1200px) {
+  @media (min-width: 993px) {
     .col {
       @class: col-pc-;
       .col-loop(@n) when (@n>0){
