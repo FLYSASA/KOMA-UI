@@ -62,10 +62,10 @@ export default {
         span && `col-${span}`, 
         offset && `offset-${offset}`,
         ...[phone && phone.span && [`col-phone-${phone.span}`]],
-        // ...([`col-ipad-${ipad.span}`]),
-        // ...(narrowPc && [`col-narrowPc-${narrowPc.span}`]),
-        // ...(pc && [`col-pc-${pc.span}`]),
-        // ...(widePc && [`col-widePc-${widePc.span}`]),
+        ...[ipad && ipad.span && [`col-ipad-${ipad.span}`]],
+        ...[narrowPc && narrowPc.span && [`col-narrow-pc-${narrowPc.span}`]],
+        ...[pc && pc.span && [`col-pc-${pc.span}`]],
+        ...[widePc && widePc.span && [`col-wide-pc-${widePc.span}`]],
       ]
     },
     computedColStyle(){
@@ -119,7 +119,7 @@ export default {
       .col-loop(24);
     }
   }
-  @media (max-width: 577px) and (max-width: 768px) {
+  @media (min-width: 577px) and (max-width: 768px) {
     .col {
       @class: col-ipad-;
       .col-loop(@n) when (@n>0){
@@ -131,9 +131,9 @@ export default {
       .col-loop(24);
     }
   }
-  @media (max-width: 769px) and (max-width: 992px) {
+  @media (min-width: 769px) and (max-width: 992px) {
     .col {
-      @class: col-narrow-;
+      @class: col-narrow-pc-;
       .col-loop(@n) when (@n>0){
         &.@{class}@{n}{
             width: @n/24*100%;
@@ -143,7 +143,7 @@ export default {
       .col-loop(24);
     }
   }
-  @media (max-width: 993px) and (max-width: 1200px) {
+  @media (min-width: 993px) and (max-width: 1200px) {
     .col {
       @class: col-pc-;
       .col-loop(@n) when (@n>0){
@@ -155,7 +155,7 @@ export default {
       .col-loop(24);
     }
   }
-  @media (moin-width: 1201px) {
+  @media (min-width: 1201px) {
     .col {
       @class: col-wide-pc-;
       .col-loop(@n) when (@n>0){
