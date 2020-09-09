@@ -51,12 +51,11 @@ export default {
     colClass(){
       const { span, offset, ipad, narrowPc, pc, widePc } = this
       return [ 
-        span && `col-${span}`, 
-        offset && `offset-${offset}`,
-        ...[ipad && ipad.span && [`col-ipad-${ipad.span}`]],
-        ...[narrowPc && narrowPc.span && [`col-narrow-pc-${narrowPc.span}`]],
-        ...[pc && pc.span && [`col-pc-${pc.span}`]],
-        ...[widePc && widePc.span && [`col-wide-pc-${widePc.span}`]],
+        this.createClass({span, offset}), 
+        this.createClass(ipad, 'ipad-'),
+        this.createClass(narrowPc, 'narrow-pc-'),
+        this.createClass(pc, 'pc-'),
+        this.createClass(widePc, 'wide-pc-'),
       ]
     },
     computedColStyle(){
@@ -70,7 +69,20 @@ export default {
   created () {
   },
   mounted () {},
-  methods: {}
+  methods: {
+    createClass(obj, str = '') {
+      // str: ipad-, narrow-pc-, pc-, wide-pc- 
+      if(!obj){return []}
+      let arr = [];
+      if (obj.span) {
+        arr.push(`col-${str}${obj.span}`)
+      }
+      if (obj.offset) {
+        arr.push(`offset-${str}${obj.offset}`)
+      }
+      return arr;
+    }
+  }
 }
 
 </script>
@@ -108,6 +120,15 @@ export default {
         .col-loop((@n)-1);
       }
       .col-loop(24);
+
+      @offset: offset-ipad-;
+      .offset-loop(@n) when (@n>0){
+        &.@{offset}@{n}{
+            margin-left: @n/24*100%;
+        }
+        .offset-loop((@n)-1);
+      }
+      .offset-loop(24)
     }
   }
   @media (min-width: 769px) {
@@ -120,6 +141,15 @@ export default {
         .col-loop((@n)-1);
       }
       .col-loop(24);
+
+      @offset: offset-narrow-pc-;
+      .offset-loop(@n) when (@n>0){
+        &.@{offset}@{n}{
+            margin-left: @n/24*100%;
+        }
+        .offset-loop((@n)-1);
+      }
+      .offset-loop(24)
     }
   }
   @media (min-width: 993px) {
@@ -132,6 +162,15 @@ export default {
         .col-loop((@n)-1);
       }
       .col-loop(24);
+
+      @offset: offset-pc-;
+      .offset-loop(@n) when (@n>0){
+        &.@{offset}@{n}{
+            margin-left: @n/24*100%;
+        }
+        .offset-loop((@n)-1);
+      }
+      .offset-loop(24)
     }
   }
   @media (min-width: 1201px) {
@@ -144,6 +183,15 @@ export default {
         .col-loop((@n)-1);
       }
       .col-loop(24);
+
+      @offset: offset-wide-pc-;
+      .offset-loop(@n) when (@n>0){
+        &.@{offset}@{n}{
+            margin-left: @n/24*100%;
+        }
+        .offset-loop((@n)-1);
+      }
+      .offset-loop(24)
     }
   }
 </style>
