@@ -69,7 +69,7 @@ describe('Input', () => {
         vm.$on(eventName, callback);
         // 触发对应的事件
         const event = new Event(eventName);
-        // 给触发的事件传值
+        // 给触发的事件传值, 原生不能直接给event.target.value赋值，这里用了hack的方法
         Object.defineProperty(event, 'target', {
           value: {value: 'hi'},
           enumerable: true
