@@ -7,15 +7,10 @@
 <script>
 export default {
   name: 'KomaHeader',
-  components: {},
-  props: {},
   data () {
     return {
     };
   },
-  computed: {},
-  created () {},
-  methods: {}
 }
 
 </script>

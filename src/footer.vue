@@ -7,15 +7,10 @@
 <script>
 export default {
   name: 'KomaFooter',
-  components: {},
-  props: {},
   data () {
     return {
     };
   },
-  computed: {},
-  created () {},
-  methods: {}
 }
 
 </script>

@@ -7,15 +7,10 @@
 <script>
 export default {
   name: 'KomaSider',
-  components: {},
-  props: {},
   data () {
     return {
     };
-  },
-  computed: {},
-  created () {},
-  methods: {}
+  }
 }
 
 </script>

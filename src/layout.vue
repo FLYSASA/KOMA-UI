@@ -15,7 +15,6 @@ export default {
       }
     };
   },
-  created () {},
   mounted () {
     console.log(this.$children)
     this.$children.forEach((vm) => {
@@ -24,7 +23,6 @@ export default {
      }
     })
   },
-  methods: {}
 }
 
 </script>
@@ -33,7 +31,6 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    border: 1px solid green;
     &.hasSider {
       flex-direction: row;
     }
