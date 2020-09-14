@@ -1,12 +1,12 @@
 <template>
-  <div class="footer">
+  <div class="content">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'KomaFooter',
+  name: 'KomaContent',
   components: {},
   props: {},
   data () {
@@ -20,4 +20,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
+.content {
+  flex-grow: 1;
+}
 </style>

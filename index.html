@@ -26,56 +26,68 @@
 		#app {
 			margin: 20px;
 		}
+
+		.demo {
+			border: 1px solid red;
+			min-height: 100px;;
+		}
 	</style>
 </head>
 
 <body>
 	<div id="app">
 		<template>
-				<!-- row & col -->
-				<div style="border: 1px solid black;">
-					<g-row gutter="10" align="center">
-						<g-col span="2">1</g-col>
-						<g-col span="2">2</g-col>
-						<g-col span="2">3</g-col>
-					</g-row>
-					<g-row>
-						<g-col span="2" 
-						:ipad="{span: 10, offset: 2}"
-						:pc="{span: 6}">1
-						</g-col>
-						<g-col span="22" 
-						:ipad="{span: 12}"
-						:pc="{span: 18}"
-						>2</g-col>
-					</g-row>
-					<g-row>
-						<g-col span="2" offset="4">1</g-col>
-						<g-col span="15" offset="3">2</g-col>
-					</g-row>
-					<g-row>
-						<g-col span="6">1</g-col>
-						<g-col span="18">2</g-col>
-					</g-row>
-				</div>
-				<!-- input -->
-				<div style="margin-bottom: 10px">
-					<!-- <g-input value="哈哈" error="该字段不合法"></g-input>
-								<g-input value="哈哈" readonly></g-input>
-								<g-input value="嘻嘻" disabled></g-input> -->
-					<g-input v-model="message" @change="inputChange"></g-input>
-					<span>{{message}}</span>
-					<button @click="message += 1">+1</button>
-				</div>
-				<!-- button -->
-				<g-button @click="loading2 = !loading2" icon="download" icon-position="right" :loading="loading2">加载</g-button>
-				<g-button @click="loading1 = !loading1" :loading="loading1" icon="download">设置</g-button>
-				<g-button @click="loading1 = !loading1" :loading="loading1">点击</g-button>
-				<g-button-group>
-					<g-button icon="left">后退</g-button>
-					<g-button>更多</g-button>
-					<g-button icon="right" icon-position="right">前进</g-button>
-				</g-button-group>
+			<!-- grid -->
+			<g-layout style="margin-bottom: 10px; height: 100vh;">
+				<g-sider class="demo">sider</g-sider>
+				<g-layout>
+					<g-header class="demo">header</g-header>
+					<g-content class="demo">content</g-content>
+					<g-footer class="demo">footer</g-footer>
+				</g-layout>
+			</g-layout>
+			<!-- row & col -->
+			<div style="border: 1px solid black;">
+				<g-row gutter="10" align="center">
+					<g-col span="2">1</g-col>
+					<g-col span="2">2</g-col>
+					<g-col span="2">3</g-col>
+				</g-row>
+				<g-row>
+					<g-col span="2" 
+					:ipad="{span: 10, offset: 2}"
+					:pc="{span: 6}">1
+					</g-col>
+					<g-col span="22" 
+					:ipad="{span: 12}"
+					:pc="{span: 18}"
+					>2</g-col>
+				</g-row>
+				<g-row>
+					<g-col span="2" offset="4">1</g-col>
+					<g-col span="15" offset="3">2</g-col>
+				</g-row>
+				<g-row>
+					<g-col span="6">1</g-col>
+					<g-col span="18">2</g-col>
+				</g-row>
+			</div>
+			<!-- input -->
+			<div style="margin-bottom: 10px">
+				<!-- <g-input value="哈哈" error="该字段不合法"></g-input> -->
+				<g-input v-model="message" @change="inputChange"></g-input>
+				<span>{{message}}</span>
+				<button @click="message += 1">+1</button>
+			</div>1
+			<!-- button -->
+			<g-button @click="loading2 = !loading2" icon="download" icon-position="right" :loading="loading2">加载</g-button>
+			<g-button @click="loading1 = !loading1" :loading="loading1" icon="download">设置</g-button>
+			<g-button @click="loading1 = !loading1" :loading="loading1">点击</g-button>
+			<g-button-group>
+				<g-button icon="left">后退</g-button>
+				<g-button>更多</g-button>
+				<g-button icon="right" icon-position="right">前进</g-button>
+			</g-button-group>
 		</template>
 
 		<div id="test" style="margin-top: 20px;">
