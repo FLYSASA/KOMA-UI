@@ -39,7 +39,9 @@
 
 <body>
 	<div id="app">
-		<template>
+		<!-- toast -->
+		<button @click="showToast">点击显示toast</button>
+		<template v-if="false">
 			<!-- grid -->
 			<g-layout style="margin-bottom: 10px; height: 100vh;">
 				<g-sider>sider</g-sider>
