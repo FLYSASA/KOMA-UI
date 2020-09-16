@@ -38,12 +38,13 @@ new Vue({
     message: 'hi1'
   },
   created(){
-    setTimeout(()=>{
-      // 手动触发输入框的change事件
-      const event = new Event('change');
-      const inputElement = this.$el.querySelector('input')
-      inputElement.dispatchEvent(event)
-    }, 1000)
+    // setTimeout(()=>{
+    //   // 手动触发输入框的change事件
+    //   const event = new Event('change');
+    //   const inputElement = this.$el.querySelector('input')
+    //   inputElement.dispatchEvent(event)
+    // }, 1000)
+    this.$toast('哈哈')
   },
   methods: {
     inputChange (e) {
