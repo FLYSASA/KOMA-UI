@@ -44,7 +44,6 @@ new Vue({
     //   const inputElement = this.$el.querySelector('input')
     //   inputElement.dispatchEvent(event)
     // }, 1000)
-    this.$toast('哈哈')
   },
   methods: {
     inputChange (e) {

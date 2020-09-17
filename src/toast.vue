@@ -1,6 +1,8 @@
 <template>
   <div class="toast">
     <slot></slot>
+    <div class="line">
+    </div>
     <span class="close" v-if="closeButton" @click="onclickClose">
       {{ closeButton.text }}
     </span>
@@ -77,15 +79,13 @@ export default {
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
   padding: 0 16px;
   border-radius: 4px;
-
   .close {
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      height: 100px;
-      border-left: 1px solid red;
-    }
+    cursor: pointer;
+  }
+  .line {
+    border-left: 1px solid #666;
+    margin: 0 16px;
+    height: 100%;
   }
 }
 </style>
