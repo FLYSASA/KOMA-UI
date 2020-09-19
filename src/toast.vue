@@ -1,5 +1,5 @@
 <template>
-  <div class="toast" ref="toast">
+  <div class="toast" ref="toast" :class="computedClass">
     <div class="message-wrapper">
       <slot v-if="!enableHtml"></slot>
       <div v-else v-html="$slots.default"></div>
@@ -19,7 +19,7 @@ export default {
   props: {
     autoClose: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     autoCloseDelay: {
       type: Number,
@@ -33,16 +33,28 @@ export default {
         }
       }
     },
+    // 是否支持插入html，风险选项xss攻击等，所以这里默认关闭
     enableHtml: {
       type: Boolean,
       default: false
+    },
+    position: {
+      type: String,
+      default: 'top',
+      validator(val){
+        return ['top', 'bottom', 'middle'].indexOf(val) >= 0
+      },
     }
   },
   data () {
     return {
     };
   },
-  computed: {},
+  computed: {
+    computedClass(){
+      return [`position-${this.position}`]
+    }
+  },
   mounted() {
     this.execAutoClose()
     this.updateStyle()
@@ -87,9 +99,7 @@ export default {
   background: @toast-bg;
   color: #fff;
   position: fixed;
-  top: 0;
   left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
@@ -105,6 +115,18 @@ export default {
   .line {
     border-left: 1px solid #666;
     margin: 0 16px;
+  }
+  &.position-top {
+    top: 0;
+    transform: translateX(-50%);
+  }
+  &.position-bottom {
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+  &.position-middle{
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>

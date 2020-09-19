@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" :class="layoutClass">
+  <div class="layout" :class="layoutClass" ref="layout">
     <slot></slot>
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
     };
   },
   mounted () {
+    console.log(this.$refs['layout'].children, this.$children)
     this.$children.forEach((vm) => {
      if(vm.$options.name === 'KomaSider') {
        this.layoutClass.hasSider = true
