@@ -49,10 +49,19 @@ new Vue({
     inputChange (e) {
       // console.log(e)
     },
-    showToast(){
+    showToast1(){
+      this.showToast('top')
+    },
+    showToast2(){
+      this.showToast('middle')
+    },
+    showToast3(){
+      this.showToast('bottom')
+    },
+    showToast(position){
       this.$toast('知道了', {
         autoClose: false,
-        position: 'bottom',
+        position: position,
         closeButton: {
           text: '测试', 
           callback(){console.log('喜喜')}
