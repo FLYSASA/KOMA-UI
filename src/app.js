@@ -52,7 +52,7 @@ new Vue({
     showToast(){
       this.$toast('知道了', {
         autoClose: false,
-        position: 'middle',
+        position: 'bottom',
         closeButton: {
           text: '测试', 
           callback(){console.log('喜喜')}
