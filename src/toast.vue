@@ -11,7 +11,7 @@
       </span>
   </div>
   </div>
-</template>
+</template> 
 
 <script>
 import Vue from 'vue';
@@ -20,12 +20,11 @@ export default {
   components: {},
   props: {
     autoClose: {
-      type: Boolean,
-      default: false,
-    },
-    autoCloseDelay: {
-      type: Number,
-      default: 3
+      type: [Number, Boolean],
+      default: 3000,
+      validator(val){
+        return val === false || typeof val === 'number';
+      }
     },
     closeButton: {
       type: Object,
@@ -65,15 +64,17 @@ export default {
   methods: {
     updateStyle () {
       this.$nextTick(()=>{
-        let height = this.$refs['toast'].getBoundingClientRect().height
-        this.$refs['line'].style.height = `${height}px`
+        if( this.$refs['toast'] ){
+          let height = this.$refs['toast'].getBoundingClientRect().height
+          this.$refs['line'].style.height = `${height}px`
+        }
       })
     },
     execAutoClose() {
       if (this.autoClose) {
         setTimeout(()=>{
           this.close();
-        }, this.autoCloseDelay * 1000);
+        }, this.autoClose);
       }
     },
     onclickClose(){

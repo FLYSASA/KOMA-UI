@@ -7,7 +7,8 @@
     "start": "parcel index.html --no-cache",
     "dev-test": "parcel watch test/* --no-cache && karma start",
     "test": "parcel build test/* --no-cache --no-minify && karma start --single-run",
-    "watch": "parcel watch test/* --no-cache"
+    "watch": "parcel watch test/* --no-cache",
+    "karma": "karma start"
   },
   "repository": {
     "type": "git",

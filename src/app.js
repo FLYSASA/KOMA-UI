@@ -60,7 +60,7 @@ new Vue({
     },
     showToast(position){
       this.$toast('知道了', {
-        autoClose: false,
+        autoClose: 3000,
         position: position,
         closeButton: {
           text: '测试', 
