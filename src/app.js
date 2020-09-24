@@ -13,6 +13,7 @@ import Sider from './sider'
 import Content from './content'
 import Footer from './footer'
 import Toast from './Toast'
+import Filter from './Filter'
 
 Vue.component('g-button', Button)
 Vue.component('g-icon', Icon)
@@ -26,6 +27,7 @@ Vue.component('g-sider', Sider)
 Vue.component('g-content', Content)
 Vue.component('g-footer', Footer)
 Vue.component('g-toast', Toast)
+Vue.component('g-filter', Filter)
 
 Vue.use(plugin);
 
@@ -35,7 +37,8 @@ new Vue({
     loading1: false,
     loading2: true,
     loading3: false,
-    message: 'hi1'
+    message: 'hi1',
+    
   },
   created(){
     // setTimeout(()=>{
