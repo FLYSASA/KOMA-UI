@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 export default {
   name: 'KomaTabs',
   components: {},
@@ -23,10 +24,16 @@ export default {
   },
   data () {
     return {
+      eventBus: new Vue,
     };
   },
-  created() {
-    // this.$emit('update:selected')
+  provide() {
+    return {
+      eventBus: this.eventBus
+    }
+  },
+  mounted() {
+    this.eventBus.$emit('update:selected', this.selected)
   },
   methods: {},
 }

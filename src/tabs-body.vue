@@ -8,9 +8,10 @@
 export default {
   name: 'KomaTabsBody',
   components: {},
-  props: {},
+  inject: ['eventBus'],
   data () {
     return {
+      active: false,
     };
   },
   methods: {}
