@@ -25,7 +25,7 @@ describe('Toast', () => {
         done();
       })
     })
-    it('接收 closeButton ', ()=>{
+    it('接收 closeButton ', (done)=>{
       const callback = sinon.fake()
       const Constructor = Vue.extend(Toast)
       const vm = new Constructor({
@@ -38,8 +38,12 @@ describe('Toast', () => {
       }).$mount()
       let closeButton = vm.$el.querySelector('.close')
       expect(closeButton.textContent.trim()).to.eq('关闭了')
-      closeButton.click()
-      expect(callback).to.have.been.called
+      // 加延时的原因是 很可能close后，mounted才执行，就会报style undefined
+      setTimeout(()=>{
+        closeButton.click()
+        expect(callback).to.have.been.called
+        done()
+      }, 200)
     })
 
     it('接收 enableHtml ', ()=>{

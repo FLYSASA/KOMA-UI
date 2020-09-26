@@ -39,13 +39,30 @@
 
 <body>
 	<div id="app">
-		<!-- filter -->
-		<g-filter title="标题"></g-filter>
-		<!-- toast -->
-		<button @click="showToast1">top</button>
-		<button @click="showToast2">middle</button>
-		<button @click="showToast3">bottom</button>
+		<g-tabs :selected.sync="selectedTab">
+			<g-tabs-head>
+				<template slot="actions">
+					<button>设置</button>
+				</template>
+				<g-tabs-item name="finance">
+					<g-icon name="shezhi"></g-icon>财经
+				</g-tabs-item>
+				<g-tabs-item name="sport">体育</g-tabs-item>
+				<g-tabs-item name="women">美女</g-tabs-item>
+			</g-tabs-head>
+			<g-tabs-body>
+				<g-tabs-pane name="finance">财经相关资讯</g-tabs-pane>
+				<g-tabs-pane name="sport">体育相关资讯</g-tabs-pane>
+				<g-tabs-pane name="women">美女相关资讯</g-tabs-pane>
+			</g-tabs-body>
+		</g-tabs>
 		<template v-if="false">
+			<!-- filter -->
+			<g-filter title="标题"></g-filter>
+			<!-- toast -->
+			<button @click="showToast1">top</button>
+			<button @click="showToast2">middle</button>
+			<button @click="showToast3">bottom</button>
 			<!-- grid -->
 			<g-layout style="margin-bottom: 10px; height: 100vh;">
 				<g-sider>sider</g-sider>

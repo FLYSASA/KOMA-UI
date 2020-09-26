@@ -12,8 +12,13 @@ import Header from './header'
 import Sider from './sider'
 import Content from './content'
 import Footer from './footer'
-import Toast from './Toast'
-import Filter from './Filter'
+import Toast from './toast'
+import Filter from './filter'
+import Tabs from './tabs.vue'
+import TabsHead from './tabs-head.vue'
+import TabsBody from './tabs-body.vue'
+import TabsItem from './tabs-item.vue'
+import TabsPane from './tabs-pane.vue'
 
 Vue.component('g-button', Button)
 Vue.component('g-icon', Icon)
@@ -26,8 +31,13 @@ Vue.component('g-header', Header)
 Vue.component('g-sider', Sider)
 Vue.component('g-content', Content)
 Vue.component('g-footer', Footer)
-Vue.component('g-toast', Toast)
 Vue.component('g-filter', Filter)
+Vue.component('g-toast', Toast)
+Vue.component('g-tabs', Tabs)
+Vue.component('g-tabs-head', TabsHead)
+Vue.component('g-tabs-body', TabsBody)
+Vue.component('g-tabs-item', TabsItem)
+Vue.component('g-tabs-pane', TabsPane)
 
 Vue.use(plugin);
 
@@ -38,7 +48,7 @@ new Vue({
     loading2: true,
     loading3: false,
     message: 'hi1',
-    
+    selectedTab: 'women'
   },
   created(){
     // setTimeout(()=>{
