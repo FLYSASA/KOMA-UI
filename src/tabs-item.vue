@@ -40,7 +40,6 @@ export default {
 
 </script>
 <style lang='less' scoped>
-  @bg-color: red;
   @active-color: blue;
   .tabs-item {
     padding: 0 1em;
@@ -51,7 +50,6 @@ export default {
     &.active{
       font-weight: bold;
       color: @active-color;
-      background: @bg-color;
     }
   }
 </style>
