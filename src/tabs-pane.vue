@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-pane">
+  <div class="tabs-pane" v-if="active">
     <slot></slot>
   </div>
 </template>
@@ -11,20 +11,18 @@
     inject: ['eventBus'],
     props: {
       name: {
-      type: String|Number,
-      required: true
-    }
+        type: String|Number,
+        required: true
+      }
     },
     data() {
-      return {};
+      return {
+        active: false
+      };
     },
     mounted() {
       this.eventBus.$on('update:selected', (name) => {
-        if (name === this.name) {
-          console.log(`我${this.name}panel被选中了`)
-        } else {
-          console.log(`我${this.name}panel没被选中`)
-        }
+        this.active = name === this.name
       })
     },
     methods: {}

@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-item" @click="onClick">
+  <div class="tabs-item" @click="onClick" :class="{active: active}">
     <slot></slot>
   </div>
 </template>
@@ -19,6 +19,8 @@ export default {
       required: true
     }
   },
+  computed: {
+  },
   data () {
     return {
       active: false
@@ -26,11 +28,7 @@ export default {
   },
   mounted(){
     this.eventBus.$on('update:selected', (name)=>{
-      if(name === this.name) {
-        console.log(`我${this.name}被选中了`)
-      }else{
-        console.log(`我${this.name}没被选中`)
-      }
+      this.active = name === this.name
     })
   },
   methods: {
@@ -42,7 +40,12 @@ export default {
 
 </script>
 <style lang='less' scoped>
-.tabs-item {
-  padding: 0 1em;
-}
+  @bg-color: red;
+  .tabs-item {
+    padding: 0 1em;
+    cursor: pointer;
+    &.active{
+      background: @bg-color;
+    }
+  }
 </style>
