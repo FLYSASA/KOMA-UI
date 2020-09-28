@@ -21,9 +21,11 @@
       };
     },
     mounted() {
-      this.eventBus.$on('update:selected', (name) => {
-        this.active = name === this.name
-      })
+      if(this.eventBus) {
+        this.eventBus.$on('update:selected', (name) => {
+          this.active = name === this.name
+        })
+      }
     },
     methods: {}
   }

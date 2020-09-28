@@ -21,17 +21,19 @@ export default {
   },
   methods: {},
   mounted(){
-    this.eventBus.$on('update:selected', (name)=>{
-      console.log(name)
-      this.$children.forEach((child)=>{
-        if(child.name === name) {
-          let { width } = child.$el.getBoundingClientRect()
-          let left = child.$el.offsetLeft
-          this.$refs['activeLine'].style.width = `${width}px`
-          this.$refs['activeLine'].style.left = `${left}px`
-        }
+    if(this.eventBus) {
+      this.eventBus.$on('update:selected', (name)=>{
+        this.$children.forEach((child)=>{
+          if(child.name === name) {
+            let { width } = child.$el.getBoundingClientRect()
+            // 相对于parent的left值
+            let left = child.$el.offsetLeft
+            this.$refs['activeLine'].style.width = `${width}px`
+            this.$refs['activeLine'].style.left = `${left}px`
+          }
+        })
       })
-    })
+    }
   }
 }
 
