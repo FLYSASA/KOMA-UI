@@ -1,6 +1,6 @@
 <template>
-  <div class="popover" @click="click">
-    <div class="content-wrapper"  v-if="visible">
+  <div class="popover" @click.stop="click">
+    <div class="content-wrapper"  @click.stop v-if="visible">
       <slot name="content"></slot>
     </div>
     <slot></slot>
@@ -24,6 +24,17 @@ export default {
   methods: {
     click() {
       this.visible = !this.visible
+      if(this.visible){
+        // 不加延时的话 冒泡机制会立刻转成false
+        setTimeout(()=>{
+          let errorHandler = ()=>{
+            this.visible = false
+            // 不清楚的话会一直累积，当false掉时就能移除掉上一个监听器了
+            document.removeEventListener('click', errorHandler)
+          }
+          document.addEventListener('click', errorHandler)
+        })
+      }
     }
   },
 };
