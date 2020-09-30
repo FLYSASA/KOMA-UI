@@ -25,6 +25,7 @@
 
 		#app {
 			margin: 20px;
+			padding: 100px;
 		}
 		.sider {
 			width: 100px;
@@ -39,24 +40,31 @@
 
 <body>
 	<div id="app">
-		<g-tabs :selected.sync="selectedTab" @update:selected="yyy">
-			<g-tabs-head>
-				<template slot="actions">
-					<button>设置</button>
-				</template>
-				<g-tabs-item name="finance">
-					<g-icon name="shezhi"></g-icon>财经
-				</g-tabs-item>
-				<g-tabs-item name="sport" disabled>体育</g-tabs-item>
-				<g-tabs-item name="women">美女</g-tabs-item>
-			</g-tabs-head>
-			<g-tabs-body>
-				<g-tabs-pane name="finance">财经相关资讯</g-tabs-pane>
-				<g-tabs-pane name="sport">体育相关资讯</g-tabs-pane>
-				<g-tabs-pane name="women">美女相关资讯</g-tabs-pane>
-			</g-tabs-body>
-		</g-tabs>
+		<g-popover>
+			<template #content>
+				<div>popover内容</div>
+			</template>
+			<button>点我</button>
+		</g-popover>
 		<template v-if="false">
+			<!-- tabs -->
+			<g-tabs :selected.sync="selectedTab" @update:selected="yyy">
+				<g-tabs-head>
+					<template slot="actions">
+						<button>设置</button>
+					</template>
+					<g-tabs-item name="finance">
+						<g-icon name="shezhi"></g-icon>财经
+					</g-tabs-item>
+					<g-tabs-item name="sport" disabled>体育</g-tabs-item>
+					<g-tabs-item name="women">美女</g-tabs-item>
+				</g-tabs-head>
+				<g-tabs-body>
+					<g-tabs-pane name="finance">财经相关资讯</g-tabs-pane>
+					<g-tabs-pane name="sport">体育相关资讯</g-tabs-pane>
+					<g-tabs-pane name="women">美女相关资讯</g-tabs-pane>
+				</g-tabs-body>
+			</g-tabs>
 			<!-- filter -->
 			<g-filter title="标题"></g-filter>
 			<!-- toast -->
