@@ -114,6 +114,7 @@ export default {
       document.removeEventListener('click', this.onClickDocument)
     },
     open () {
+      console.log('dada')
       this.visible = true
       // 不加延时的话 冒泡机制会立刻转成false
       setTimeout(()=>{

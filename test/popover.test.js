@@ -9,7 +9,7 @@ describe('Popover', () => {
   it('存在.', () => {
     expect(Popover).to.exist
   })
-  it('可以设置position', (done) => {
+  it('可以设置 position', (done) => {
     Vue.component('g-popover', Popover)
     const div = document.createElement('div')
     document.body.appendChild(div)
@@ -32,8 +32,30 @@ describe('Popover', () => {
         done()
       })
     })
-    // expect(useElements.length).to.equal(1)
-    // expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
-    // vm.$destroy()
+  })
+  xit('可以设置 trigger', (done) => {
+    Vue.component('g-popover', Popover)
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    div.innerHTML = `
+      <g-popover trigger="hover" ref="popoverTest2">
+        <template #content">
+          <div>弹出内容</div>
+        </template>
+        <button>点我</button>
+      </g-popover>
+    `
+    const vm = new Vue({
+      el: div
+    })
+    vm.$nextTick(()=>{
+      let event = new Event('mouseenter')
+      vm.$el.dispatchEvent(event)
+      vm.$nextTick(()=>{
+        const { popoverContent } = vm.$refs.popoverTest2.$refs
+        expect(popoverContent).to.exist
+      })
+      done()
+    })
   })
 })
