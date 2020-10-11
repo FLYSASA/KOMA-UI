@@ -62,7 +62,7 @@ new Vue({
   },
   methods: {
     yyy(){
-      console.log(1)
+      console.log('yyy')
     },
     inputChange (e) {
       // console.log(e)
