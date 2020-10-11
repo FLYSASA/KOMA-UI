@@ -37,7 +37,8 @@ export default {
       let triggerWrapper = this.$refs['triggerWrapper']
       let { left, top } = triggerWrapper.getBoundingClientRect()
       console.log(left, top)
-      contentEl.style.left = left + 'px';
+      // 加入window.scroll的意义在于会出现横纵向滚动条的情况，因为这里定位是相对于body, 而left的只是相对于视窗
+      contentEl.style.left = left + + window.scrollX + 'px';
       contentEl.style.top = top + window.scrollY + 'px';
 
     },
