@@ -1,5 +1,5 @@
 <template>
-  <div class="popover" @click.stop="click">
+  <div class="popover" @click.stop="clickPopover">
     <div ref="content" class="content-wrapper" v-show="visible"  @click="xxx">
       <slot name="content"></slot>
     </div>
@@ -41,7 +41,7 @@ export default {
       contentEl.style.top = top + window.scrollY + 'px';
 
     },
-    click () {
+    clickPopover () {
       this.visible = !this.visible
       if(this.visible){
         // 不加延时的话 冒泡机制会立刻转成false
