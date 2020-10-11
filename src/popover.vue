@@ -1,9 +1,11 @@
 <template>
   <div class="popover" @click.stop="click">
-    <div class="content-wrapper"  @click.stop v-if="visible">
+    <div ref="content" class="content-wrapper" v-show="visible"  @click="xxx">
       <slot name="content"></slot>
     </div>
-    <slot></slot>
+    <span ref="triggerWrapper">
+      <slot></slot>
+    </span>
   </div>
 </template>
 
@@ -19,14 +21,32 @@ export default {
 
   computed: {},
 
-  created() {},
+  mounted() {
+    console.log(this.$refs['triggerWrapper'])
+  },
 
   methods: {
-    click() {
+    xxx () {
+      console.log('xxx')
+    },
+    // 重新定位，避免overflow: hidden;的问题
+    updateStyle () {
+      let contentEl = this.$refs['content']
+      // 需要先挂载到页面上，才能设样式
+      document.body.appendChild(contentEl)
+      let triggerWrapper = this.$refs['triggerWrapper']
+      let { left, top } = triggerWrapper.getBoundingClientRect()
+      console.log(left, top)
+      contentEl.style.left = left + 'px';
+      contentEl.style.top = top + window.scrollY + 'px';
+
+    },
+    click () {
       this.visible = !this.visible
       if(this.visible){
         // 不加延时的话 冒泡机制会立刻转成false
         setTimeout(()=>{
+          this.updateStyle()
           let errorHandler = ()=>{
             this.visible = false
             // 不清楚的话会一直累积，当false掉时就能移除掉上一个监听器了
@@ -44,12 +64,11 @@ export default {
     display: inline-block;
     vertical-align: top;
     position: relative;
-    .content-wrapper {
-      position: absolute;
-      left: 0;
-      bottom: 100%;
-      border: 1px solid green;
-      box-shadow: 0 0 3px rgba(0,0,0,0.5);
-    }
+  }
+  .content-wrapper {
+    position: absolute;
+    border: 1px solid green;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    transform: translateY(-100%)
   }
 </style>
