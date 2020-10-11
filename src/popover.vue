@@ -1,5 +1,5 @@
 <template>
-  <div class="popover" @click="clickPopover">
+  <div class="popover" ref="popover">
     <div ref="popoverContent" class="content-wrapper" v-if="visible"
     :class="{[`position-${position}`]:true}">
       <slot name="content"></slot>
@@ -13,13 +13,19 @@
 <script>
 export default {
   name: 'KomaPopover',
-  components: {},
   props:{
     position: {
       type: String,
       default: 'top',
       validator(val){
         return ['top', 'bottom', 'left', 'right'].indexOf(val) >= 0
+      }
+    },
+    trigger: {
+      type: String,
+      default: 'click',
+      validator(val){
+        return ['click', 'hover'].indexOf(val) >= 0
       }
     }
   },
@@ -32,6 +38,21 @@ export default {
   computed: {},
 
   mounted() {
+    if(this.trigger === 'click'){
+      this.$refs['popover'].addEventListener('click', this.clickPopover)
+    } else {
+      this.$refs['popover'].addEventListener('mouseenter', this.open)
+      this.$refs['popover'].addEventListener('mouseleave', this.close)
+    }
+  },
+
+  destroyed() {
+    if(this.trigger === 'click'){
+      this.$refs['popover'].removeEventListener('click', this.clickPopover)
+    } else {
+      this.$refs['popover'].removeEventListener('mouseenter', this.open)
+      this.$refs['popover'].removeEventListener('mouseleave', this.close)
+    }
   },
 
   methods: {
@@ -43,7 +64,7 @@ export default {
       document.body.appendChild(popoverContent)
 
       const { left, top, height, width } = triggerWrapper.getBoundingClientRect()
-      const {height: height2} = popoverContent.getBoundingClientRect()
+      const { height: height2 } = popoverContent.getBoundingClientRect()
 
       let positions = {
         top: {
@@ -77,6 +98,7 @@ export default {
       document.addEventListener('click', this.onClickDocument)
     },
     clickPopover (e) {
+      console.log(e.target)
       // 点的触发器的话就关闭popover, 点popover内容不关闭
       if(this.$refs['triggerWrapper'].contains(e.target)) {
         if(this.visible) {
