@@ -37,32 +37,34 @@ export default {
   methods: {
     // 重新定位，避免overflow: hidden;的问题
     positionPopover () {
-      let { popoverContent, triggerWrapper } = this.$refs
+      const { popoverContent, triggerWrapper } = this.$refs
       if(!popoverContent){return;}
       // 需要先挂载到页面上，才能设样式
       document.body.appendChild(popoverContent)
 
-      let { left, top, height, width } = triggerWrapper.getBoundingClientRect()
-      if(this.position === 'top') {
-        // 加入window.scroll的意义在于会出现横纵向滚动条的情况，因为这里定位是相对于body, 而left的只是相对于视窗
-        popoverContent.style.left = left + window.scrollX + 'px';
-        popoverContent.style.top = top + window.scrollY + 'px';
-      } else if (this.position === 'bottom'){
-        popoverContent.style.left = left + window.scrollX + 'px';
-        popoverContent.style.top = top + height + window.scrollY + 'px';
-      } else if (this.position === 'left'){
-        popoverContent.style.left = left + window.scrollX + 'px';
+      const { left, top, height, width } = triggerWrapper.getBoundingClientRect()
+      const {height: height2} = popoverContent.getBoundingClientRect()
 
-        let {height: height2} = popoverContent.getBoundingClientRect()
-        // 让popovercontent 与 trigger纵向居中对齐
-        popoverContent.style.top = top + window.scrollY + (height - height2)/2 + 'px';
-      } else if (this.position === 'right'){
-        popoverContent.style.left = left + width + window.scrollX + 'px';
-
-        let {height: height2} = popoverContent.getBoundingClientRect()
-        // 让popovercontent 与 trigger纵向居中对齐
-        popoverContent.style.top = top + window.scrollY + (height - height2)/2 + 'px';
+      let positions = {
+        top: {
+          top: top + window.scrollY,
+          left: left + window.scrollX
+        },
+        bottom: {
+          top: top + height + window.scrollY,
+          left: left + window.scrollX,
+        },
+        left: {
+          top: top + window.scrollY + (height - height2)/2,
+          left: left + window.scrollX
+        },
+        right: {
+          top: top + window.scrollY + (height - height2)/2,
+          left: left + width + window.scrollX
+        }
       }
+      popoverContent.style.left = positions[this.position].left + 'px'
+      popoverContent.style.top = positions[this.position].top + 'px';
 
     },
     onClickDocument (e) {
