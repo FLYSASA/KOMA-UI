@@ -47,6 +47,7 @@ export default {
   },
 
   destroyed() {
+    if(!this.$refs['popover']){return;}
     if(this.trigger === 'click'){
       this.$refs['popover'].removeEventListener('click', this.clickPopover)
     } else {
@@ -98,7 +99,6 @@ export default {
       document.addEventListener('click', this.onClickDocument)
     },
     clickPopover (e) {
-      console.log(e.target)
       // 点的触发器的话就关闭popover, 点popover内容不关闭
       if(this.$refs['triggerWrapper'].contains(e.target)) {
         if(this.visible) {
@@ -153,12 +153,14 @@ export default {
       transform: translateY(-100%);
       margin-top: -10px;
       &::before{
-        border-top-color: black; 
+        border-top-color: black;
+        border-bottom: none;
         top: 100%;
         left: 10px;
       }
       &::after{
         border-top-color: #fff; 
+        border-bottom: none;
         top: calc(100% - 1px);
         left: 10px;
       }
@@ -167,12 +169,14 @@ export default {
     &.position-bottom {
       margin-top: 10px;
       &::before{
-        border-bottom-color: black; 
+        border-bottom-color: black;
+        border-top: none;
         bottom: 100%;
         left: 10px;
       }
       &::after{
-        border-bottom-color: #fff; 
+        border-bottom-color: #fff;
+        border-top: none;
         bottom: calc(100% - 1px);
         left: 10px;
       }
@@ -183,12 +187,14 @@ export default {
       transform: translateX(-100%);
       &::before{
         border-left-color: black; 
+        border-right: none;
         top: 50%;
         left: 100%;
         transform: translateY(-50%);
       }
       &::after{
-        border-left-color: #fff; 
+        border-left-color: #fff;
+        border-right: none;
         top: 50%;
         left: calc(100% - 1px);
         transform: translateY(-50%);
@@ -198,13 +204,15 @@ export default {
     &.position-right {
       margin-left: 10px;
       &::before{
-        border-right-color: black; 
+        border-right-color: black;
+        border-left: none;
         top: 50%;
         right: 100%;
         transform: translateY(-50%);
       }
       &::after{
-        border-right-color: #fff; 
+        border-right-color: #fff;
+        border-left: none;
         top: 50%;
         right: calc(100% - 1px);
         transform: translateY(-50%);
