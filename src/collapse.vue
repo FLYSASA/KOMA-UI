@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      active: null,
       eventBus: new Vue()
     };
   },
@@ -35,14 +34,31 @@ export default {
   computed: {},
 
   mounted() {
-    console.log(this.selected)
-    this.eventBus.$emit('change', this.selected)
-    this.eventBus.$on('change', (val)=>{
-      this.$emit('update:selected', val)
+    // 不能直接修改props
+    let selected = JSON.parse(JSON.stringify(this.selected))
+    this.eventBus.$emit('change', selected)
+    this.eventBus.$on('addChange', (name)=>{
+      if(this.single) {
+        selected = []
+      }
+      selected.push(name)
+      this.updateNewVal(selected)
+    })
+    this.eventBus.$on('removeChange', (name)=>{
+      let index = selected.indexOf(name)
+      selected.splice(index, 1)
+      this.updateNewVal(selected)
     })
   },
 
-  methods: {},
+  methods: {
+    updateNewVal(val){
+      // 更新sync
+      this.$emit('update:selected', val)
+      // 更新子组件
+      this.eventBus.$emit('change', val)
+    }
+  },
 };
 </script>
 <style lang='less' scoped>

@@ -21,26 +21,29 @@
       name: {
         type: String,
         required: true
-      }
+      },
     },
     inject: [ 'eventBus' ],
     data() {
       return {
-        open: false
+        open: false,
       };
     },
     mounted() {
-      this.eventBus && this.eventBus.$on('change', (val)=>{
-        this.open = (val.indexOf(this.name) > -1)
+      this.eventBus && this.eventBus.$on('change', (names)=>{
+        if(names.indexOf(this.name) > -1) {
+          this.open = true
+        } else {
+          this.open = false
+        }
       })
     },
     methods: {
       click() {
         if(this.open) {
-          this.open = false
-          this.eventBus && this.eventBus.$emit('change', [this.name])
+          this.eventBus && this.eventBus.$emit('removeChange', this.name)
         } else {
-          this.eventBus && this.eventBus.$emit('change', [])
+          this.eventBus && this.eventBus.$emit('addChange', this.name)
         }
       }
     },
