@@ -42,17 +42,17 @@ export default {
         selected = []
       }
       selected.push(name)
-      this.updateNewVal(selected)
+      this.broadcast(selected)
     })
     this.eventBus.$on('removeChange', (name)=>{
       let index = selected.indexOf(name)
       selected.splice(index, 1)
-      this.updateNewVal(selected)
+      this.broadcast(selected)
     })
   },
 
   methods: {
-    updateNewVal(val){
+    broadcast(val){
       // 更新sync
       this.$emit('update:selected', val)
       // 更新子组件
