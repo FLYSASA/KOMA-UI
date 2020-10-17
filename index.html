@@ -40,10 +40,11 @@
 
 <body>
 	<div id="app">
-		<g-collapse>
-			<g-collapse-item title="标题1">内容1</g-collapse-item>
-			<g-collapse-item title="标题2">内容2</g-collapse-item>
-			<g-collapse-item title="标题3">内容3</g-collapse-item>
+		{{selectedCollapse}}
+		<g-collapse :selected.sync="selectedCollapse">
+			<g-collapse-item title="标题1" name="1">内容1</g-collapse-item>
+			<g-collapse-item title="标题2" name="2">内容2</g-collapse-item>
+			<g-collapse-item title="标题3" name="3">内容3</g-collapse-item>
 		</g-collapse>
 		<template v-if="false">
 			<!-- collapse -->
