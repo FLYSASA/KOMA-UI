@@ -8,8 +8,17 @@ module.exports = {
       { text: 'External', link: 'https://google.com' },
     ],
     sidebar: [
-      '/install/',
-      '/get-started/',
+      {
+        title: '入门',
+        children: [
+          '/install/',
+          '/get-started/',
+        ]
+      },
+      {
+        title: '组件',
+        children: ['/components/Button']
+      },
     ]
   }
 }
