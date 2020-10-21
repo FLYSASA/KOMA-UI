@@ -10,7 +10,8 @@
     "watch": "parcel watch test/* --no-cache",
     "karma": "karma start",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "d": "bash deploy.sh"
   },
   "repository": {
     "type": "git",
