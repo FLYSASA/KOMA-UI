@@ -59,6 +59,9 @@
     border: 1px solid @border-color;
     background: @button-bg;
     vertical-align: middle;
+    &[disabled="disabled"]{
+      cursor: not-allowed;
+    }
     &:hover {border-color: @border-color-hover;}
     &:active { background-color: @button-active-bg; }
     &:focus { outline: none; }
