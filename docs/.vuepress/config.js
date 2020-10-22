@@ -12,6 +12,8 @@ module.exports = {
     sidebar: [
       {
         title: '入门',
+        // 不折叠
+        collapsable: false,
         children: [
           '/install/',
           '/get-started/',
@@ -19,13 +21,8 @@ module.exports = {
       },
       {
         title: '组件',
+        collapsable: false,
         children: [
-          {
-            title: '按钮',
-            children: [
-              '/components/button',
-            ]
-          },
           '/components/button',
           '/components/grid',
           '/components/input',
