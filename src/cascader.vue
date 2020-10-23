@@ -23,7 +23,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-  @import './css/var';
+  @import './css/_var';
   .cascader-wrapper {
 
   }

@@ -126,7 +126,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-  @import './css/var';
+  @import './css/_var';
   .popover {
     display: inline-block;
     vertical-align: top;

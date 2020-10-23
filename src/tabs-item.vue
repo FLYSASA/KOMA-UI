@@ -48,7 +48,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-  @import './css/var';
+  @import './css/_var';
   .tabs-item {
     padding: 0 1em;
     height: 100%;
