@@ -22,6 +22,7 @@ import TabsPane from './tabs-pane.vue'
 import Popover from './popover.vue'
 import Collapse from './collapse.vue'
 import CollapseItem from './collapse-item.vue'
+import Cascader from './cascader.vue'
 
 Vue.component('g-button', Button)
 Vue.component('g-icon', Icon)
@@ -44,6 +45,7 @@ Vue.component('g-tabs-pane', TabsPane)
 Vue.component('g-popover', Popover)
 Vue.component('g-collapse', Collapse)
 Vue.component('g-collapse-item', CollapseItem)
+Vue.component('g-cascader', Cascader)
 
 Vue.use(plugin);
 
@@ -55,7 +57,61 @@ new Vue({
     loading3: false,
     message: 'hi1',
     selectedTab: 'women',
-    selectedCollapse: ['1']
+    selectedCollapse: ['1'],
+    cascaderDatas: [
+      {
+        name: '浙江',
+        key: 'zhejiang',
+        children: [
+          {
+            name: '杭州',
+            key: 'hangzhou',
+            children: [
+              {
+                name: '上城区',
+                key: 'shangchengqu',
+              },
+              {
+                name: '下城区',
+                key: 'xiaChengqu',
+              }
+            ]
+          },
+          {
+            name: '嘉兴',
+            key: 'jiaxing',
+          },
+          {
+            name: '湖州',
+            key: 'huzhou',
+          }
+        ]
+      },
+      {
+        name: '福建',
+        key: 'fujian',
+        children: [
+          {
+            name: '福州',
+            key: 'fuzhou',
+            children: [
+              {
+                name: '鼓楼',
+                key: 'gulou',
+              },
+              {
+                name: '台江',
+                key: 'taijiang',
+              }
+            ]
+          },
+          {
+            name: '莆田',
+            key: 'putian',
+          }
+        ]
+      }
+    ]
   },
   created(){
     // setTimeout(()=>{

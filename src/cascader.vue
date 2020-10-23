@@ -1,23 +1,34 @@
 <template>
-  <div class="cascader-wrapper">
-    <slot></slot>
+  <div>
+    <div class="cascader-wrapper">
+      <slot></slot>
+    </div>
+    <div class="popover">
+      <cascader-item v-for="item in datas" :sourceItem="item"></cascader-item>
+    </div>
   </div>
 </template>
 
 <script>
+import cascaderItem from './cascader-item'
 export default {
   name: 'KomaCascader',
-  components: {},
-  props: {},
+  components: { cascaderItem },
+  props: {
+    datas: {
+      type: Array
+    }
+  },
   data() {
     return {
-
     };
   },
 
   computed: {},
 
-  created() {},
+  created() {
+    console.log(this.datas)
+  },
 
   methods: {},
 };
