@@ -48,8 +48,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-  @active-color: blue;
-  @disabled-text-color: #ddd;
+  @import './css/var';
   .tabs-item {
     padding: 0 1em;
     height: 100%;

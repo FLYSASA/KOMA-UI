@@ -39,9 +39,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-@tab-height: 40px;
-@active-line-color: blue;
-@border-color: #ddd;
+@import './css/var';
 .tabs-head {
   display: flex;
   height: @tab-height;

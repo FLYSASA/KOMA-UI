@@ -126,8 +126,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-  @border-color: #333;
-  @border-radius: 4px;
+  @import './css/var';
   .popover {
     display: inline-block;
     vertical-align: top;
@@ -135,7 +134,7 @@ export default {
   }
   .content-wrapper {
     position: absolute;
-    border: 1px solid @border-color;
+    border: 1px solid @color;
     border-radius: @border-radius;
     // box-shadow: 0 0 3px rgba(0,0,0,0.5);
     filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));

@@ -47,14 +47,8 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-   @height: 32px;
-   @border-color: #999;
-   @hover-border-color: #666;
-   @disabled-border-color: #bbb;
-   @border-radius: 4px;
-   @font-size: 12px;
-   @box-shadow-color: rgba(0, 0, 0, 0.5);
-   @red: #F14530;
+   @import './css/var';
+   @height: @input-height;
    .wrapper {
       display: inline-flex;
       align-items: center;
