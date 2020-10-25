@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <g-cascader :datas="cascaderDatas" popover-height="200px"></g-cascader>
   </div>
 </template>
