@@ -4,27 +4,10 @@
       <div class="trigger" @click="popoverVisible = !popoverVisible">
       </div>
       <div class="popover" v-if="popoverVisible">
-        <div class="level1">
-          <div class="label" v-for="item1 in datas" @click="selectedItem1 = item1">
-            {{ item1.name }}
-          </div>
-        </div>
-        <div class="level2">
-          <div class="label" v-for="item2 in level2Items" @click="selectedItem2 = item2">
-            {{ item2.name }}
-          </div>
-        </div>
-        <div class="level3">
-          <div class="label" v-for="item3 in level3Items" >
-            {{ item3.name }}
-          </div>
-        </div>
+        <cascader-item :items="datas"></cascader-item>
       </div>
       <slot></slot>
     </div>
-    <!-- <div class="popover">
-      <cascader-item v-for="item in datas" :sourceItem="item"></cascader-item>
-    </div> -->
   </div>
 </template>
 
@@ -41,19 +24,10 @@ export default {
   data() {
     return {
       popoverVisible: true,
-      selectedItem1: null,
-      selectedItem2: null,
     };
   },
 
-  computed: {
-    level2Items(){
-      return this.selectedItem1 && this.selectedItem1.children || []
-    },
-    level3Items(){
-      return this.selectedItem2 && this.selectedItem2.children || []
-    }
-  },
+  computed: {},
 
   created() {
     console.log(this.datas)
