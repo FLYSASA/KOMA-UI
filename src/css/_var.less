@@ -2,6 +2,8 @@
 @active-line-color: blue;
 @border-color-hover: #666;
 @border-color: #999;
+// 变浅
+@border-color-light: lighten(@border-color, 30%);
 @border-radius: 4px;
 @box-shadow-color: rgba(0, 0, 0, 0.5);
 @button-active-bg: #eee;
@@ -18,3 +20,7 @@
 @tab-height: 40px;
 @toast-bg: rgba(0, 0, 0, 0.75);
 @toast-min-height: 40px;
+
+.box-shadow {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
