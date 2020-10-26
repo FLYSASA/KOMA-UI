@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <g-cascader :datas="cascaderDatas" popover-height="200px"></g-cascader>
+    <g-cascader
+      :selected="selected"
+      :datas="cascaderDatas" 
+      popover-height="200px"></g-cascader>
   </div>
 </template>
 
@@ -14,6 +17,7 @@ export default {
   props: {},
   data () {
     return {
+      selected: [],
       cascaderDatas: [
       {
         name: '浙江',

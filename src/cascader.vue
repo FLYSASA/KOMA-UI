@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <div class="cascader">
-      <div class="trigger" @click="popoverVisible = !popoverVisible">
-      </div>
-      <div class="popover-wrapper" v-if="popoverVisible">
-        <cascader-item :items="datas" class="popover" :height="popoverHeight"></cascader-item>
-      </div>
-      <slot></slot>
+  <div class="cascader">
+    <div class="trigger" @click="popoverVisible = !popoverVisible">
     </div>
+    <div class="popover-wrapper" v-if="popoverVisible">
+      <cascader-item class="popover"
+      :height="popoverHeight"
+      :selected="selected"
+      :items="datas"></cascader-item>
+    </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -22,6 +23,10 @@ export default {
     },
     popoverHeight:{
       type: String
+    },
+    selected: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
