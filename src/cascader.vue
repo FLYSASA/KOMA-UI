@@ -42,9 +42,6 @@ export default {
   },
 
   methods: {
-    a(){
-      
-    }
   },
 };
 </script>

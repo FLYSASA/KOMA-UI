@@ -1,5 +1,9 @@
 <template>
   <div class="cascader-item" :style="{ height }">
+    <div>
+      selected： {{ selected }}
+      level: {{ level }}
+    </div>
     <div class="left">
       <div class="label" v-for="(item, index) in items"
         :key="index"
@@ -9,7 +13,10 @@
       </div>
     </div>
     <div class="right" v-if="rightItems">
-      <cascader-item :items="rightItems" :height="height"></cascader-item>
+      <cascader-item
+      :level="level+1"
+      :items="rightItems" 
+      :height="height"></cascader-item>
     </div>
   </div>
 </template>
@@ -25,6 +32,14 @@ export default {
     },
     height: {
       type: String
+    },
+    selected: {
+      type: Array,
+      default: () => []
+    },
+    level: {
+      type: Number,
+      default: 0
     }
   },
   data () {
