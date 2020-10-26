@@ -36,7 +36,11 @@ export default {
     console.log(this.popoverClassName)
   },
 
-  methods: {},
+  methods: {
+    a(){
+      
+    }
+  },
 };
 </script>
 <style lang='less' scoped>
