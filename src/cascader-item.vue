@@ -14,8 +14,10 @@
     </div>
     <div class="right" v-if="rightItems">
       <cascader-item
+      :selected="selected"
       :level="level+1"
-      :items="rightItems" 
+      :items="rightItems"
+      @update:selected="onUpdateSelected"
       :height="height"></cascader-item>
     </div>
   </div>
@@ -49,13 +51,21 @@ export default {
   },
   computed: {
     rightItems () {
-      return this.leftSelected && this.leftSelected.children || null
+      let currentSelected = this.selected[this.level]
+      if (currentSelected && currentSelected.children){
+        return currentSelected.children || null
+      }
+      return null;
     }
   },
   created () {},
   methods: {
+    onUpdateSelected(val){
+      this.$emit('update:selected', val)
+    },
     onclickLable(item) {
       // this.$set(this.selected, this.level, item)
+      // 精髓，将selected按level赋值
       let copy = JSON.parse(JSON.stringify(this.selected))
       copy[this.level] = item
       // 单向数据流
