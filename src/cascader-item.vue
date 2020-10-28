@@ -1,9 +1,5 @@
 <template>
   <div class="cascader-item" :style="{ height }">
-    <div>
-      selected： {{ selected && selected[level] && selected[level].name }}
-      level: {{ level }}
-    </div>
     <div class="left">
       <div class="label" v-for="(item, index) in items"
         :key="index"
@@ -68,6 +64,7 @@ export default {
       // 精髓，将selected按level赋值
       let copy = JSON.parse(JSON.stringify(this.selected))
       copy[this.level] = item
+      copy.splice(this.level + 1)
       // 单向数据流
       this.$emit('update:selected', copy)
     }
@@ -82,7 +79,6 @@ export default {
   align-items: flex-start;
   justify-content: flex-start;
   height: 100px;
-  border: 1px solid red;
   .left {
     height: 100%;
     padding: .3em 0;
