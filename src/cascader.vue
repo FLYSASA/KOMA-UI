@@ -6,6 +6,7 @@
       <cascader-item class="popover"
       :height="popoverHeight"
       :selected="selected"
+      @update:selected="onUpdateSelected"
       :items="datas"></cascader-item>
     </div>
     <slot></slot>
@@ -38,10 +39,12 @@ export default {
   computed: {},
 
   created() {
-    console.log(this.popoverClassName)
   },
 
   methods: {
+    onUpdateSelected(val){
+      this.$emit('update:selected', val)
+    }
   },
 };
 </script>

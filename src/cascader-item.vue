@@ -1,13 +1,13 @@
 <template>
   <div class="cascader-item" :style="{ height }">
     <div>
-      selected： {{ selected }}
+      selected： {{ selected && selected[level] && selected[level].name }}
       level: {{ level }}
     </div>
     <div class="left">
       <div class="label" v-for="(item, index) in items"
         :key="index"
-        @click="leftSelected = item">
+        @click="onclickLable(item)">
         {{ item.name }}
         <icon class="icon" v-if="item.children" name="right"></icon>
       </div>
@@ -53,7 +53,15 @@ export default {
     }
   },
   created () {},
-  methods: {}
+  methods: {
+    onclickLable(item) {
+      // this.$set(this.selected, this.level, item)
+      let copy = JSON.parse(JSON.stringify(this.selected))
+      copy[this.level] = item
+      // 单向数据流
+      this.$emit('update:selected', copy)
+    }
+  }
 }
 
 </script>
