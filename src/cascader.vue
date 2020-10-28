@@ -1,6 +1,8 @@
 <template>
   <div class="cascader">
     <div class="trigger" @click="popoverVisible = !popoverVisible">
+      <!-- 默认一个字符防止抖动，没字到有字会有样式抖动 -->
+      {{computedSelectedName || '&nbsp;'}}
     </div>
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-item class="popover"
@@ -36,7 +38,11 @@ export default {
     };
   },
 
-  computed: {},
+  computed: {
+    computedSelectedName() {
+      return this.selected.map(i => i.name).join('-')
+    }
+  },
 
   created() {
   },
@@ -53,11 +59,16 @@ export default {
   .cascader {
     position: relative;
     .trigger {
-      border: 1px solid red;
+      border: 1px solid @border-color;
+      border-radius: @border-radius;
       height: @input-height;
-      width: 100px;
+      display: inline-flex;
+      align-items: center;
+      min-width: 10em;
+      padding: 0 1em;
     }
     .popover-wrapper {
+      margin-top: 6px;
       position: absolute;
       top: 100%;
       left: 0;

@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    {{selected}}
     <g-cascader
       :selected="selected"
       :datas="cascaderDatas"
