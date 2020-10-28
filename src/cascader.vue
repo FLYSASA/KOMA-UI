@@ -1,7 +1,6 @@
 <template>
   <div class="cascader">
     <div class="trigger" @click="popoverVisible = !popoverVisible">
-      <!-- 默认一个字符防止抖动，没字到有字会有样式抖动 -->
       {{computedSelectedName || '&nbsp;'}}
     </div>
     <div class="popover-wrapper" v-if="popoverVisible">
@@ -57,6 +56,7 @@ export default {
 <style lang='less' scoped>
   @import './css/_var';
   .cascader {
+    display: inline-block;
     position: relative;
     .trigger {
       border: 1px solid @border-color;
@@ -68,7 +68,6 @@ export default {
       padding: 0 1em;
     }
     .popover-wrapper {
-      margin-top: 6px;
       position: absolute;
       top: 100%;
       left: 0;

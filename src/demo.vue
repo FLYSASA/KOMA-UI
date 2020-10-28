@@ -1,9 +1,8 @@
 <template>
   <div id="app">
     <g-cascader
-      :selected="selected"
+      :selected.sync="selected"
       :datas="cascaderDatas"
-      @update:selected="selected = $event"
       popover-height="200px"></g-cascader>
   </div>
 </template>
