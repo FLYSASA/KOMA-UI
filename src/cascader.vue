@@ -62,7 +62,7 @@ export default {
       border: 1px solid @border-color;
       border-radius: @border-radius;
       height: @input-height;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       min-width: 10em;
       padding: 0 1em;
