@@ -29,6 +29,9 @@ export default {
     selected: {
       type: Array,
       default: () => []
+    },
+    loadData: {
+      type: Function,
     }
   },
   data() {
@@ -47,9 +50,36 @@ export default {
   },
 
   methods: {
+    findItemById(itemId, datas){
+      let item = {}
+      console.log(datas)
+      let a = datas.some((i) => {
+        if(i.id === itemId) {
+          console.log('gg', i)
+          item = i
+          return true;
+        } else {
+          console.log('xixix')
+          if(i.children && i.children.length){
+            this.findItemById(itemId, i.children)
+          }
+        }
+      })
+      if(a) {
+        return item;
+      } else {
+        return  {}
+      }
+    },
     onUpdateSelected(val){
       this.$emit('update:selected', val)
-    }
+      let lastItem = val[val.length - 1];
+      let callback = (res)=>{
+        let toUpdate = this.findItemById(lastItem.id, this.datas)
+        this.$set(toUpdate, 'children', res)
+      }
+      this.loadData(lastItem, callback); 
+    },
   },
 };
 </script>

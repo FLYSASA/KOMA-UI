@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <g-cascader
-      :selected.sync="selected"
+      :selected.sync ="selected"
       :datas="cascaderDatas"
+      :load-data="loadData"
       popover-height="200px"></g-cascader>
   </div>
 </template>
@@ -10,10 +11,21 @@
 <script>
 import Cascader from './cascader'
 import db from './defs/db';
-function ajax (id = 0) {
-  return db.filter(i => i.parent_id === id)
+// 异步获取
+// function ajax1 (id = 0, success, fail) {
+//   let timerId = setTimeout(()=>{
+//     let result = db.filter(i => i.parent_id === id)
+//     success(result)
+//   }, 2000)
+//   return timerId;
+// }
+// promise获取
+function ajax (id = 0, success, fail) {
+  return new Promise((success, fail) => {
+    let result = db.filter(i => i.parent_id === id)
+    success(result)
+  })
 }
-console.log(ajax())
 export default {
   name: 'demo',
   components: {
@@ -23,12 +35,25 @@ export default {
   data () {
     return {
       selected: [],
-      cascaderDatas: ajax()
+      cascaderDatas: []
     };
   },
   computed: {},
-  created () {},
-  methods: {}
+  created () {
+    // ajax1(0, (res)=>{
+    //   this.cascaderDatas = res
+    // })
+    ajax(0).then((res)=>{
+      this.cascaderDatas = res
+    })
+  },
+  methods: {
+    loadData({id}, callback) {
+      ajax(id).then((res)=>{
+        callback(res)
+      })
+    }
+  }
 }
 
 </script>
