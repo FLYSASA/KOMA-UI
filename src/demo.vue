@@ -9,6 +9,11 @@
 
 <script>
 import Cascader from './cascader'
+import db from './defs/db';
+function ajax (id = 0) {
+  return db.filter(i => i.parent_id === id)
+}
+console.log(ajax())
 export default {
   name: 'demo',
   components: {
@@ -18,60 +23,7 @@ export default {
   data () {
     return {
       selected: [],
-      cascaderDatas: [
-      {
-        name: '浙江',
-        key: 'zhejiang',
-        children: [
-          {
-            name: '杭州',
-            key: 'hangzhou',
-            children: [
-              {
-                name: '上城区',
-                key: 'shangchengqu',
-              },
-              {
-                name: '下城区',
-                key: 'xiaChengqu',
-              }
-            ]
-          },
-          {
-            name: '嘉兴',
-            key: 'jiaxing',
-          },
-          {
-            name: '湖州',
-            key: 'huzhou',
-          }
-        ]
-      },
-      {
-        name: '福建',
-        key: 'fujian',
-        children: [
-          {
-            name: '福州',
-            key: 'fuzhou',
-            children: [
-              {
-                name: '鼓楼',
-                key: 'gulou',
-              },
-              {
-                name: '台江',
-                key: 'taijiang',
-              }
-            ]
-          },
-          {
-            name: '莆田',
-            key: 'putian',
-          }
-        ]
-      }
-    ]
+      cascaderDatas: ajax()
     };
   },
   computed: {},

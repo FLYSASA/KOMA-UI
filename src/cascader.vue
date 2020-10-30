@@ -1,7 +1,7 @@
 <template>
   <div class="cascader">
     <div class="trigger" @click="popoverVisible = !popoverVisible">
-      {{computedSelectedName || '&nbsp;'}}
+      {{computedSelectedName }}
     </div>
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-item class="popover"

@@ -79,9 +79,11 @@ export default {
   align-items: flex-start;
   justify-content: flex-start;
   height: 100px;
+  cursor: pointer;
   .left {
     height: 100%;
     padding: .3em 0;
+    overflow: auto;
   }
   .right {
     height: 100%;
