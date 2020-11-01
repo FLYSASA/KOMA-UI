@@ -50,33 +50,50 @@ export default {
   },
 
   methods: {
-    findItemById(itemId, datas){
-      let item = {}
-      console.log(datas)
-      let a = datas.some((i) => {
-        if(i.id === itemId) {
-          console.log('gg', i)
-          item = i
-          return true;
-        } else {
-          console.log('xixix')
-          if(i.children && i.children.length){
-            this.findItemById(itemId, i.children)
-          }
-        }
-      })
-      if(a) {
-        return item;
-      } else {
-        return  {}
-      }
-    },
     onUpdateSelected(val){
       this.$emit('update:selected', val)
       let lastItem = val[val.length - 1];
-      let callback = (res)=>{
-        let toUpdate = this.findItemById(lastItem.id, this.datas)
-        this.$set(toUpdate, 'children', res)
+      // 定义最简单的，在数组中找到对应id的item
+      let simplest = (children, id) => {
+        console.log(children, id)
+        return children.filter(item => item.id === id)[0]
+      }
+      // 复杂多维的
+      let complex = (children, id)=>{
+        let noChildrenArr = []
+        let hasChildrenArr = []
+        children.forEach(i => {
+          if(i.children && i.children.length) {
+            hasChildrenArr.push(i)
+          } else {
+            noChildrenArr.push(i)
+          }
+        })
+        let found = simplest(noChildrenArr, id)
+        if(found){
+          return found;
+        } else {
+          found = simplest(hasChildrenArr, id)
+          if(found) {
+            return found
+          } else {
+            for (let i=0; i < hasChildrenArr.length; i++) {
+              found = complex(hasChildrenArr[i].children, id)
+              if(found) {
+                return found;
+              }
+            }
+            return undefined;
+          }
+        }
+      }
+
+      let callback = (res) => {
+        // 为了找到要更新的item项, 把它更新成用户懒加载返回的数据，但这里为了不违反单向数据流，子组件直接修改传入的数据，所以这里浅拷贝
+        let copy = JSON.parse(JSON.stringify(this.datas))
+        let toUpdate = complex(copy, lastItem.id)
+        toUpdate.children = res
+        this.$emit('update:datas', copy)
       }
       this.loadData(lastItem, callback); 
     },
