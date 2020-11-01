@@ -55,7 +55,6 @@ export default {
       let lastItem = val[val.length - 1];
       // 定义最简单的，在数组中找到对应id的item
       let simplest = (children, id) => {
-        console.log(children, id)
         return children.filter(item => item.id === id)[0]
       }
       // 复杂多维的
@@ -95,7 +94,9 @@ export default {
         toUpdate.children = res
         this.$emit('update:datas', copy)
       }
-      this.loadData(lastItem, callback); 
+      if(!lastItem.isLeaf) {
+        this.loadData(lastItem, callback); 
+      }
     },
   },
 };

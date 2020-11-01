@@ -23,6 +23,14 @@ import db from './defs/db';
 function ajax (id = 0, success, fail) {
   return new Promise((success, fail) => {
     let result = db.filter(i => i.parent_id === id)
+    // 给数据加个 isLeaf 属性
+    result.forEach(node => {
+      if(db.filter(i => i.parent_id === node.id).length > 0) {
+        node.isLeaf = false
+      } else {
+        node.isLeaf = true
+      }
+    })
     success(result)
   })
 }
@@ -45,6 +53,7 @@ export default {
     // })
     ajax(0).then((res)=>{
       this.cascaderDatas = res
+      console.log(res)
     })
   },
   methods: {

@@ -4,8 +4,8 @@
       <div class="label" v-for="(item, index) in items"
         :key="index"
         @click="onclickLable(item)">
-        {{ item.name }}
-        <icon class="icon" v-if="item.children" name="right"></icon>
+        <span class="name">{{ item.name }}</span>
+        <icon class="icon" v-if="!item.isLeaf" name="right"></icon>
       </div>
     </div>
     <div class="right" v-if="rightItems">
@@ -93,11 +93,17 @@ export default {
   }
   .label {
     white-space: nowrap;
-    padding: .3em 1em;
+    padding: .5em 1em;
     display: flex;
     align-items: center;
-    .icon {
-      margin-left: 1em;
+    &:hover{
+      background: @gray;
+    }
+    > .name {
+      margin-right: 1em;
+    }
+    > .icon {
+      margin-left: auto;
       fill: @border-color;
     }
   }
