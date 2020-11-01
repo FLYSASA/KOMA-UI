@@ -5,11 +5,12 @@
         :key="index"
         @click="onclickLable(item)">
         <span class="name">{{ item.name }}</span>
-        <icon class="icon" v-if="!item.isLeaf" name="right"></icon>
+        <icon class="icon" v-if="rightArrowVisible(item)" name="right"></icon>
       </div>
     </div>
     <div class="right" v-if="rightItems">
       <cascader-item
+      :load-data="loadData"
       :selected="selected"
       :level="level+1"
       :items="rightItems"
@@ -38,6 +39,9 @@ export default {
     level: {
       type: Number,
       default: 0
+    },
+    loadData: {
+      type: Function,
     }
   },
   data () {
@@ -54,10 +58,13 @@ export default {
         }
       }
       return null;
-    }
+    },
   },
   created () {},
   methods: {
+    rightArrowVisible(item) {
+      return this.loadData ? !item.isLeaf : item.children;
+    },
     onUpdateSelected(val){
       this.$emit('update:selected', val)
     },

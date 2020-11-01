@@ -8,6 +8,7 @@
       :height="popoverHeight"
       :selected="selected"
       @update:selected="onUpdateSelected"
+      :load-data="loadData"
       :items="datas"></cascader-item>
     </div>
     <slot></slot>
@@ -95,7 +96,7 @@ export default {
         this.$emit('update:datas', copy)
       }
       if(!lastItem.isLeaf) {
-        this.loadData(lastItem, callback); 
+        this.loadData && this.loadData(lastItem, callback); 
       }
     },
   },
@@ -122,6 +123,7 @@ export default {
       display: flex;
       background: white;
       &:extend(.box-shadow);
+      margin-top: 5px;
     }
   }
 </style>

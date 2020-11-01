@@ -59,6 +59,7 @@ export default {
   methods: {
     loadData({id}, callback) {
       ajax(id).then((res)=>{
+        console.log(res)
         callback(res)
       })
     }
