@@ -2,7 +2,7 @@
   <div id="app">
     <g-cascader
       :selected.sync ="selected"
-      :datas="cascaderDatas"
+      :datas.sync="cascaderDatas"
       :load-data="loadData"
       popover-height="200px"></g-cascader>
   </div>
