@@ -101,6 +101,7 @@ export default {
     }
     > .name {
       margin-right: 1em;
+      user-select: none;
     }
     > .icon {
       margin-left: auto;
