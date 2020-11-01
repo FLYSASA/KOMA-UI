@@ -1,5 +1,5 @@
 <template>
-  <div class="cascader" ref="cascader">
+  <div class="cascader" ref="cascader" v-click-outside="close">
     <div class="trigger" @click="toggle">
       {{computedSelectedName }}
     </div>
@@ -17,9 +17,14 @@
 
 <script>
 import cascaderItem from './cascader-item'
+import ClickOutside from './directives/click-outside';
+
 export default {
   name: 'KomaCascader',
   components: { cascaderItem },
+  directives: {
+    ClickOutside
+  },
   props: {
     datas: {
       type: Array
@@ -47,26 +52,14 @@ export default {
     }
   },
 
-  created() {
-  },
+  created() {},
 
   methods: {
-    onClickDocument(e) {
-      let { cascader } = this.$refs
-      let { target } = e
-
-      if ( cascader === target || cascader.contains(target)) { return;}
-      this.close()
-    },
     open() {
       this.popoverVisible = true
-      setTimeout(()=>{
-        document.addEventListener('click', this.onClickDocument)
-      })
     },
     close() {
       this.popoverVisible = false
-      document.removeEventListener('click', this.onClickDocument)
     },
     toggle() {
       if(this.popoverVisible) {

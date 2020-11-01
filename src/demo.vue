@@ -1,26 +1,36 @@
 <template>
   <div id="app">
-    <g-cascader
-      :selected.sync ="selected"
-      :datas.sync="cascaderDatas"
-      :load-data="loadData"
-      popover-height="200px"></g-cascader>
+    <div>
+      <g-cascader
+        :selected.sync ="selected"
+        :datas.sync="cascaderDatas"
+        :load-data="loadData"
+        popover-height="200px"></g-cascader>
+    </div>
 
     <div>
+      <g-cascader
+        :selected.sync ="selected"
+        :datas.sync="cascaderDatas"
+        :load-data="loadData"
+        popover-height="200px"></g-cascader>
+    </div>
+
+    <!-- <div>
       <g-popover>
         <button>点我</button>
         <template slot="content">
           弹出内容
         </template>
       </g-popover>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import Cascader from './cascader'
 import db from './defs/db';
-import Popover from './popover'
+import Popover from './popover';
 // 异步获取
 // function ajax1 (id = 0, success, fail) {
 //   let timerId = setTimeout(()=>{
@@ -64,7 +74,6 @@ export default {
     // })
     ajax(0).then((res)=>{
       this.cascaderDatas = res
-      console.log(res)
     })
   },
   methods: {
