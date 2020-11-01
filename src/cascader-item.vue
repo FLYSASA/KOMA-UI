@@ -51,6 +51,8 @@ export default {
   },
   computed: {
     rightItems () {
+      // 之前的会存在bug，当selected和level不更新时，不会重新计算该值
+      // 现在改为检测items的变化
       if(this.selected && this.selected[this.level]) {
         let item = this.items.filter(i => i.name === this.selected[this.level].name)
         if(item[0] && item[0].children && item[0].children.length) {

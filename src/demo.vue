@@ -5,12 +5,22 @@
       :datas.sync="cascaderDatas"
       :load-data="loadData"
       popover-height="200px"></g-cascader>
+
+    <div>
+      <g-popover>
+        <button>点我</button>
+        <template slot="content">
+          弹出内容
+        </template>
+      </g-popover>
+    </div>
   </div>
 </template>
 
 <script>
 import Cascader from './cascader'
 import db from './defs/db';
+import Popover from './popover'
 // 异步获取
 // function ajax1 (id = 0, success, fail) {
 //   let timerId = setTimeout(()=>{
@@ -37,7 +47,8 @@ function ajax (id = 0, success, fail) {
 export default {
   name: 'demo',
   components: {
-    'g-cascader': Cascader
+    'g-cascader': Cascader,
+    'g-popover': Popover
   },
   props: {},
   data () {
