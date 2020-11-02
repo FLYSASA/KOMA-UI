@@ -1,5 +1,6 @@
 import chai, { expect } from 'chai';
 import Vue from 'vue';
+import { mount } from '@vue/test-utils'
 import Button from '@/button';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -13,15 +14,13 @@ describe('Button', () => {
     expect(Button).to.exist
   })
   it('可以设置icon.', () => {
-    const Constructor = Vue.extend(Button)
-    const vm = new Constructor({
+    const wrapper = mount(Button, {
       propsData: {
         icon: 'settings'
       }
-    }).$mount()
-    const useElement = vm.$el.querySelector('use')
-    expect(useElement.getAttribute('xlink:href')).to.equal('#i-settings')
-    vm.$destroy()
+    })
+    const useElement = wrapper.find('use')
+    expect(useElement.attributes('href')).to.equal('#i-settings')
   })
   it('可以设置loading.', () => {
     const Constructor = Vue.extend(Button)
@@ -37,14 +36,10 @@ describe('Button', () => {
     vm.$destroy()
   })
   it('icon 默认的 order 是 1', () => {
-    const div = document.createElement('div')
-    document.body.appendChild(div)
-    const Constructor = Vue.extend(Button)
-    const vm = new Constructor({
-      propsData: {
-        icon: 'settings',
-      }
-    }).$mount(div)
+    const wrapper = mount(Button, {
+      propsData: { icon: 'settings' }
+    })
+    const vm = wrapper.vm
     const icon = vm.$el.querySelector('svg')
     expect(getComputedStyle(icon).order).to.eq('1')
     vm.$el.remove()
