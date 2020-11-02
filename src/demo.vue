@@ -7,23 +7,6 @@
         :load-data="loadData"
         popover-height="200px"></g-cascader>
     </div>
-
-    <div>
-      <g-cascader
-        :selected.sync ="selected"
-        :datas.sync="cascaderDatas"
-        :load-data="loadData"
-        popover-height="200px"></g-cascader>
-    </div>
-
-    <!-- <div>
-      <g-popover>
-        <button>点我</button>
-        <template slot="content">
-          弹出内容
-        </template>
-      </g-popover>
-    </div> -->
   </div>
 </template>
 
@@ -79,8 +62,9 @@ export default {
   methods: {
     loadData({id}, callback) {
       ajax(id).then((res)=>{
-        console.log(res)
-        callback(res)
+        setTimeout(()=>{
+          callback(res)
+        }, 2000)
       })
     }
   }

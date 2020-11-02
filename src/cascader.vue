@@ -5,6 +5,7 @@
     </div>
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-item class="popover"
+      :loading-item="loadingItem"
       :height="popoverHeight"
       :selected="selected"
       @update:selected="onUpdateSelected"
@@ -43,6 +44,7 @@ export default {
   data() {
     return {
       popoverVisible: false,
+      loadingItem: {}
     };
   },
 
@@ -106,14 +108,18 @@ export default {
       }
 
       let callback = (res) => {
+        // 拿到数据回调完成，不再显示loading
+        this.loadingItem = {};
         // 为了找到要更新的item项, 把它更新成用户懒加载返回的数据，但这里为了不违反单向数据流，子组件直接修改传入的数据，所以这里浅拷贝
         let copy = JSON.parse(JSON.stringify(this.datas))
         let toUpdate = complex(copy, lastItem.id)
         toUpdate.children = res
         this.$emit('update:datas', copy)
       }
-      if(!lastItem.isLeaf) {
-        this.loadData && this.loadData(lastItem, callback); 
+      if(!lastItem.isLeaf && this.loadData) {
+        this.loadingItem = lastItem
+        console.log(this.loadingItem)
+        this.loadData(lastItem, callback); 
       }
     },
   },
@@ -124,7 +130,6 @@ export default {
   .cascader {
     display: inline-block;
     position: relative;
-    border: 1px solid red;
     .trigger {
       border: 1px solid @border-color;
       border-radius: @border-radius;
@@ -133,8 +138,10 @@ export default {
       align-items: center;
       min-width: 10em;
       padding: 0 1em;
+      background: #fff;
     }
     .popover-wrapper {
+      z-index: 1;
       position: absolute;
       top: 100%;
       left: 0;

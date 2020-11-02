@@ -5,11 +5,19 @@
         :key="index"
         @click="onclickLable(item)">
         <span class="name">{{ item.name }}</span>
-        <icon class="icon" v-if="rightArrowVisible(item)" name="right"></icon>
+        <span class="icons">
+          <template v-if="loadingItem && loadingItem.name === item.name">
+            <icon class="loading" name="loading"></icon>
+          </template>
+          <template v-else>
+            <icon class="icon" v-if="rightArrowVisible(item)" name="right"></icon>
+          </template>
+        </span>
       </div>
     </div>
     <div class="right" v-if="rightItems">
       <cascader-item
+      :loading-item="loadingItem"
       :load-data="loadData"
       :selected="selected"
       :level="level+1"
@@ -42,6 +50,10 @@ export default {
     },
     loadData: {
       type: Function,
+    },
+    loadingItem: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -112,9 +124,14 @@ export default {
       margin-right: 1em;
       user-select: none;
     }
-    > .icon {
+    > .icons {
       margin-left: auto;
       fill: @border-color;
+      display: flex;
+      align-items: center;
+      .loading {
+        animation: spin 2s infinite linear;
+      }
     }
   }
 }
