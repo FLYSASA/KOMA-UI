@@ -1,10 +1,10 @@
 import chai, { expect } from 'chai';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils'
-import Button from '@/button';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
+import Button from '@/button';
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -23,17 +23,16 @@ describe('Button', () => {
     expect(useElement.attributes('href')).to.equal('#i-settings')
   })
   it('可以设置loading.', () => {
-    const Constructor = Vue.extend(Button)
-    const vm = new Constructor({
+    const wrapper = mount(Button, {
       propsData: {
         icon: 'shezhi',
         loading: true
       }
-    }).$mount()
+    })
+    const vm = wrapper.vm
     const useElements = vm.$el.querySelectorAll('use')
     expect(useElements.length).to.equal(1)
     expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
-    vm.$destroy()
   })
   it('icon 默认的 order 是 1', () => {
     const wrapper = mount(Button, {
@@ -42,8 +41,6 @@ describe('Button', () => {
     const vm = wrapper.vm
     const icon = vm.$el.querySelector('svg')
     expect(getComputedStyle(icon).order).to.eq('1')
-    vm.$el.remove()
-    vm.$destroy()
   })
   it('设置 iconPosition 可以改变 order', () => {
     const div = document.createElement('div')
