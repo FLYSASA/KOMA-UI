@@ -1,15 +1,11 @@
-import chai, { expect } from 'chai';
-import Vue from 'vue';
-import { mount } from '@vue/test-utils'
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
-import Button from '@/button';
+import chai, {expect} from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+import {shallowMount, mount} from '@vue/test-utils'
+import Button from '@/button'
+chai.use(sinonChai)
 
-Vue.config.productionTip = false
-Vue.config.devtools = false
-
-describe('Button', () => {
+describe('Button.vue', () => {
   it('存在.', () => {
     expect(Button).to.exist
   })
@@ -20,12 +16,12 @@ describe('Button', () => {
       }
     })
     const useElement = wrapper.find('use')
-    expect(useElement.attributes('href')).to.equal('#i-settings')
+    expect(useElement.attributes()['href']).to.equal('#i-settings')
   })
   it('可以设置loading.', () => {
     const wrapper = mount(Button, {
       propsData: {
-        icon: 'shezhi',
+        icon: 'settings',
         loading: true
       }
     })
@@ -34,16 +30,22 @@ describe('Button', () => {
     expect(useElements.length).to.equal(1)
     expect(useElements[0].getAttribute('xlink:href')).to.equal('#i-loading')
   })
+
   xit('icon 默认的 order 是 1', () => {
     const wrapper = mount(Button, {
-      propsData: { icon: 'settings' }
+      attachToDocument: true,
+      propsData: {
+        icon: 'settings',
+      }
     })
     const vm = wrapper.vm
     const icon = vm.$el.querySelector('svg')
     expect(getComputedStyle(icon).order).to.eq('1')
   })
+
   xit('设置 iconPosition 可以改变 order', () => {
     const wrapper = mount(Button, {
+      attachToDocument: true,
       propsData: {
         icon: 'settings',
         iconPosition: 'right'
@@ -52,8 +54,6 @@ describe('Button', () => {
     const vm = wrapper.vm
     const icon = vm.$el.querySelector('svg')
     expect(getComputedStyle(icon).order).to.eq('2')
-    vm.$el.remove()
-    vm.$destroy()
   })
   it('点击 button 触发 click 事件', () => {
     const wrapper = mount(Button, {
