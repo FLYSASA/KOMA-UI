@@ -1,16 +1,25 @@
 <template>
   <div id="app">
     <div>
-      <g-cascader
-        :selected.sync ="selected"
-        :datas.sync="cascaderDatas"
-        :load-data="loadData"
-        popover-height="200px"></g-cascader>
+      <g-slides>
+        <g-slides-item v-for="i in 3" :key="i" :name="i">
+          <div class="box">{{ i }}</div>
+        </g-slides-item>
+      </g-slides>
+      <template v-if="false">
+        <g-cascader
+          :selected.sync ="selected"
+          :datas.sync="cascaderDatas"
+          :load-data="loadData"
+          popover-height="200px"></g-cascader>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import GSlides from './slides';
+import GSlidesItem from './slides-item';
 import Cascader from './cascader'
 import db from './defs/db';
 import Popover from './popover';
@@ -41,7 +50,9 @@ export default {
   name: 'demo',
   components: {
     'g-cascader': Cascader,
-    'g-popover': Popover
+    'g-popover': Popover,
+    GSlides,
+    GSlidesItem
   },
   props: {},
   data () {
@@ -77,12 +88,11 @@ export default {
     padding: 0;
     box-sizing: border-box;
   }
-
-  html {
-    --font-size: 14px;
-  }
-  body {
-    font-size: var(--font-size)
+  .box {
+    width: 200px;
+    height: 200px;
+    background:#ddd;
+    border: 1px solid red;
   }
 
 </style>
