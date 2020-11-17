@@ -33,12 +33,17 @@ export default {
 
 </script>
 <style lang='less' scoped>
+.g-crousel-item {
+  width: 100%;
+}
 // 动画
 .slide-enter-active, .slide-leave-active {
   transition: all 1s;
 }
 // 这里绝对定位的目的是为了让走的那个不占位置
 .slide-leave-active {
+  width: 100%;
+  height: 100%;
   position:absolute;
   left: 0;
   top: 0;

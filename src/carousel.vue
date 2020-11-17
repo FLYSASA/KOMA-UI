@@ -5,6 +5,14 @@
         <slot></slot>
       </div>
     </div>
+    <div class="g-carousel-dots">
+      <!-- 不能直接使用$children, 因为他不是响应式的所以不会刷新视图 -->
+      <span v-for="n in childrenLength"
+      @click="select(n-1)"
+      :class="{active: n - 1 === selectedIndex}">
+        {{ n }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -23,12 +31,20 @@ export default {
   },
   data () {
     return {
+      childrenLength: 0,
     };
   },
   updated: {
     
   },
-  computed: {},
+  computed: {
+    selectedIndex(){
+      return this.names.indexOf(this.selected)
+    },
+    names(){
+      return this.$children.map(i => i.name) || []
+    }
+  },
   mounted () {
     this.updateChildren()
     this.playAutomatically()
@@ -38,25 +54,21 @@ export default {
     this.updateChildren()
   },
   methods: {
+    // 点击下标切换选中
+    select(index){
+      this.$emit('update:selected', this.names[index])
+    },
     playAutomatically() {
-      const names = this.$children.map(i => i.name)
-      let index = names.indexOf(this.getSelected())
+      let index = this.names.indexOf(this.getSelected())
       // setInterval在极端情况下，会有问题
-      // setInterval(() => {
-      //   if(index === names.length) {
-      //     index = 0
-      //   }
-      //   this.$emit('update:selected', names[index + 1])
-      //   index++
-      // }, 3000)
 
       // 用 setTimeout 模拟 setInterval
       let run = ()=>{
         if( index < 0 ) {
-          index = names.length - 1
+          index = this.names.length - 1
         }
         let newIndex = index
-        this.$emit('update:selected', names[newIndex])
+        this.$emit('update:selected', this.names[newIndex])
         index--
         setTimeout(run, 3000)
       }
@@ -67,12 +79,12 @@ export default {
       return this.selected || first.name
     },
     updateChildren() {
+      this.childrenLength = this.$children.length
       let selected = this.getSelected()
       this.$children.forEach((vm) =>{
         vm.selected = selected
-        const names = this.$children.map(i => i.name)
-        let newIndex = names.indexOf(this.getSelected())
-        let oldIndex = names.indexOf(vm.name)
+        let newIndex = this.names.indexOf(this.getSelected())
+        let oldIndex = this.names.indexOf(vm.name)
         // 新选中的在现在的左边 就是反向的
         vm.reverse = newIndex > oldIndex ? false : true
       })
@@ -83,13 +95,18 @@ export default {
 </script>
 <style lang='less' scoped>
 .g-carousel {
-  display: inline-block;
   &-window {
     overflow: hidden;
   }
   &-wrapper {
+    width: 100%;
     position: relative;
     display: flex;
+  }
+  .g-carousel-dots {
+    .active {
+      color: red;
+    }
   }
 }
 </style>

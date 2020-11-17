@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <g-carousel :selected.sync="carouselSelected">
+      <g-carousel :selected.sync="carouselSelected" class="wrapper">
         <g-carousel-item v-for="i in 3" :key="i" :name="i">
           <div class="box">{{ i }}</div>
         </g-carousel-item>
@@ -43,9 +43,13 @@ export default {
     padding: 0;
     box-sizing: border-box;
   }
+  .wrapper{
+    border: 1px solid;
+    margin: 40px;
+  }
   .box {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 300px;
     background:#ddd;
     border: 1px solid red;
   }
