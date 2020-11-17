@@ -84,12 +84,11 @@ export default {
 <style lang='less' scoped>
 .g-carousel {
   display: inline-block;
-  overflow: hidden;
   &-window {
-    // display: flex;
     overflow: hidden;
   }
   &-wrapper {
+    position: relative;
     display: flex;
   }
 }
