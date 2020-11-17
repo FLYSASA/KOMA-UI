@@ -1,5 +1,11 @@
 <template>
-  <div class="g-carousel" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+  <div class="g-carousel" 
+    @mouseenter="onMouseEnter" 
+    @mouseleave="onMouseLeave"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
+    >
     <div class="g-carousel-window">
       <div class="g-carousel-wrapper">
         <slot></slot>
@@ -41,7 +47,8 @@ export default {
   },
   computed: {
     selectedIndex(){
-      return this.names.indexOf(this.selected)
+      let index = this.names.indexOf(this.selected)
+      return index === -1 ? 0 : index
     },
     names(){
       return this.$children.map(i => i.name) || []
@@ -56,11 +63,55 @@ export default {
     this.updateChildren()
   },
   methods: {
+    onTouchStart(e){
+      this.pause()
+      if(e.touches.length > 1) {return;}
+      // 为什么touches是数组，因为是多点触控
+      this.startTouch = e.touches[0]
+    },
+    onTouchMove(){
+      console.log('边摸边动');
+    },
+    onTouchEnd(e){
+      let endTouch = e.changedTouches[0]
+      let {clientX: x1, clientY: y1} = this.startTouch
+      let {clientX: x2, clientY: y2} = endTouch
+
+      // 直线斜边距离
+      let distance = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2))
+      // 纵向距离
+      let deltaY = Math.abs(y2 - y1)
+      let rate = distance / deltaY
+      // 判断是往右在滑，还是在往上滑，通过30°斜角 1/2的比例去判断
+      console.log(rate)
+      if(rate > 2) {
+        if(x2 > x1) {
+          // 左滑
+          console.log(this.selectedIndex)
+          this.select(this.selectedIndex - 1)
+        } else {
+          // 右滑
+          console.log(this.selectedIndex)
+          this.select(this.selectedIndex + 1)
+        }
+      }
+
+      this.$nextTick(()=>{
+        this.playAutomatically()
+      })
+
+    },
     // 点击下标切换选中
-    select(index){
+    select(newIndex){
+      if( newIndex === -1 ) {
+        newIndex = this.names.length - 1
+      }
+      if (newIndex === this.names.length) {
+        newIndex = 0
+      }
       // 记录上一次的选中，以便判断是否reverse
       this.lastSelectedIndex = this.selectedIndex
-      this.$emit('update:selected', this.names[index])
+      this.$emit('update:selected', this.names[newIndex])
     },
     playAutomatically() {
       if(this.timerId) {return;}
@@ -69,12 +120,6 @@ export default {
       let run = ()=>{
         let index = this.names.indexOf(this.getSelected())
         let newIndex = index + 1
-        if( newIndex === -1 ) {
-          newIndex = this.names.length - 1
-        }
-        if (newIndex === this.names.length) {
-          newIndex = 0
-        }
         this.select(newIndex)
         this.timerId = setTimeout(run, 3000)
       }

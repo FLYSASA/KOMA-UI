@@ -28,7 +28,7 @@ export default {
   props: {},
   data () {
     return {
-      carouselSelected: 1,
+      carouselSelected: null,
     };
   },
   computed: {},
