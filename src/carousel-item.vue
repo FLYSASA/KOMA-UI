@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: '',
+  name: 'KomaCarouselItem',
   components: {},
   props: {
     name: {

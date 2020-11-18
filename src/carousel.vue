@@ -12,20 +12,29 @@
       </div>
     </div>
     <div class="g-carousel-dots">
+      <span @click="select(selectedIndex - 1)">
+        <g-icon name="left"></g-icon>
+      </span>
       <!-- 不能直接使用$children, 因为他不是响应式的所以不会刷新视图 -->
       <span v-for="n in childrenLength"
       @click="select(n-1)"
       :class="{active: n - 1 === selectedIndex}">
         {{ n }}
       </span>
+      <span @click="select(selectedIndex + 1)">
+        <g-icon name="right"></g-icon>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+import GIcon from './icon';
 export default {
-  name: '',
-  components: {},
+  name: 'KomaCarousel',
+  components: {
+    GIcon
+  },
   props: {
     selected: {
       type: String | Number
@@ -51,12 +60,18 @@ export default {
       return index === -1 ? 0 : index
     },
     names(){
-      return this.$children.map(i => i.name) || []
+      return this.items.map(i => i.name) || []
+    },
+    items(){
+      return this.$children.filter(vm => vm.$options.name === 'KomaCarouselItem')
     }
   },
   mounted () {
     this.updateChildren()
-    this.playAutomatically()
+    if(this.autoPlay){
+      this.playAutomatically()
+    }
+    this.childrenLength = this.items.length
   },
   // 外面selected值更新后, 需要重新通知每一个子组件新的值
   updated(){
@@ -83,15 +98,12 @@ export default {
       let deltaY = Math.abs(y2 - y1)
       let rate = distance / deltaY
       // 判断是往右在滑，还是在往上滑，通过30°斜角 1/2的比例去判断
-      console.log(rate)
       if(rate > 2) {
         if(x2 > x1) {
           // 左滑
-          console.log(this.selectedIndex)
           this.select(this.selectedIndex - 1)
         } else {
           // 右滑
-          console.log(this.selectedIndex)
           this.select(this.selectedIndex + 1)
         }
       }
@@ -137,23 +149,22 @@ export default {
       this.timerId = null
     },
     getSelected(){
-      let first = this.$children[0]
+      let first = this.items[0]
       return this.selected || first.name
     },
     updateChildren() {
-      this.childrenLength = this.$children.length
       let selected = this.getSelected()
-      this.$children.forEach((vm) =>{
+      this.items.forEach((vm) =>{
         // 新选中的在现在的左边 就是反向的
         let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
         // 只有在自动播放的时候才去无缝轮播
-        if (this.timerId) {
+        if(this.timerId){
           // 保证右向无缝轮播
-          if(this.lastSelectedIndex === this.$children.length - 1 && this.selectedIndex === 0){
+          if(this.lastSelectedIndex === this.items.length - 1 && this.selectedIndex === 0){
             reverse = false;
           }
           // 保证左向无缝轮播
-          if(this.lastSelectedIndex === 0 && this.selectedIndex === this.$children.length - 1) {
+          if(this.lastSelectedIndex === 0 && this.selectedIndex === this.items.length - 1) {
             reverse = true;
           }
         }
