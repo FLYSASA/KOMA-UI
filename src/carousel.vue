@@ -18,6 +18,7 @@
       <!-- 不能直接使用$children, 因为他不是响应式的所以不会刷新视图 -->
       <span v-for="n in childrenLength"
       @click="select(n-1)"
+      :data-index="n-1"
       :class="{active: n - 1 === selectedIndex}">
         {{ n }}
       </span>
@@ -43,6 +44,10 @@ export default {
       type: Boolean,
       default: true
     },
+    autoPlayDelay: {
+      type: Number,
+      default: 3000
+    }
   },
   data () {
     return {
@@ -133,9 +138,9 @@ export default {
         let index = this.names.indexOf(this.getSelected())
         let newIndex = index + 1
         this.select(newIndex)
-        this.timerId = setTimeout(run, 3000)
+        this.timerId = setTimeout(run, this.autoPlayDelay)
       }
-      this.timerId = setTimeout(run, 3000)
+      this.timerId = setTimeout(run, this.autoPlayDelay)
     },
     onMouseEnter() {
       this.pause()
