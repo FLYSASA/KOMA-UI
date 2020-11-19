@@ -90,7 +90,7 @@ export default {
       this.startTouch = e.touches[0]
     },
     onTouchMove(){
-      console.log('边摸边动');
+      // console.log('边摸边动');
     },
     onTouchEnd(e){
       let endTouch = e.changedTouches[0]
