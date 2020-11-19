@@ -18,7 +18,7 @@
 
 <script>
 import cascaderItem from './cascader-item'
-import ClickOutside from './directives/click-outside';
+import ClickOutside from '../directives/click-outside';
 
 export default {
   name: 'KomaCascader',
@@ -126,7 +126,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-  @import './css/_var';
+  @import '../css/_var';
   .cascader {
     display: inline-block;
     position: relative;

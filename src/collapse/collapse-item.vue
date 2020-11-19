@@ -50,7 +50,7 @@
   };
 </script>
 <style lang='less' scoped>
-  @import './css/_var';
+  @import '../css/_var';
   .collapse-item {
     >.title {
       border: 1px solid @gray;

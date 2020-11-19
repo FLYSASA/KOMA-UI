@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import GCarousel from './carousel';
-import GCarouselItem from './carousel-item';
-import Cascader from './cascader'
+import GCarousel from './carousel/carousel';
+import GCarouselItem from './carousel/carousel-item';
+import Cascader from './cascader/cascader'
 import db from './defs/db';
 import Popover from './popover';
 

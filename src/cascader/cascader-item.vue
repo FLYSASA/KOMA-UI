@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Icon from './icon'
+import Icon from '../icon'
 export default {
   name: 'cascader-item',
   components: { Icon },
@@ -96,7 +96,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-@import './css/_var';
+@import '../css/_var';
 .cascader-item {
   display: flex;
   align-items: flex-start;

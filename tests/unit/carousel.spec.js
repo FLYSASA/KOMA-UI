@@ -2,8 +2,8 @@ import chai, {expect} from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import {shallowMount, mount} from '@vue/test-utils'
-import Carousel from '@/carousel'
-import CarouselItem from '@/carousel-item'
+import Carousel from '@/carousel/carousel'
+import CarouselItem from '@/carousel/carousel-item'
 import Vue from 'vue';
 chai.use(sinonChai)
 
@@ -27,7 +27,6 @@ describe('Carousel.vue', () => {
       }
     })
     setTimeout(()=>{
-      console.log(wrapper.html())
       expect(wrapper.find('.box1').exists()).to.be.true
       done()
     })
