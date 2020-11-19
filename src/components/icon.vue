@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import './svg';
+	import '../svg';
 	export default {
 		name:'KomaIcon',
 		props: {

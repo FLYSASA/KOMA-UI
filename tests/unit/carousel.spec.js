@@ -2,8 +2,8 @@ import chai, {expect} from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import {shallowMount, mount} from '@vue/test-utils'
-import Carousel from '@/carousel/carousel'
-import CarouselItem from '@/carousel/carousel-item'
+import Carousel from '@/components/carousel/carousel'
+import CarouselItem from '@/components/carousel/carousel-item'
 import Vue from 'vue';
 chai.use(sinonChai)
 

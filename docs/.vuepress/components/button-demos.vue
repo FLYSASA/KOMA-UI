@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Button from '../../../src/button/button';
+import Button from '../../../src/components/button/button';
 export default {
   name: '',
   components: {

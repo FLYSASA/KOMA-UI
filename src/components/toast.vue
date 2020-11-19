@@ -94,7 +94,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-@import './css/_var';
+@import '../css/_var';
 
 @keyframes slide-up {
   0% { opacity: 0; transform: translateY(100%);}

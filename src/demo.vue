@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import GCarousel from './carousel/carousel';
-import GCarouselItem from './carousel/carousel-item';
-import Cascader from './cascader/cascader'
+import GCarousel from './components/carousel/carousel';
+import GCarouselItem from './components/carousel/carousel-item';
+import Cascader from './components/cascader/cascader'
 import db from './defs/db';
-import Popover from './popover';
+import Popover from './components/popover';
 
 export default {
   name: 'demo',

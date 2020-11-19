@@ -21,7 +21,7 @@
   }
 </script>
 <style lang='less' scoped>
-  @import '../css/_var';
+  @import '../../css/_var';
   .g-button-group {
     display: inline-flex;
     vertical-align: middle;

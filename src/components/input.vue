@@ -47,7 +47,7 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-   @import './css/_var';
+   @import '../css/_var';
    @height: @input-height;
    .wrapper {
       display: inline-flex;

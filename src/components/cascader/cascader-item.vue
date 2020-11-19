@@ -96,7 +96,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-@import '../css/_var';
+@import '../../css/_var';
 .cascader-item {
   display: flex;
   align-items: flex-start;

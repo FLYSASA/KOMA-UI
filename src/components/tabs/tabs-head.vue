@@ -39,7 +39,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-@import '../css/_var';
+@import '../../css/_var';
 .tabs-head {
   display: flex;
   height: @tab-height;
