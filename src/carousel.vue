@@ -17,6 +17,7 @@
       </span>
       <!-- 不能直接使用$children, 因为他不是响应式的所以不会刷新视图 -->
       <span v-for="n in childrenLength"
+      :key="n"
       @click="select(n-1)"
       :data-index="n-1"
       :class="{active: n - 1 === selectedIndex}">
