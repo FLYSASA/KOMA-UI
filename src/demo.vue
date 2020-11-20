@@ -1,36 +1,39 @@
 <template>
   <div id="app">
     <div>
-      <g-carousel :selected.sync="carouselSelected" class="wrapper">
-        <g-carousel-item v-for="i in 3" :key="i" :name="i">
-          <div class="box">{{ i }}</div>
-        </g-carousel-item>
-      </g-carousel>
+      <g-nav :selected.sync="selected">
+        <g-nav-item name="home">首页</g-nav-item>
+        <g-nav-item name="about">关于</g-nav-item>
+        <g-nav-item name="news">资讯</g-nav-item>
+      </g-nav>
     </div>
   </div>
 </template>
 
 <script>
-import GCarousel from './components/carousel/carousel';
-import GCarouselItem from './components/carousel/carousel-item';
-import Cascader from './components/cascader/cascader'
+import GNav from './components/nav/nav';
+import GNavItem from './components/nav/nav-item';
 
 export default {
   name: 'demo',
   components: {
-    'g-cascader': Cascader,
-    GCarousel,
-    GCarouselItem
+    GNav,
+    GNavItem
   },
   props: {},
   data () {
     return {
-      carouselSelected: null,
+      selected: ['home'],
     };
+  },
+  watch: {
+    selected(val){
+      console.log(val)
+    }
   },
   computed: {},
   methods: {
-  }
+  },
 }
 
 </script>
@@ -39,18 +42,6 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  .wrapper{
-    margin: 40px;
-  }
-  .box {
-    width: 100%;
-    height: 300px;
-    background:#ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
   }
 
 </style>
