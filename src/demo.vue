@@ -14,14 +14,11 @@
 import GCarousel from './components/carousel/carousel';
 import GCarouselItem from './components/carousel/carousel-item';
 import Cascader from './components/cascader/cascader'
-import db from './defs/db';
-import Popover from './components/popover';
 
 export default {
   name: 'demo',
   components: {
     'g-cascader': Cascader,
-    'g-popover': Popover,
     GCarousel,
     GCarouselItem
   },
