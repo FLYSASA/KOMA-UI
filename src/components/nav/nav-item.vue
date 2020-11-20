@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-item" :class="{active: selected}" @click="onclick">
+  <div class="g-nav-item" :class="{active: selected}" @click="onclick">
     <slot></slot>
   </div>
 </template>
@@ -19,10 +19,13 @@ export default {
       selected: false
     };
   },
+  inject: ['root'],
 
   computed: {},
 
-  mounted() {},
+  created() {
+    this.root.addItem(this)
+  },
 
   methods: {
     onclick(){
@@ -33,9 +36,8 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-.nav-item {
-  min-width: 100px;
-  text-align: center;
+.g-nav-item {
+  padding: 10px 20px;
   &.active {
     background: red;
   }

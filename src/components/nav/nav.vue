@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-wrapper">
+  <div class="g-nav">
     <slot></slot>
   </div>
 </template>
@@ -8,6 +8,11 @@
 export default {
   name: 'KomaNav',
   components: {},
+  provide(){
+    return {
+      root: this
+    }
+  },
   props: {
     selected: {
       type: Array,
@@ -22,25 +27,27 @@ export default {
   },
   data() {
     return {
-
+      items: []
     };
   },
   computed: {
-    items(){
-      return this.$children.filter(vm => vm.$options.name === 'KomaNavItem')
-    }
+    // items(){
+    //   return this.$children.filter(vm => vm.$options.name === 'KomaNavItem')
+    // }
   },
   updated(){
     // 因为父组件props更新后，需要重新触发此事件去判断子组件是否选中
     this.updateChildren()
   },
-
   mounted() {
     this.updateChildren()
     this.listenToChildren()
   },
-
   methods: {
+    // 使用注入的好处是，让所有子组件自己告诉我它的存在，而不需要我去遍历找子组件
+    addItem(vm){
+      this.items.push(vm);
+    },
     updateChildren(){
       // 更新选中的值
       this.items.forEach(vm => {
@@ -72,7 +79,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-.nav-wrapper {
+.g-nav {
   display: flex;
   align-items: center;
 }
