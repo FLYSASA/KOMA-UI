@@ -3,15 +3,15 @@
     <div>
       <g-nav :selected.sync="selected">
         <g-nav-item name="home">首页</g-nav-item>
-        <g-sub-nav>
+        <g-sub-nav name="about">
           <template #title>关于</template>
           <g-nav-item name="developer">开发团队</g-nav-item>
           <g-nav-item name="culture">企业文化</g-nav-item>
-          <g-sub-nav>
+          <g-sub-nav name="contact">
             <template #title>联系方式</template>
             <g-nav-item name="wechat">微信</g-nav-item>
             <g-nav-item name="qq">qq</g-nav-item>
-            <g-sub-nav name="mail">
+            <g-sub-nav name="mobile">
               <template #title>手机</template>
               <g-nav-item name="cm">移动</g-nav-item>
               <g-nav-item name="cn">电信</g-nav-item>
@@ -44,7 +44,7 @@ export default {
   },
   watch: {
     selected(val){
-      console.log(val)
+      // console.log(val)
     }
   },
   computed: {},

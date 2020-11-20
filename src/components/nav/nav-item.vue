@@ -31,6 +31,8 @@ export default {
     onclick(){
       // 子组件简单处理，只需要通知点击的name就行，数据交给父组件组处理
       this.$emit('add:selected', this.name)
+      // 激活父组件
+      this.$parent.x && this.$parent.x()
     }
   },
 };

@@ -27,7 +27,8 @@ export default {
   },
   data() {
     return {
-      items: []
+      items: [],
+      namePath: [],  // 记录多层级选中的值
     };
   },
   computed: {
@@ -44,10 +45,12 @@ export default {
     this.listenToChildren()
   },
   methods: {
+    updateNamePath() {
+      
+    },
     // 使用注入的好处是，让所有子组件自己告诉我它的存在，而不需要我去遍历找子组件
     addItem(vm){
       this.items.push(vm);
-      console.log(this.items)
     },
     updateChildren(){
       // 更新选中的值

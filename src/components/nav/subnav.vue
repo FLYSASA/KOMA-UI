@@ -1,5 +1,5 @@
 <template>
-  <div class="g-sub-nav">
+  <div class="g-sub-nav" :class="{active}">
     <span @click="onClick">
       <slot name="title"></slot>
     </span>
@@ -13,10 +13,16 @@
 export default {
   name: 'KomaSubNav',
   components: {},
-  props: {},
+  props: {
+    name: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      open: false
+      open: false,
+      active: false
     };
   },
 
@@ -27,7 +33,11 @@ export default {
   methods: {
     onClick(){
       this.open = !this.open;
-    }
+    },
+    // 子组件是激活状态的话，自己也激活
+    x(){
+      this.active = true
+    },
   },
 };
 </script>
@@ -35,6 +45,16 @@ export default {
 @import 'css/_var';
 .g-sub-nav {
   position: relative;
+  &.active {
+    &::after{
+      content: '';
+      position: absolute;
+      bottom: 1px;
+      left: 0;
+      width: 100%;
+      border-bottom: 2px solid @active-color;
+    }
+  }
   > span {
     padding: 10px 20px; 
     display: inline-block;    // inline-block一般都有bug，习惯性的加上vertical-align: top;
