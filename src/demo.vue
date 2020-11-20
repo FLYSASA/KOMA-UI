@@ -13,8 +13,8 @@
             <g-nav-item name="qq">qq</g-nav-item>
             <g-sub-nav name="mail">
               <template #title>手机</template>
-              <g-nav-item name="wechat">移动</g-nav-item>
-              <g-nav-item name="qq">电信</g-nav-item>
+              <g-nav-item name="cm">移动</g-nav-item>
+              <g-nav-item name="cn">电信</g-nav-item>
             </g-sub-nav>
           </g-sub-nav>
         </g-sub-nav>
@@ -39,7 +39,7 @@ export default {
   props: {},
   data () {
     return {
-      selected: ['developer'],
+      selected: ['home'],
     };
   },
   watch: {

@@ -32,6 +32,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
+@import 'css/_var';
 .g-sub-nav {
   position: relative;
   > span {
@@ -43,8 +44,14 @@ export default {
     position: absolute;
     top: 100%;
     left: 0;
-    border: 1px solid;
+    margin-top: 1px;
     white-space: nowrap;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+    border-radius: @border-radius;
+    font-size: @font-size;
+    color: @light-color;
+    min-width: 8em;
   }
   .g-sub-nav .popover{
     top: 0;

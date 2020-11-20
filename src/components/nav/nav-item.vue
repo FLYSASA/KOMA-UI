@@ -36,10 +36,29 @@ export default {
 };
 </script>
 <style lang='less' scoped>
+@import 'css/_var';
 .g-nav-item {
   padding: 10px 20px;
+  position: relative;
+  cursor: pointer;
   &.active {
-    background: red;
+    &::after{
+      content: '';
+      position: absolute;
+      bottom: 1px;
+      left: 0;
+      width: 100%;
+      border-bottom: 2px solid @active-color;
+    }
+  }
+}
+.g-sub-nav .g-nav-item {
+  &.active {
+    background: @gray;
+    color: @color;
+    &::after{
+      display: none;
+    }
   }
 }
 </style>

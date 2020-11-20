@@ -80,8 +80,11 @@ export default {
 };
 </script>
 <style lang='less' scoped>
+@import 'css/_var';
 .g-nav {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid @gray;
+  color: @color;
 }
 </style>
