@@ -7,7 +7,16 @@
           <template #title>关于</template>
           <g-nav-item name="developer">开发团队</g-nav-item>
           <g-nav-item name="culture">企业文化</g-nav-item>
-          <g-nav-item name="contracts">联系电话</g-nav-item>
+          <g-sub-nav>
+            <template #title>联系方式</template>
+            <g-nav-item name="wechat">微信</g-nav-item>
+            <g-nav-item name="qq">qq</g-nav-item>
+            <g-sub-nav name="mail">
+              <template #title>手机</template>
+              <g-nav-item name="wechat">移动</g-nav-item>
+              <g-nav-item name="qq">电信</g-nav-item>
+            </g-sub-nav>
+          </g-sub-nav>
         </g-sub-nav>
         <g-nav-item name="news">资讯</g-nav-item>
       </g-nav>
