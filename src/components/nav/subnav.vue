@@ -6,7 +6,7 @@
         <g-icon name="right"></g-icon>
       </span>
     </span>
-    <div class="g-sub-nav-popover" v-show="open">
+    <div class="g-sub-nav-popover" v-show="open" :class="{vertical}">
       <slot></slot>
     </div>
   </div>
@@ -20,7 +20,7 @@ export default {
   components: {
     GIcon
   },
-  inject: ['root'],
+  inject: ['root', 'vertical'],
   directives: {
     ClickOutside
   },
@@ -97,6 +97,11 @@ export default {
     font-size: @font-size;
     color: @light-color;
     min-width: 8em;
+    &.vertical {
+      position: static;
+      border-radius: 0;
+      box-shadow: none;
+    }
   }
   .g-sub-nav {
     &.active {

@@ -1,5 +1,5 @@
 <template>
-  <div class="g-nav">
+  <div class="g-nav" :class="{ vertical }">
     <slot></slot>
   </div>
 </template>
@@ -10,7 +10,8 @@ export default {
   components: {},
   provide(){
     return {
-      root: this
+      root: this,
+      vertical: this.vertical
     }
   },
   props: {
@@ -21,6 +22,10 @@ export default {
       }
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    vertical: {
       type: Boolean,
       default: false
     }
@@ -86,9 +91,13 @@ export default {
 @import 'css/_var';
 .g-nav {
   display: flex;
-  align-items: center;
   border-bottom: 1px solid @gray;
   color: @color;
   user-select: none;
+  &.vertical {
+    flex-direction: column;
+    border: 1px solid @gray;
+  }
+
 }
 </style>
