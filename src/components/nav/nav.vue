@@ -89,5 +89,6 @@ export default {
   align-items: center;
   border-bottom: 1px solid @gray;
   color: @color;
+  user-select: none;
 }
 </style>
