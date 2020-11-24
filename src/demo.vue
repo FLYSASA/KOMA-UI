@@ -20,7 +20,7 @@
         </g-sub-nav>
         <g-nav-item name="news">资讯</g-nav-item>
       </g-nav>
-      <g-nav :selected.sync="selected" vertical style="width: 200px; margin: 20px;">
+      <g-nav :selected.sync="selected" vertical style="width: 200px; margin: 200px;">
         <g-nav-item name="home">首页</g-nav-item>
         <g-sub-nav name="about">
           <template #title>关于</template>

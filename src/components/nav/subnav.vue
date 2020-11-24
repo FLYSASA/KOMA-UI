@@ -1,16 +1,23 @@
 <template>
-  <div class="g-sub-nav" :class="{active}" v-click-outside="close">
+  <div class="g-sub-nav" :class="{ active }" v-click-outside="close">
     <span class="g-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
-      <span class="g-sub-nav-icon" :class="{open}">
+      <span class="g-sub-nav-icon" :class="{ open }">
         <g-icon name="right"></g-icon>
       </span>
     </span>
-    <transition @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
-      <div class="g-sub-nav-popover" v-show="open" :class="{vertical}">
+    <template v-if="vertical">
+      <transition @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
+        <div class="g-sub-nav-popover" v-show="open" :class="{ vertical }">
+          <slot></slot>
+        </div>
+      </transition>
+    </template>
+    <template v-else>
+      <div class="g-sub-nav-popover" v-show="open" :class="{ vertical }">
         <slot></slot>
       </div>
-    </transition>
+    </template>
   </div>
 </template>
 
@@ -121,6 +128,7 @@ export default {
     position: absolute;
     top: 100%;
     left: 0;
+    z-index: 10;
     margin-top: 1px;
     white-space: nowrap;
     background: #fff;
@@ -129,11 +137,11 @@ export default {
     font-size: @font-size;
     color: @light-color;
     min-width: 8em;
+    transition: height 250ms;
     &.vertical {
       position: static;
       border-radius: 0;
       box-shadow: none;
-      transition: height 250ms;
       overflow: hidden;
     }
   }
