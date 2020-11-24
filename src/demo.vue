@@ -59,7 +59,7 @@ export default {
   props: {},
   data () {
     return {
-      selected: [],
+      selected: 'home',
     };
   },
   watch: {

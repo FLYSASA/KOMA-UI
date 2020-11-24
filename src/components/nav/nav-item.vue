@@ -33,7 +33,7 @@ export default {
       this.root.namePath = []
       this.$parent.updateNamePath && this.$parent.updateNamePath()
       // 子组件简单处理，只需要通知点击的name就行，数据交给父组件组处理
-      this.$emit('add:selected', this.name)
+      this.$emit('update:selected', this.name)
     }
   },
 };
