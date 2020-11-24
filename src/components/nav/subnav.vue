@@ -6,9 +6,11 @@
         <g-icon name="right"></g-icon>
       </span>
     </span>
-    <div class="g-sub-nav-popover" v-show="open" :class="{vertical}">
-      <slot></slot>
-    </div>
+    <transition @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
+      <div class="g-sub-nav-popover" v-show="open" :class="{vertical}">
+        <slot></slot>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -45,6 +47,36 @@ export default {
   created() {},
 
   methods: {
+    enter(el, done) {
+      // 先拿到auto真实高度，存到变量height
+      let {height} = el.getBoundingClientRect()
+      // 高度先为0 -> 然后转换auto，这样高度会有变化，可以响应 transition: height 1s;
+      el.style.height = 0
+      // 这里加一句计算高度的原因是因为浏览器会让多次多样的样式赋值合并
+      // 如果中间进行一个进行元素高度计算的操作，就不会发生合并现象
+      el.getBoundingClientRect()
+      el.style.height = `${height}px`
+      el.addEventListener('transitionend', ()=>{
+        done();
+      })
+    },
+    // 重新设为auto，不然因为overflow:hidden; 子级会看不到
+    afterEnter(el) {
+      el.style.height = 'auto';
+    },
+    leave(el, done) {
+      let {height} = el.getBoundingClientRect()
+      el.style.height = `${height}px`
+      el.getBoundingClientRect()
+      el.style.height = 0;
+      // 如果直接调用done的话，动画会直接结束，直接display none。这里监听动画结束事件然后再去调用done
+      el.addEventListener('transitionend', ()=>{
+        done();
+      })
+    },
+    afterLeave(el){
+      el.style.height = 'auto';
+    },
     close(){
       this.open = false
     },
@@ -101,6 +133,8 @@ export default {
       position: static;
       border-radius: 0;
       box-shadow: none;
+      transition: height 250ms;
+      overflow: hidden;
     }
   }
   .g-sub-nav {
