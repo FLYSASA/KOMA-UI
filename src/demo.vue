@@ -2,7 +2,8 @@
   <div id="app">
     <div>
       <g-nav :selected.sync="selected">
-        <g-nav-item name="home">首页</g-nav-item>
+        <g-nav-item name="home">首页
+        </g-nav-item>
         <g-sub-nav name="about">
           <template #title>关于</template>
           <g-nav-item name="developer">开发团队</g-nav-item>
@@ -58,7 +59,7 @@ export default {
   props: {},
   data () {
     return {
-      selected: ['home'],
+      selected: [],
     };
   },
   watch: {

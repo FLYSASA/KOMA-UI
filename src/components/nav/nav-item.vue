@@ -1,5 +1,5 @@
 <template>
-  <div class="g-nav-item" :class="{active: selected}" @click="onclick">
+  <div class="g-nav-item" :class="{active: selected, vertical}" @click="onclick">
     <slot></slot>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
       selected: false
     };
   },
-  inject: ['root'],
+  inject: ['root', 'vertical'],
 
   computed: {},
 
@@ -43,19 +43,30 @@ export default {
 .g-nav-item {
   padding: 10px 20px;
   position: relative;
-  cursor: pointer;
-  &.active {
-    &::after{
-      content: '';
-      position: absolute;
-      bottom: 1px;
-      left: 0;
-      width: 100%;
-      border-bottom: 2px solid @active-color;
+  &:not(.vertical){
+    &.active {
+      &::after{
+        content: '';
+        position: absolute;
+        bottom: 1px;
+        left: 0;
+        width: 100%;
+        border-bottom: 2px solid @active-color;
+      }
     }
   }
+  &.vertical {
+    &.active {
+      color: @active-color;
+    }
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  cursor: pointer;
 }
-.g-sub-nav .g-nav-item {
+.g-sub-nav .g-nav-item:not(.vertical) {
   &.active {
     background: @gray;
     color: @color;
