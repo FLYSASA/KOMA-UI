@@ -50,7 +50,7 @@ import GSubNav from './components/nav/subnav';
 import GNavItem from './components/nav/nav-item';
 
 export default {
-  name: 'demo',
+  name: 'ButtonDemo',
   components: {
     GNav,
     GSubNav,
