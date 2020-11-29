@@ -1,6 +1,6 @@
 // 声明一个Validator类 
 // 静态方法 Validator.add = fn  实例是不能调用静态方法的
-// 对象方法 Validator.validate
+// 对象方法 Validator.validate 用于实例调用
 class Validator {
   // 属性
   constructor (){}
