@@ -41,6 +41,7 @@ class Validator {
         }
       })
     })
+    // {email: {required: '必填', minLength: '太短'}}
     return errors;
   }
   required(value){

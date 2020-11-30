@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-import Validator from '@/components/validate'
+import Validator from '@/components/form/validate'
 
 describe('Validator', () => {
   it('存在.', () => {

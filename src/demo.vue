@@ -1,83 +1,75 @@
 <template>
   <div id="app">
     <div>
-      <g-nav :selected.sync="selected">
-        <g-nav-item name="home">首页
-        </g-nav-item>
-        <g-sub-nav name="about">
-          <template #title>关于</template>
-          <g-nav-item name="developer">开发团队</g-nav-item>
-          <g-nav-item name="culture">企业文化</g-nav-item>
-          <g-sub-nav name="contact">
-            <template #title>联系方式</template>
-            <g-nav-item name="wechat">微信</g-nav-item>
-            <g-nav-item name="qq">qq</g-nav-item>
-            <g-sub-nav name="mobile">
-              <template #title>手机</template>
-              <g-nav-item name="cm">移动</g-nav-item>
-              <g-nav-item name="cn">电信</g-nav-item>
-            </g-sub-nav>
-          </g-sub-nav>
-        </g-sub-nav>
-        <g-nav-item name="news">资讯</g-nav-item>
-      </g-nav>
-      <g-nav :selected.sync="selected" vertical style="width: 200px; margin: 200px;">
-        <g-nav-item name="home">首页</g-nav-item>
-        <g-sub-nav name="about">
-          <template #title>关于</template>
-          <g-nav-item name="developer">开发团队</g-nav-item>
-          <g-nav-item name="culture">企业文化</g-nav-item>
-          <g-sub-nav name="contact">
-            <template #title>联系方式</template>
-            <g-nav-item name="wechat">微信</g-nav-item>
-            <g-nav-item name="qq">qq</g-nav-item>
-            <g-sub-nav name="mobile">
-              <template #title>手机</template>
-              <g-nav-item name="cm">移动</g-nav-item>
-              <g-nav-item name="cn">电信</g-nav-item>
-            </g-sub-nav>
-          </g-sub-nav>
-        </g-sub-nav>
-        <g-nav-item name="news">资讯</g-nav-item>
-      </g-nav>
+      <div class="form-wrapper">
+        <g-form class="form" :model="model" :rules="rules" ref="form">
+          <h1>登录</h1>
+          <g-form-item label="邮箱" prop="email">
+            <g-input type="text" v-model="model.email"></g-input>
+          </g-form-item>
+          <g-form-item label="密码" prop="password">
+            <g-input type="password" v-model="model.password"></g-input>
+          </g-form-item>
+          <div>
+            <g-button class="ok" type="submit" @click="onSubmit">提交</g-button>
+          </div>
+        </g-form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import GNav from './components/nav/nav';
-import GSubNav from './components/nav/subnav';
-import GNavItem from './components/nav/nav-item';
+import GButton from '@/components/button/button';
+import GInput from '@/components/input';
+import GForm from '@/components/form/form';
+import GFormItem from '@/components/form/form-item';
+import formMixin from '@/components/form/form-mixin';
 
 export default {
   name: 'ButtonDemo',
   components: {
-    GNav,
-    GSubNav,
-    GNavItem
+    GButton,
+    GInput,
+    GForm,
+    GFormItem
   },
+  mixins: [formMixin],
   props: {},
   data () {
     return {
-      selected: 'home',
+      model: {
+        email: '',
+        password: ''
+      },
+      rules: [
+        { key: 'email', pattern: 'email', required: true},
+        { key: 'password', minLength: 6, required: true}
+      ]
     };
   },
-  watch: {
-    selected(val){
-      // console.log(val)
-    }
-  },
+  watch: {},
   computed: {},
   methods: {
+    onSubmit () {
+      this.$refs['form'].validate((valid)=>{
+        if(valid){
+          console.log(valid)
+        }
+      })
+    }
   },
 }
 
 </script>
-<style>
+<style lang="less">
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+  .form-wrapper{
+    padding: 20px;
   }
 
 </style>
