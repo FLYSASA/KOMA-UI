@@ -1,11 +1,16 @@
 <template>
   <div class="koma-pager">
-    <span v-for="(page, index) in pages" 
-    :key="index" 
-    :class="{active: page === currentPage, separator: page === '...'}"
-    class="koma-pager-item">
-      {{page}}
-    </span>
+    <template v-for="(page, index) in pages">
+      <template v-if="page === currentPage">
+        <span :key="index" class="koma-pager-item active">{{page}}</span>
+      </template>
+      <template v-else-if="page === '...'">
+        <g-icon name="more" :key="index" class="separator"></g-icon>
+      </template>
+      <template v-else>
+        <span :key="index" class="koma-pager-item other" @click="change(page)">{{page}}</span>
+      </template>
+    </template>
   </div>
 </template>
 
@@ -20,9 +25,10 @@ function unique(array) {
   // 注意这里返回的都是字符串，不再是number
   return Object.keys(obj).map(i => parseInt(i))
 }
+import GIcon from '../icon';
 export default {
   name: 'KomaPager',
-  components: {},
+  components: { GIcon },
   props: {
     totalPage: {
       type: Number,
@@ -38,7 +44,13 @@ export default {
     }
   },
   data () {
-    let pages = unique([1, this.totalPage, this.currentPage, 
+    return {
+      
+    }
+  },
+  computed: {
+    pages(){
+      let pages = unique([1, this.totalPage, this.currentPage, 
       this.currentPage - 1, 
       this.currentPage - 2, 
       this.currentPage + 1, 
@@ -51,13 +63,15 @@ export default {
         prev.push(current)
         return prev;
       }, [])
-    return {
-      pages
-    };
+      return pages;
+    }
   },
-  computed: {},
   created () {},
-  methods: {}
+  methods: {
+    change(page) {
+      this.$emit('update:current-page', page)
+    },
+  }
 }
 
 </script>
@@ -65,7 +79,13 @@ export default {
 @import "css/_var";
 .koma-pager {
   display: flex;
+  align-items: center;
   user-select: none;
+  .separator{
+    width: 25px;
+    font-size: @font-size;
+    cursor: default;
+  }
   &-item {
     display: inline-flex;
     align-items: center;
@@ -77,9 +97,6 @@ export default {
     margin: 0 4px;
     min-width: 25px;
     height: 25px;
-    &.separator {
-      cursor: default;
-    }
     &:hover {
       border-color: @blue;
       color: @blue;
