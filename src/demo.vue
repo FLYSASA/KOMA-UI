@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-pager total-page="10" current-page="5"></g-pager>
+    <g-pager :total-page="20" :current-page="4"></g-pager>
   </div>
 </template>
 
@@ -26,6 +26,9 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+  #app {
+    margin: 20px;
   }
 
 </style>

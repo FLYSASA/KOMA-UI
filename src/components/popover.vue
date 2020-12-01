@@ -137,6 +137,7 @@ export default {
     border: 1px solid @color;
     border-radius: @border-radius;
     // box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    // 保证content和arrow的阴影统一
     filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));
     background: white;
     padding: .5em 1em;
