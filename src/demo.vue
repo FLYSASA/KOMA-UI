@@ -15,7 +15,7 @@ export default {
   props: {},
   data () {
     return {
-      currentPage: 4
+      currentPage: 1
     };
   },
   methods: {},

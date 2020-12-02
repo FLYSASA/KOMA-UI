@@ -1,5 +1,8 @@
 <template>
   <div class="koma-pager">
+    <span class="koma-pager-nav prev" :class="{disabled: currentPage === 1}">
+      <g-icon name="left"></g-icon>
+    </span>
     <template v-for="(page, index) in pages">
       <template v-if="page === currentPage">
         <span :key="index" class="koma-pager-item active">{{page}}</span>
@@ -11,6 +14,9 @@
         <span :key="index" class="koma-pager-item other" @click="change(page)">{{page}}</span>
       </template>
     </template>
+    <span class="koma-pager-nav next"  :class="{disabled: currentPage === totalPage}">
+      <g-icon name="right"></g-icon>
+    </span>
   </div>
 </template>
 
@@ -45,7 +51,7 @@ export default {
   },
   data () {
     return {
-      
+
     }
   },
   computed: {
@@ -55,6 +61,7 @@ export default {
       this.currentPage - 2, 
       this.currentPage + 1, 
       this.currentPage + 2])
+      .filter((n)=> n > 0 && n <= this.totalPage)
       .sort((a, b)=> a - b)                     // 升序排序
       .reduce((prev, current, index, array)=>{  // 页码间隔大于1时，中间显示...
         if(array[index - 1] && array[index] - array[index - 1] > 1){
@@ -77,14 +84,31 @@ export default {
 </script>
 <style lang='less' scoped>
 @import "css/_var";
+@width: 25px;
+@height: 25px;
 .koma-pager {
   display: flex;
   align-items: center;
   user-select: none;
   .separator{
-    width: 25px;
+    width: @width;
     font-size: @font-size;
     cursor: default;
+  }
+  .koma-pager-nav {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: @height;
+    width: @width;
+    margin: 0 4px;
+    cursor: pointer;
+    &.disabled {
+      cursor: not-allowed;
+      svg {
+        fill: darken(@gray, 30%);
+      }
+    }
   }
   &-item {
     display: inline-flex;
@@ -95,8 +119,8 @@ export default {
     font-size: @font-size;
     padding: 0 4px;
     margin: 0 4px;
-    min-width: 25px;
-    height: 25px;
+    min-width: @width;
+    height: @height;
     &:hover {
       border-color: @blue;
       color: @blue;
