@@ -1,6 +1,7 @@
 <template>
-  <div class="koma-pager">
-    <span class="koma-pager-nav prev" :class="{disabled: currentPage === 1}">
+  <div class="koma-pager" v-if="!(hideIfOnePage && totalPage <= 1)">
+    <span class="koma-pager-nav prev" :class="{disabled: currentPage === 1}"
+      @click="change(currentPage - 1)">
       <g-icon name="left"></g-icon>
     </span>
     <template v-for="(page, index) in pages">
@@ -14,7 +15,8 @@
         <span :key="index" class="koma-pager-item other" @click="change(page)">{{page}}</span>
       </template>
     </template>
-    <span class="koma-pager-nav next"  :class="{disabled: currentPage === totalPage}">
+    <span class="koma-pager-nav next"  :class="{disabled: currentPage === totalPage}"
+      @click="change(currentPage + 1)">
       <g-icon name="right"></g-icon>
     </span>
   </div>
@@ -76,7 +78,9 @@ export default {
   created () {},
   methods: {
     change(page) {
-      this.$emit('update:current-page', page)
+      if(page >= 1 && page <= this.totalPage) {
+        this.$emit('update:current-page', page)
+      }
     },
   }
 }
