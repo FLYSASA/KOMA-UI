@@ -3,19 +3,24 @@
     <table class="koma-table" :class="{border, compact, striped}">
       <thead>
         <tr>
-          <th><input type="checkbox"></th>
+          <th><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems"></th>
           <th v-if="numberVisible">#</th>
-          <th v-for="(column, index) in columns" :key="index">
+          <th v-for="column in columns" :key="column.field">
             {{column.text}}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in dataSource" :key="index">
-          <td><input type="checkbox" @change="onChangeItem(item, index, $event)"></td>
+        <tr v-for="(item, index) in dataSource" :key="item.id">
+          <td>
+            <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
+            <input type="checkbox"
+            :checked="inselectedItems(item)"
+            @change="onChangeItem(item, index, $event)">
+          </td>
           <td v-if="numberVisible">{{index + 1}}</td>
-          <template v-for="(column, idx) in columns">
-            <td :key="idx">{{item[column.field]}}</td>
+          <template v-for="column in columns">
+            <td :key="column.field">{{item[column.field]}}</td>
           </template>
         </tr>
       </tbody>
@@ -30,7 +35,11 @@ export default {
   props: {
     dataSource: {
       type: Array,
-      required: true
+      required: true,
+      validator(arr){
+        // 验证是否含有关键key
+        return !(arr.filter(i=> i.id === undefined).length > 0)
+      }
     },
     columns: {
       type: Array,
@@ -54,6 +63,10 @@ export default {
     striped: {
       type: Boolean,
       default: true
+    },
+    selectedItems: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -61,14 +74,42 @@ export default {
 
     };
   },
-
+  watch:{
+    selectedItems(val){
+      if(val.length > 0 && val.length < this.dataSource.length) {
+        this.$refs['allCheckBox'].indeterminate = true
+      } else if (val.length === this.dataSource.length){
+        console.log('1')
+        this.$refs['allCheckBox'].indeterminate = false
+        this.$refs['allCheckBox'].checked = true
+      } else {
+        this.$refs['allCheckBox'].indeterminate = false
+        this.$refs['allCheckBox'].checked = false
+      }
+    }
+  },
   computed: {},
-
-  created() {},
+  created() {
+    // console.log(this.selectedItems)
+  },
 
   methods: {
+    inselectedItems(item){
+      return this.selectedItems.filter(i => i.id === item.id).length > 0
+    },
+    onChangeAllItems(e){
+      let selected = e.target.checked;
+      this.$emit('update:selectedItems', selected ? this.dataSource : [])
+    },
     onChangeItem(item, index, e){
-      this.$emit('selectedChange', {selected: e.target.checked, item, index})
+      let selected = e.target.checked;
+      let copy = JSON.parse(JSON.stringify(this.selectedItems))
+      if(selected){
+        copy.push(item)
+      }else{
+        copy = copy.filter(i => i.id !== item.id)
+      }
+      this.$emit('update:selectedItems', copy)
     },
   },
 };
