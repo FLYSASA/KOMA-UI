@@ -3,7 +3,7 @@
     <table class="koma-table" :class="{border, compact, striped}">
       <thead>
         <tr>
-          <th><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems"></th>
+          <th><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
           <th v-if="numberVisible">#</th>
           <th v-for="column in columns" :key="column.field">
             {{column.text}}
@@ -79,16 +79,36 @@ export default {
       if(val.length > 0 && val.length < this.dataSource.length) {
         this.$refs['allCheckBox'].indeterminate = true
       } else if (val.length === this.dataSource.length){
-        console.log('1')
         this.$refs['allCheckBox'].indeterminate = false
-        this.$refs['allCheckBox'].checked = true
       } else {
         this.$refs['allCheckBox'].indeterminate = false
-        this.$refs['allCheckBox'].checked = false
       }
     }
   },
-  computed: {},
+  computed: {
+    isAllItemSelected(){
+      // return this.dataSource.length === this.selectedItems.length
+      // 上面的判断是不对的
+      // this.selectedItems = [{id: 2}, {id: 1}]
+      // this.dataSource = [{id: 1}, {id: 2}]
+      // 如何判断上面两个数组元素是相等的？
+      // 注意sort默认是按字典排序的，即 [1, 2, 11, 22].sort()  =>  [1, 11, 2, 22], 并且会改变原数组！
+      // 因为sort会改变原数组，所以前面map一下产生一个新的数组
+      const a = this.dataSource.map(i => i.id).sort()   
+      const b = this.selectedItems.map(i => i.id).sort()
+      if(a.length !== b.length) {
+        return false
+      }
+      let equal = true
+      for(let i = 0; i < a.length; i++){
+        if(a[i] !== b[i]){
+          equal = false;
+          break;
+        }
+      }
+      return equal;
+    },
+  },
   created() {
     // console.log(this.selectedItems)
   },
