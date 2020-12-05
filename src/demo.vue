@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <div style="margin: 20px">
-      <g-table :data-source="tableData" :columns="columns" border @selectedChange="selectedChange"
+      <g-table :data-source="tableData" :columns="columns" border
+      :orderBy.sync="sortRules"
+      @update:orderBy="x"
+      @selectedChange="selectedChange"
       :selectedItems.sync="selectedItems"></g-table>
       <g-table style="margin-top: 20px" :data-source="tableData" :columns="columns" border compact :striped="false"></g-table>
     </div>
@@ -37,6 +40,9 @@ export default {
         {text: '姓名', field: 'name'},
         {text: '分数', field: 'score'},
       ],
+      sortRules: {
+        score: 'des'
+      },
       selectedItems: []
     };
   },
@@ -48,7 +54,10 @@ export default {
   methods: {
     selectedChange(obj){
       console.log(obj)
-    }
+    },
+    x(){
+      this.tableData.sort((a, b) => a.score - b.score)
+    },
   },
 }
 

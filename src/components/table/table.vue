@@ -6,7 +6,14 @@
           <th><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
           <th v-if="numberVisible">#</th>
           <th v-for="column in columns" :key="column.field">
-            {{column.text}}
+            <div class="kama-table-name" 
+              @click="changeOrderBy(column.field)">
+              {{column.text}}
+              <span class="koma-sorter" v-if="column.field in orderBy" >
+                <g-icon name="ascending" :class="{active: orderBy[column.field] === 'asc'}"></g-icon>
+                <g-icon name="descending" :class="{active: orderBy[column.field] === 'desc'}"></g-icon>
+              </span>
+            </div>
           </th>
         </tr>
       </thead>
@@ -29,9 +36,10 @@
 </template>
 
 <script>
+import GIcon from '../icon';
 export default {
   name: 'KomaTable',
-  components: {},
+  components: { GIcon },
   props: {
     dataSource: {
       type: Array,
@@ -64,9 +72,15 @@ export default {
       type: Boolean,
       default: true
     },
+    // 勾选项
     selectedItems: {
       type: Array,
       default: () => []
+    },
+    // 排序
+    orderBy: {
+      type: Object,
+      default: () => ({})   // 注意这里的括号，如果默认为对象的话，需要加括号
     }
   },
   data() {
@@ -114,6 +128,18 @@ export default {
   },
 
   methods: {
+    changeOrderBy(key){
+      const copy = JSON.parse(JSON.stringify(this.orderBy))
+      let oldValue = copy[key]
+      if (oldValue === 'asc') {
+        copy[key] = 'desc'
+      } else if (oldValue === 'desc') {
+        copy[key] = true
+      } else {
+        copy[key] = 'asc'
+      }
+      this.$emit('update:orderBy', copy)
+    },
     inselectedItems(item){
       return this.selectedItems.filter(i => i.id === item.id).length > 0
     },
@@ -165,9 +191,29 @@ export default {
           background: white;
         }
         &:nth-child(even) {
-          background: lighten(@grey, 12%);
+          background: lighten(@gray, 12%);
         }
       }
+    }
+  }
+  .kama-table-name {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    .koma-sorter {
+      margin: 0 4px;
+      svg {
+        width: 8px;
+        height: 8px;
+        fill: @grey;
+        &.active {
+          fill: red;
+        }
+      }
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 }
