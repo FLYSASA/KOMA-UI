@@ -1,37 +1,39 @@
 <template>
-  <div class="koma-table-wrapper">
-    <table class="koma-table" :class="{border, compact, striped}">
-      <thead>
-        <tr>
-          <th><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
-          <th v-if="numberVisible">#</th>
-          <th v-for="column in columns" :key="column.field">
-            <div class="kama-table-name" 
-              @click="changeOrderBy(column.field)">
-              {{column.text}}
-              <span class="koma-sorter" v-if="column.field in orderBy" >
-                <g-icon name="ascending" :class="{active: orderBy[column.field] === 'asc'}"></g-icon>
-                <g-icon name="descending" :class="{active: orderBy[column.field] === 'desc'}"></g-icon>
-              </span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in dataSource" :key="item.id">
-          <td>
-            <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
-            <input type="checkbox"
-            :checked="inselectedItems(item)"
-            @change="onChangeItem(item, index, $event)">
-          </td>
-          <td v-if="numberVisible">{{index + 1}}</td>
-          <template v-for="column in columns">
-            <td :key="column.field">{{item[column.field]}}</td>
-          </template>
-        </tr>
-      </tbody>
-    </table>
+  <div class="koma-table-wrapper" ref="wrapper">
+    <div :style="{height, overflow: 'auto'}">
+      <table class="koma-table" ref="table" :class="{border, compact, striped}">
+        <thead>
+          <tr>
+            <th><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
+            <th v-if="numberVisible">#</th>
+            <th v-for="column in columns" :key="column.field">
+              <div class="kama-table-name" 
+                @click="changeOrderBy(column.field)">
+                {{column.text}}
+                <span class="koma-sorter" v-if="column.field in orderBy" >
+                  <g-icon name="ascending" :class="{active: orderBy[column.field] === 'asc'}"></g-icon>
+                  <g-icon name="descending" :class="{active: orderBy[column.field] === 'desc'}"></g-icon>
+                </span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in dataSource" :key="item.id">
+            <td>
+              <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
+              <input type="checkbox"
+              :checked="inselectedItems(item)"
+              @change="onChangeItem(item, index, $event)">
+            </td>
+            <td v-if="numberVisible">{{index + 1}}</td>
+            <template v-for="column in columns">
+              <td :key="column.field">{{item[column.field]}}</td>
+            </template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="koma-table-loading" v-if="loading">
       <g-icon name="loading"></g-icon>
     </div>
@@ -89,6 +91,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    // 高度，用于出现固定表头
+    height: {
+      type: Number | String,
     }
   },
   data() {
@@ -131,11 +137,44 @@ export default {
       return equal;
     },
   },
-  created() {
-    // console.log(this.selectedItems)
-  },
+  mounted() {
+    // clone 
+    let cloneTable  = this.$refs.table.cloneNode(true)
+    this.cloneTable = cloneTable
+    // cloneTable.className = 'clone-table'
+    cloneTable.classList.add('clone-table')
+    this.$refs.wrapper.appendChild(cloneTable)
+    this.updateHeadersWidth()
 
+    this.onWindowResize = () => this.updateHeadersWidth()
+    window.addEventListener('resize', this.onWindowResize)
+  },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.onWindowResize)
+    this.cloneTable.remove()
+  },
   methods: {
+    updateHeadersWidth(){
+      let cloneTable = this.cloneTable;
+      // 获取原表头
+      let orginHead = Array.from(this.$refs.table.children).filter((node) => {
+        return node.tagName.toLowerCase() === 'thead'
+      })[0]
+      let cloneTableHead;
+      Array.from(cloneTable.children).map(node => {
+        if(node.tagName.toLowerCase() !== 'thead'){
+          node.remove()
+        } else {
+          cloneTableHead = node
+        }
+      })
+      // 将原来表头的每列宽度赋值给 clone的header
+      Array.from(orginHead.children[0].children).map((th, index) => {
+        const {width} = th.getBoundingClientRect()
+        console.log(cloneTableHead.children[0].children[index])
+        cloneTableHead.children[0].children[index].style.width = width + 'px'
+      })
+    },
     changeOrderBy(key){
       const copy = JSON.parse(JSON.stringify(this.orderBy))
       let oldValue = copy[key]
@@ -173,6 +212,7 @@ export default {
 @grey: darken(@gray, 10%);
 .koma-table-wrapper {
   position: relative;
+  overflow: auto;
   .koma-table {
     width: 100%;
     border-collapse: collapse;
@@ -243,6 +283,12 @@ export default {
       height: 30px;
       .spin();
     }
+  }
+  .clone-table{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
 }
 </style>
