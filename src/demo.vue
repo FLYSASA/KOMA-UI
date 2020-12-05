@@ -4,6 +4,7 @@
       <g-table :data-source="tableData" :columns="columns" border
       :orderBy.sync="sortRules"
       @update:orderBy="x"
+      :loading="loading"
       @selectedChange="selectedChange"
       :selectedItems.sync="selectedItems"></g-table>
       <g-table style="margin-top: 20px" :data-source="tableData" :columns="columns" border compact :striped="false"></g-table>
@@ -43,7 +44,8 @@ export default {
       sortRules: {
         score: 'des'
       },
-      selectedItems: []
+      selectedItems: [],
+      loading: false
     };
   },
   watch: {
@@ -56,7 +58,11 @@ export default {
       console.log(obj)
     },
     x(){
-      this.tableData.sort((a, b) => a.score - b.score)
+      this.loading = true
+      setTimeout(()=>{
+        this.tableData.sort((a, b) => a.score - b.score)
+        this.loading = false
+      }, 3000)
     },
   },
 }

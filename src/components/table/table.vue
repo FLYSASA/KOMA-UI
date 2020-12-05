@@ -32,6 +32,9 @@
         </tr>
       </tbody>
     </table>
+    <div class="koma-table-loading" v-if="loading">
+      <g-icon name="loading"></g-icon>
+    </div>
   </div>
 </template>
 
@@ -81,6 +84,11 @@ export default {
     orderBy: {
       type: Object,
       default: () => ({})   // 注意这里的括号，如果默认为对象的话，需要加括号
+    },
+    // 加载态
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -163,57 +171,77 @@ export default {
 <style lang='less' scoped>
 @import 'css/_var';
 @grey: darken(@gray, 10%);
-.koma-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  border-bottom: 1px solid @grey;
-  &.border {
-    border: 1px solid @grey;
-    td, th {
-      border: 1px solid @grey;
-    }
-  }
-  &.compact {
-    td, th {
-      padding: 4px;
-    }
-  }
-  td, th {
-    text-align: left;
+.koma-table-wrapper {
+  position: relative;
+  .koma-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
     border-bottom: 1px solid @grey;
-    padding: 8px;
-  }
-  &.striped {
-    tbody {
-      > tr {
-        &:nth-child(odd) {
-          background: white;
-        }
-        &:nth-child(even) {
-          background: lighten(@gray, 12%);
+    &.border {
+      border: 1px solid @grey;
+      td, th {
+        border: 1px solid @grey;
+      }
+    }
+    &.compact {
+      td, th {
+        padding: 4px;
+      }
+    }
+    td, th {
+      text-align: left;
+      border-bottom: 1px solid @grey;
+      padding: 8px;
+    }
+    &.striped {
+      tbody {
+        > tr {
+          &:nth-child(odd) {
+            background: white;
+          }
+          &:nth-child(even) {
+            background: lighten(@gray, 12%);
+          }
         }
       }
     }
-  }
-  .kama-table-name {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-    .koma-sorter {
-      margin: 0 4px;
-      svg {
-        width: 8px;
-        height: 8px;
-        fill: @grey;
-        &.active {
-          fill: red;
-        }
-      }
-      display: inline-flex;
-      flex-direction: column;
+    .kama-table-name {
+      display: flex;
       align-items: center;
+      cursor: pointer;
+      user-select: none;
+      .koma-sorter {
+        margin: 0 4px;
+        svg {
+          width: 8px;
+          height: 8px;
+          fill: @grey;
+          &.active {
+            fill: red;
+          }
+        }
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+  .koma-table-loading {
+    background: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      fill: @color;
+      width: 30px;
+      height: 30px;
+      .spin();
     }
   }
 }
