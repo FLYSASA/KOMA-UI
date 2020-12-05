@@ -1,12 +1,12 @@
 <template>
   <div class="koma-table-wrapper" ref="wrapper">
-    <div :style="{height, overflow: 'auto'}">
+    <div :style="{overflow: 'auto'}" ref="tableWrapper">
       <table class="koma-table" ref="table" :class="{border, compact, striped}">
         <thead>
           <tr>
-            <th><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
-            <th v-if="numberVisible">#</th>
-            <th v-for="column in columns" :key="column.field">
+            <th :style="{width: '50px'}"><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
+            <th v-if="numberVisible" :style="{width: '50px'}">#</th>
+            <th :style="{width: `${column.width}px`}" v-for="column in columns" :key="column.field">
               <div class="kama-table-name" 
                 @click="changeOrderBy(column.field)">
                 {{column.text}}
@@ -20,15 +20,15 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in dataSource" :key="item.id">
-            <td>
+            <td :style="{width: '50px'}">
               <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
               <input type="checkbox"
               :checked="inselectedItems(item)"
               @change="onChangeItem(item, index, $event)">
             </td>
-            <td v-if="numberVisible">{{index + 1}}</td>
+            <td v-if="numberVisible" :style="{width: '50px'}">{{index + 1}}</td>
             <template v-for="column in columns">
-              <td :key="column.field">{{item[column.field]}}</td>
+              <td :style="{width: `${column.width}px`}" :key="column.field">{{item[column.field]}}</td>
             </template>
           </tr>
         </tbody>
@@ -94,7 +94,7 @@ export default {
     },
     // 高度，用于出现固定表头
     height: {
-      type: Number | String,
+      type: Number,
     }
   },
   data() {
@@ -138,19 +138,22 @@ export default {
     },
   },
   mounted() {
-    // clone 
-    let cloneTable  = this.$refs.table.cloneNode(true)
+    // clone 浅拷贝
+    let cloneTable  = this.$refs.table.cloneNode(false)
     this.cloneTable = cloneTable
     // cloneTable.className = 'clone-table'
     cloneTable.classList.add('clone-table')
+    // 找到表格thead
+    let thead = this.$refs.table.children[0]
+    let {height} = thead.getBoundingClientRect()
+    this.$refs.tableWrapper.style.marginTop = height + 'px';
+    // 保证整体高度为用户设定的高度
+    this.$refs.tableWrapper.style.height = this.height - height + 'px';
+    cloneTable.appendChild(thead)
+    // 将thead放到复制的表格里去
     this.$refs.wrapper.appendChild(cloneTable)
-    this.updateHeadersWidth()
-
-    this.onWindowResize = () => this.updateHeadersWidth()
-    window.addEventListener('resize', this.onWindowResize)
   },
   beforeDestroy(){
-    window.removeEventListener('resize', this.onWindowResize)
     this.cloneTable.remove()
   },
   methods: {

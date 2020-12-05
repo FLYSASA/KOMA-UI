@@ -2,7 +2,7 @@
   <div id="app">
     <div style="margin: 20px">
       <g-table :data-source="tableData" :columns="columns" border
-      height="400px"
+      :height="400"
       :orderBy.sync="sortRules"
       @update:orderBy="x"
       :loading="loading"
@@ -53,7 +53,7 @@ export default {
         { id: 20, name: '安安', score: 100},
       ],
       columns: [
-        {text: '姓名', field: 'name'},
+        {text: '姓名', field: 'name', width: 200},
         {text: '分数', field: 'score'},
       ],
       sortRules: {
