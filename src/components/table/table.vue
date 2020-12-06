@@ -26,7 +26,7 @@
           <template v-for="(item, index) in dataSource">
             <!-- 主体内容 -->
             <tr :key="item.id">
-              <td v-if="expandKey" :style="{width: '50px'}" @click="expand(item)" class="table-center">
+              <td v-if="expandKey" :style="{width: '50px'}" @click="onExpand(item)" class="table-center">
                 <g-icon name="right" class="expand-icon" :class="{active: expendedItemKeys.indexOf(item.id) > -1}"></g-icon>
               </td>
               <td v-if="checkable" :style="{width: '50px'}" class="table-center">
@@ -238,7 +238,7 @@ export default {
     inExpandedIds(id){
       return this.expendedItemKeys.indexOf(id) > -1
     },
-    expand(i){
+    onExpand(i){
       if(this.inExpandedIds(i.id)){
         this.expendedItemKeys.splice(this.expendedItemKeys.indexOf(i.id), 1)
       }else{
