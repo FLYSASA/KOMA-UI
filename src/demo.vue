@@ -2,14 +2,20 @@
   <div id="app">
     <div style="margin: 20px">
       <g-table :data-source="tableData" :columns="columns" border
-      expend-key="description"
+      expand-key="description"
       :height="400"
       :orderBy.sync="sortRules"
+      checkable
       @update:orderBy="x"
       :loading="loading"
       @selectedChange="selectedChange"
-      :selectedItems.sync="selectedItems"></g-table>
-      <!-- <g-table style="margin-top: 20px" :data-source="tableData" :columns="columns" border compact :striped="false"></g-table> -->
+      :selectedItems.sync="selectedItems">
+        <template #default="scope">
+          <button>查看</button>
+          <button>编辑</button>
+        </template>
+      </g-table>
+      <g-table style="margin-top: 20px" :data-source="tableData" :columns="columns" border compact :striped="false"></g-table>
     </div>
     <div style="margin: 20px">
       <g-pager :total-page="20" :current-page.sync="currentPage"></g-pager>

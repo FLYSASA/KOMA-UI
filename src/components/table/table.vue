@@ -4,8 +4,8 @@
       <table class="koma-table" ref="table" :class="{border, compact, striped}">
         <thead>
           <tr>
-            <th :style="{width: '50px'}" class="table-center"></th>
-            <th :style="{width: '50px'}" class="table-center"><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
+            <th v-if="expandKey" :style="{width: '50px'}" class="table-center"></th>
+            <th v-if="checkable" :style="{width: '50px'}" class="table-center"><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
             <th v-if="numberVisible" :style="{width: '50px'}">#</th>
             <th :style="{width: `${column.width}px`}" v-for="column in columns" :key="column.key">
               <div class="kama-table-name" 
@@ -17,16 +17,19 @@
                 </span>
               </div>
             </th>
+            <th ref="actionsHeader" v-if="$scopedSlots.default"></th>
+            <!-- 因为滚动条占据宽度，导致表头与列不对齐，这里给表头一个gutter来让其等于滚动条的宽度保证对齐 -->
+            <th class="gutter" ref="gutter"></th>
           </tr>
         </thead>
         <tbody>
           <template v-for="(item, index) in dataSource">
             <!-- 主体内容 -->
             <tr :key="item.id">
-              <td :style="{width: '50px'}" @click="expand(item)" class="table-center">
+              <td v-if="expandKey" :style="{width: '50px'}" @click="expand(item)" class="table-center">
                 <g-icon name="right" class="expand-icon" :class="{active: expendedItemKeys.indexOf(item.id) > -1}"></g-icon>
               </td>
-              <td :style="{width: '50px'}" class="table-center">
+              <td v-if="checkable" :style="{width: '50px'}" class="table-center">
                 <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
                 <input type="checkbox"
                 :checked="inselectedItems(item)"
@@ -36,11 +39,16 @@
               <template v-for="column in columns">
                 <td :style="{width: `${column.width}px`}" :key="column.key">{{item[column.key]}}</td>
               </template>
+              <td v-if="$scopedSlots.default">
+                <div ref="actions" style="display: inline-block;">
+                  <slot :row="item"></slot>
+                </div>
+              </td>
             </tr>
             <!-- 展开内容 -->
-            <tr :key="`expand-${item.id}`" v-if="inExpandedIds(item.id)">
-              <td :colspan="columns.length + 2">
-                {{item[expendKey] || '空'}}
+            <tr v-if="inExpandedIds(item.id)" :key="`expand-${item.id}`">
+              <td :colspan="expandedCellColSpan">
+                {{item[expandKey] || '空'}}
               </td>
             </tr>
           </template>
@@ -111,8 +119,12 @@ export default {
       type: Number,
     },
     // 展开内容的key
-    expendKey: {
+    expandKey: {
       type: String
+    },
+    checkable: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -132,6 +144,16 @@ export default {
     }
   },
   computed: {
+    expandedCellColSpan(){
+      let result = 0;
+      if(this.checkable){
+        result += 1
+      }
+      if(this.expandKey){
+        result += 1
+      }
+      return this.columns.length + result;
+    },
     isAllItemSelected(){
       // return this.dataSource.length === this.selectedItems.length
       // 上面的判断是不对的
@@ -156,25 +178,63 @@ export default {
     },
   },
   mounted() {
-    // clone 浅拷贝
-    let cloneTable  = this.$refs.table.cloneNode(false)
-    this.cloneTable = cloneTable
-    // cloneTable.className = 'clone-table'
-    cloneTable.classList.add('clone-table')
-    // 找到表格thead
-    let thead = this.$refs.table.children[0]
-    let {height} = thead.getBoundingClientRect()
-    this.$refs.tableWrapper.style.marginTop = height + 'px';
-    // 保证整体高度为用户设定的高度
-    this.$refs.tableWrapper.style.height = this.height - height + 'px';
-    cloneTable.appendChild(thead)
-    // 将thead放到复制的表格里去
-    this.$refs.wrapper.appendChild(cloneTable)
+    // 固定表头
+    this.fixedHeader()
+    // 给表头追加滚动条的宽度
+    this.addThGutter()
+    // 计算操作列的宽度
+    this.updateActionWidth()
   },
   beforeDestroy(){
     this.cloneTable.remove()
   },
   methods: {
+    fixedHeader(){
+      // clone 浅拷贝
+      let cloneTable  = this.$refs.table.cloneNode(false)
+      this.cloneTable = cloneTable
+      // cloneTable.className = 'clone-table' // 这样做会把所有的class重置为一个
+      cloneTable.classList.add('clone-table')
+      // 找到表格thead
+      let thead = this.$refs.table.children[0]
+      let {height} = thead.getBoundingClientRect()
+      this.$refs.tableWrapper.style.marginTop = height + 'px';
+      // 保证整体高度为用户设定的高度
+      this.$refs.tableWrapper.style.height = this.height - height + 'px';
+      cloneTable.appendChild(thead)
+      // 将thead放到复制的表格里去
+      this.$refs.wrapper.appendChild(cloneTable)
+    },
+    addThGutter(){
+      let wrapperWidth = this.$refs['tableWrapper'].getBoundingClientRect().width
+      let tbodyWidth = this.$refs['table'].getBoundingClientRect().width
+      // width - tbodyWidth = 滚动条的宽度
+      if(wrapperWidth - tbodyWidth > 0){
+        this.$refs.gutter.style.width = wrapperWidth - tbodyWidth + 'px'
+      }else {
+        this.$refs.gutter.style.display = 'none'
+      }
+    },
+    updateActionWidth(){
+      console.log(this.$scopedSlots)
+      if(this.$scopedSlots.default) {
+        let div = this.$refs.actions[0]
+        let {width} = div.getBoundingClientRect()
+        let parent = div.parentNode   // td
+        let styles = getComputedStyle(parent)
+        let paddingLeft = styles.getPropertyValue('padding-left') 
+        let paddingRight = styles.getPropertyValue('padding-right') 
+        let borderLeft = styles.getPropertyValue('border-left-width') 
+        let borderRight = styles.getPropertyValue('border-right-width') 
+        // 给操作列的表头重新赋值真实宽度
+        let newWidth = width + parseInt(paddingLeft) + parseInt(paddingRight) + parseInt(borderLeft) + parseInt(borderRight) + 'px';
+        this.$refs.actionsHeader.style.width = newWidth;
+        // 给操作列的每一行td重新赋值真实宽度
+        this.$refs.actions.map((div)=>{
+          div.parentNode.style.width = newWidth;
+        })
+      }
+    },
     inExpandedIds(id){
       return this.expendedItemKeys.indexOf(id) > -1
     },
