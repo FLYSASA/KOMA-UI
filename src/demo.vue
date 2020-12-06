@@ -2,6 +2,7 @@
   <div id="app">
     <div style="margin: 20px">
       <g-table :data-source="tableData" :columns="columns" border
+      expend-key="description"
       :height="400"
       :orderBy.sync="sortRules"
       @update:orderBy="x"
@@ -31,7 +32,7 @@ export default {
     return {
       currentPage: 1,
       tableData: [
-        { id: 1, name: '花花', score: 100},
+        { id: 1, name: '花花', score: 100, description: '展示一段描述'},
         { id: 2, name: '大白', score: 99},
         { id: 3, name: '小绿', score: 5},
         { id: 4, name: '安安', score: 100},
@@ -53,8 +54,8 @@ export default {
         { id: 20, name: '安安', score: 100},
       ],
       columns: [
-        {text: '姓名', field: 'name', width: 200},
-        {text: '分数', field: 'score'},
+        {text: '姓名', key: 'name', width: 200},
+        {text: '分数', key: 'score'},
       ],
       sortRules: {
         score: 'des'

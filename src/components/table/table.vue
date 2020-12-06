@@ -4,33 +4,46 @@
       <table class="koma-table" ref="table" :class="{border, compact, striped}">
         <thead>
           <tr>
-            <th :style="{width: '50px'}"><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
+            <th :style="{width: '50px'}" class="table-center"></th>
+            <th :style="{width: '50px'}" class="table-center"><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
             <th v-if="numberVisible" :style="{width: '50px'}">#</th>
-            <th :style="{width: `${column.width}px`}" v-for="column in columns" :key="column.field">
+            <th :style="{width: `${column.width}px`}" v-for="column in columns" :key="column.key">
               <div class="kama-table-name" 
-                @click="changeOrderBy(column.field)">
+                @click="changeOrderBy(column.key)">
                 {{column.text}}
-                <span class="koma-sorter" v-if="column.field in orderBy" >
-                  <g-icon name="ascending" :class="{active: orderBy[column.field] === 'asc'}"></g-icon>
-                  <g-icon name="descending" :class="{active: orderBy[column.field] === 'desc'}"></g-icon>
+                <span class="koma-sorter" v-if="column.key in orderBy" >
+                  <g-icon name="ascending" :class="{active: orderBy[column.key] === 'asc'}"></g-icon>
+                  <g-icon name="descending" :class="{active: orderBy[column.key] === 'desc'}"></g-icon>
                 </span>
               </div>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in dataSource" :key="item.id">
-            <td :style="{width: '50px'}">
-              <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
-              <input type="checkbox"
-              :checked="inselectedItems(item)"
-              @change="onChangeItem(item, index, $event)">
-            </td>
-            <td v-if="numberVisible" :style="{width: '50px'}">{{index + 1}}</td>
-            <template v-for="column in columns">
-              <td :style="{width: `${column.width}px`}" :key="column.field">{{item[column.field]}}</td>
-            </template>
-          </tr>
+          <template v-for="(item, index) in dataSource">
+            <!-- 主体内容 -->
+            <tr :key="item.id">
+              <td :style="{width: '50px'}" @click="expand(item)" class="table-center">
+                <g-icon name="right" class="expand-icon" :class="{active: expendedItemKeys.indexOf(item.id) > -1}"></g-icon>
+              </td>
+              <td :style="{width: '50px'}" class="table-center">
+                <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
+                <input type="checkbox"
+                :checked="inselectedItems(item)"
+                @change="onChangeItem(item, index, $event)">
+              </td>
+              <td v-if="numberVisible" :style="{width: '50px'}">{{index + 1}}</td>
+              <template v-for="column in columns">
+                <td :style="{width: `${column.width}px`}" :key="column.key">{{item[column.key]}}</td>
+              </template>
+            </tr>
+            <!-- 展开内容 -->
+            <tr :key="`expand-${item.id}`" v-if="inExpandedIds(item.id)">
+              <td :colspan="columns.length + 2">
+                {{item[expendKey] || '空'}}
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -54,6 +67,7 @@ export default {
         return !(arr.filter(i=> i.id === undefined).length > 0)
       }
     },
+    // 列
     columns: {
       type: Array,
       required: true
@@ -95,11 +109,15 @@ export default {
     // 高度，用于出现固定表头
     height: {
       type: Number,
+    },
+    // 展开内容的key
+    expendKey: {
+      type: String
     }
   },
   data() {
     return {
-
+      expendedItemKeys: []
     };
   },
   watch:{
@@ -157,6 +175,16 @@ export default {
     this.cloneTable.remove()
   },
   methods: {
+    inExpandedIds(id){
+      return this.expendedItemKeys.indexOf(id) > -1
+    },
+    expand(i){
+      if(this.inExpandedIds(i.id)){
+        this.expendedItemKeys.splice(this.expendedItemKeys.indexOf(i.id), 1)
+      }else{
+        this.expendedItemKeys.push(i.id)
+      }
+    },
     updateHeadersWidth(){
       let cloneTable = this.cloneTable;
       // 获取原表头
@@ -174,7 +202,6 @@ export default {
       // 将原来表头的每列宽度赋值给 clone的header
       Array.from(orginHead.children[0].children).map((th, index) => {
         const {width} = th.getBoundingClientRect()
-        console.log(cloneTableHead.children[0].children[index])
         cloneTableHead.children[0].children[index].style.width = width + 'px'
       })
     },
@@ -293,5 +320,15 @@ export default {
     top: 0;
     width: 100%;
   }
+  .expand-icon {
+    cursor: pointer;
+    &.active {
+      transform: rotate(90deg);
+      transition: all .2s;
+    }
+  }
+  .koma-table .table-center{
+    text-align: center;
+  } 
 }
 </style>
