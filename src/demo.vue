@@ -1,91 +1,34 @@
 <template>
   <div id="app">
     <div style="margin: 20px">
-      <g-table :data-source="tableData" :columns="columns" border
-      expand-key="description"
-      :height="400"
-      :orderBy.sync="sortRules"
-      checkable
-      @update:orderBy="x"
-      :loading="loading"
-      @selectedChange="selectedChange"
-      :selectedItems.sync="selectedItems">
-        <template #default="scope">
-          <button>查看</button>
-          <button>编辑</button>
+      <g-upload accept="image/*"  
+        action="https://node-server-file.herokuapp.com/upload"
+        name="file">
+        <button>上传</button>
+        <template slot="tips">
+          <div>只能上传 300kb 以内的png、jpeg文件</div>
         </template>
-      </g-table>
-      <g-table style="margin-top: 20px" :data-source="tableData" :columns="columns" border compact :striped="false"></g-table>
-    </div>
-    <div style="margin: 20px">
-      <g-pager :total-page="20" :current-page.sync="currentPage"></g-pager>
+      </g-upload>
+      <button>保存</button>
     </div>
   </div>
 </template>
 
 <script>
-import GPager from '@/components/pager/pager';
-import GTable from '@/components/table/table';
+import GUpload from '@/components/uploader/uploader';
 
 export default {
   name: 'ButtonDemo',
   components: {
-    GPager,
-    GTable
+    GUpload
   },
   props: {},
   data () {
     return {
-      currentPage: 1,
-      tableData: [
-        { id: 1, name: '花花', score: 100, description: '展示一段描述'},
-        { id: 2, name: '大白', score: 99},
-        { id: 3, name: '小绿', score: 5},
-        { id: 4, name: '安安', score: 100},
-        { id: 5, name: '西西', score: 99},
-        { id: 6, name: '欧欧', score: 5},
-        { id: 7, name: '小绿', score: 5},
-        { id: 8, name: '安安', score: 100},
-        { id: 9, name: '西西', score: 99},
-        { id: 10, name: '欧欧', score: 5},
-        { id: 11, name: '小绿', score: 5},
-        { id: 12, name: '安安', score: 100},
-        { id: 13, name: '西西', score: 99},
-        { id: 14, name: '欧欧', score: 5},
-        { id: 15, name: '小绿', score: 5},
-        { id: 16, name: '安安', score: 100},
-        { id: 17, name: '西西', score: 99},
-        { id: 18, name: '欧欧', score: 5},
-        { id: 19, name: '小绿', score: 5},
-        { id: 20, name: '安安', score: 100},
-      ],
-      columns: [
-        {text: '姓名', key: 'name', width: 200},
-        {text: '分数', key: 'score'},
-      ],
-      sortRules: {
-        score: 'des'
-      },
-      selectedItems: [],
-      loading: false
     };
   },
-  watch: {
-    selectedItems(val){
-      console.log(val)
-    }
-  },
+  watch: {},
   methods: {
-    selectedChange(obj){
-      console.log(obj)
-    },
-    x(){
-      this.loading = true
-      setTimeout(()=>{
-        this.tableData.sort((a, b) => a.score - b.score)
-        this.loading = false
-      }, 3000)
-    },
   },
 }
 
