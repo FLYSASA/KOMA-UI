@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <div style="margin: 20px">
-      <g-upload accept="image/*"  
-        action="https://node-server-file.herokuapp.com/upload"
+      <g-upload accept="image/*"
+        :file-list.sync="fileList"
+        :parseResponse="parseResponse" 
+        action="http://127.0.0.1:3000/upload"
         name="file">
         <button>上传</button>
         <template slot="tips">
@@ -25,10 +27,19 @@ export default {
   props: {},
   data () {
     return {
+      fileList: []
     };
   },
-  watch: {},
+  watch: {
+    fileList(val){
+      console.log(val)
+    }
+  },
   methods: {
+    parseResponse(res){
+      let url = `http://127.0.0.1:3000/preview/${JSON.parse(res).id}`
+      return url;
+    },
   },
 }
 
@@ -38,6 +49,9 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+  ul, li {
+    list-style: none;
   }
   #app {
     margin: 20px;
