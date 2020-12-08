@@ -13,6 +13,7 @@
         <img :src="file.url" width="100" height="100" alt="">
         {{file.name}}
         <button @click="onRemoveFile(file)">删除</button>
+        {{file.status}}
       </li>
     </ol>
   </div>
@@ -59,6 +60,7 @@ export default {
         this.$emit('update:fileList', copy)
       }
     },
+    // 点击上传
     onClickUpload(){
       // create input
       let input = this.createInput()
@@ -70,11 +72,14 @@ export default {
       })
       input.click()
     },
+    // 上传前
     beforeUploadFile(file, newName, url){
       let {type, size} = file
       this.$emit('update:fileList', [...this.fileList, {name: newName, type, size, status: 'uploading'}])
     },
+    // 上传成功后
     afterUploadFile(newName, url){
+      console.log('success', this.fileList)
       // 找到上传成功之前的那个file，更新它的状态
       let copyFileList = JSON.parse(JSON.stringify(this.fileList))
       copyFileList.some((i)=>{
@@ -86,14 +91,17 @@ export default {
       })
       this.$emit('update:fileList', copyFileList)
     },
-    generateName(name){
-      while(this.fileList.filter(f=> f.name === name).length > 0) {
-        let dotIndex = name.lastIndexOf('.')
-        let nameWithoutExtension = name.substring(0, dotIndex)
-        let extension = name.substring(dotIndex)
-        name = nameWithoutExtension + '(1)' + extension
-      }
-      return name;
+    // 上传失败
+    uploadError(newName){
+      console.log('eror', this.fileList)
+      let copyFileList = JSON.parse(JSON.stringify(this.fileList))
+      copyFileList.some((i)=>{
+        if(i.name === newName){
+          i.status = 'fail'
+          return true;
+        }
+      })
+      this.$emit('update:fileList', copyFileList)
     },
     uploadFile(rawFile){
       let {name, type, size} = rawFile
@@ -105,16 +113,30 @@ export default {
       this.doUploadFile(formData, (res)=>{
         this.imgUrl = this.parseResponse(res)
         this.afterUploadFile(newName, this.imgUrl)
+      }, ()=>{
+        this.uploadError(newName)
       })
     },
-    doUploadFile(formData, success) {
+    // 上传中
+    doUploadFile(formData, success, fail) {
+      return;
       let xhr = new XMLHttpRequest()
       xhr.open(this.method, this.action)
       xhr.onload = () => {
         // const res = JSON.parse(xhr.response)   // 反序列化, 将服务端返回的字符串转成对象, 现在将序列化步骤交给使用者
         success(xhr.response)
+        // fail()
       }
       xhr.send(formData)
+    },
+    generateName(name){
+      while(this.fileList.filter(f=> f.name === name).length > 0) {
+        let dotIndex = name.lastIndexOf('.')
+        let nameWithoutExtension = name.substring(0, dotIndex)
+        let extension = name.substring(dotIndex)
+        name = nameWithoutExtension + '(1)' + extension
+      }
+      return name;
     },
     createInput(){
       let input = document.createElement('input')
