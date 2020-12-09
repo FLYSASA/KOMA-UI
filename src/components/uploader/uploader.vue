@@ -55,8 +55,18 @@ export default {
       type: Array,
       default: ()=>[]
     },
+    // 文件大小限制
     sizeLimit: {
       type: Number,
+    },
+    // 接收文件类型
+    accept: {
+      type: String,
+    },
+    // 是否支持多选
+    multiple: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -193,7 +203,8 @@ export default {
       this.$refs.temp.innerHTML = ''
       let input = document.createElement('input')
       input.type = 'file'
-      input.multiple = true
+      input.accept = this.accept
+      input.multiple = this.multiple
       this.$refs.temp.appendChild(input)
       return input;
     },
