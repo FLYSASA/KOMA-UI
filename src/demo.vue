@@ -1,33 +1,35 @@
 <template>
   <div id="app">
+    {{error}}
     <div style="margin: 20px">
       <g-upload accept="image/*"
         :file-list.sync="fileList"
         :parseResponse="parseResponse" 
         action="http://127.0.0.1:3000/upload"
+        @error="error = $event"
+        :sizeLimit="1"
         name="file">
-        <button>上传</button>
-        <template slot="tips">
-          <div>只能上传 300kb 以内的png、jpeg文件</div>
-        </template>
+        <g-button icon="upload">上传</g-button>
       </g-upload>
-      <button>保存</button>
     </div>
   </div>
 </template>
 
 <script>
+import GButton from '@/components/button/button';
 import GUpload from '@/components/uploader/uploader';
 
 export default {
   name: 'ButtonDemo',
   components: {
-    GUpload
+    GUpload,
+    GButton
   },
   props: {},
   data () {
     return {
-      fileList: []
+      fileList: [],
+      error: ''
     };
   },
   watch: {
@@ -36,6 +38,9 @@ export default {
     }
   },
   methods: {
+    onerror(error){
+      alert(error)
+    },
     parseResponse(res){
       let url = `http://127.0.0.1:3000/preview/${JSON.parse(res).id}`
       return url;

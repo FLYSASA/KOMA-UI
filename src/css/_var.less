@@ -23,6 +23,7 @@
 @toast-bg: rgba(0, 0, 0, 0.75);
 @toast-min-height: 40px;
 @gray: #eee;
+@darken-gray: darken(@gray, 20%);
 
 .box-shadow {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
@@ -33,6 +34,12 @@
   100% { transform: rotate(360deg);}
 }
 
+.loading-icon {
+  fill: @color;
+  width: 24px;
+  height: 24px;
+  .spin();
+}
 .spin {
   animation: spin 1s infinite linear;
 }

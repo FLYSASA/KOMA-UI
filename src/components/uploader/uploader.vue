@@ -1,28 +1,39 @@
 <template>
   <div class="koma-uploader">
-    {{fileList}}
     <div @click="onClickUpload" ref="trigger">
       <slot></slot>
     </div>
+    <slot name="tips"></slot>
     <div ref="temp" style="display: none;"></div>
-    <ol>
+    <ol class="koma-uploader-fileList">
       <li v-for="file in fileList" :key="file.name">
         <template v-if="file.status === 'uploading'">
-          菊花
+          <g-icon name="loading" class="loading-icon"></g-icon>
         </template>
-        <img :src="file.url" width="100" height="100" alt="">
-        {{file.name}}
-        <button @click="onRemoveFile(file)">删除</button>
-        {{file.status}}
+        <div class="image-wrapper">
+          <!-- type: "image/png" -->
+          <template v-if="file.type.indexOf('image') === 0">
+            <img :src="file.url" width="32" height="32" alt="">
+          </template>
+          <template v-else>
+            <div class="koma-uploader-defaultImage"></div>
+          </template>
+        </div>
+        <span class="file-name" :class="{[file.status]: file.status}" >{{file.name}}</span>
+        
+        <g-icon name="delete" class="delete-btn" @click="onRemoveFile(file)"></g-icon>
       </li>
     </ol>
   </div>
 </template>
 
 <script>
+import GIcon from '@/components/icon'
 export default {
   name: 'KomaUploader',
-  components: {},
+  components: {
+    GIcon
+  },
   props: {
     name: {
       type: String,
@@ -43,6 +54,9 @@ export default {
     fileList:{
       type: Array,
       default: ()=>[]
+    },
+    sizeLimit: {
+      type: Number,
     }
   },
   data() {
@@ -75,11 +89,17 @@ export default {
     // 上传前
     beforeUploadFile(file, newName, url){
       let {type, size} = file
-      this.$emit('update:fileList', [...this.fileList, {name: newName, type, size, status: 'uploading'}])
+      console.log(this.sizeLimit)
+      if(size > this.sizeLimit){
+        this.$emit('error', '文件大于2MB')
+        return false;
+      } else {
+        this.$emit('update:fileList', [...this.fileList, {name: newName, type, size, status: 'uploading'}])
+        return true;
+      }
     },
     // 上传成功后
     afterUploadFile(newName, url){
-      console.log('success', this.fileList)
       // 找到上传成功之前的那个file，更新它的状态
       let copyFileList = JSON.parse(JSON.stringify(this.fileList))
       copyFileList.some((i)=>{
@@ -92,8 +112,7 @@ export default {
       this.$emit('update:fileList', copyFileList)
     },
     // 上传失败
-    uploadError(newName){
-      console.log('eror', this.fileList)
+    uploadError(newName, xhr){
       let copyFileList = JSON.parse(JSON.stringify(this.fileList))
       copyFileList.some((i)=>{
         if(i.name === newName){
@@ -102,30 +121,38 @@ export default {
         }
       })
       this.$emit('update:fileList', copyFileList)
+      let error = ''
+      if(xhr.status === 0) {
+        error = '网络无法连接'
+      }
+      this.$emit('error', error)
     },
     uploadFile(rawFile){
       let {name, type, size} = rawFile
       let newName = this.generateName(name)
       // 在真正上传成功之前将上传的文件改为loading状态
-      this.beforeUploadFile(rawFile, newName)
+      if(!this.beforeUploadFile(rawFile, newName)){ return };
       let formData = new FormData()
       formData.append(this.name, rawFile)
-      this.doUploadFile(formData, (res)=>{
+      this.doUploadFile(formData, 
+      (res)=>{
         this.imgUrl = this.parseResponse(res)
         this.afterUploadFile(newName, this.imgUrl)
-      }, ()=>{
-        this.uploadError(newName)
+      }, (xhr)=>{
+        console.log(xhr)
+        this.uploadError(newName, xhr)
       })
     },
     // 上传中
     doUploadFile(formData, success, fail) {
-      return;
       let xhr = new XMLHttpRequest()
       xhr.open(this.method, this.action)
       xhr.onload = () => {
         // const res = JSON.parse(xhr.response)   // 反序列化, 将服务端返回的字符串转成对象, 现在将序列化步骤交给使用者
         success(xhr.response)
-        // fail()
+      }
+      xhr.onerror = ()=>{
+        fail(xhr)
       }
       xhr.send(formData)
     },
@@ -139,6 +166,7 @@ export default {
       return name;
     },
     createInput(){
+      this.$refs.temp.innerHTML = ''
       let input = document.createElement('input')
       input.type = 'file'
       this.$refs.temp.appendChild(input)
@@ -148,6 +176,38 @@ export default {
 };
 </script>
 <style lang='less' scoped>
+@import 'css/_var';
 .koma-uploader {
+  &-fileList {
+    > li {
+      display: flex;
+      align-items: center;
+      border: 1px solid @darken-gray;
+      margin: 8px 0;
+    }
+  }
+  &-defaultImage{
+    width: 24px;
+    height: 24px;
+    border: 1px solid @darken-gray;
+  }
+  .image-wrapper {
+    display: inline-flex;
+    margin-right: 8px;
+  }
+  .file-name {
+    &.success {
+      color: green;
+    }
+    &.fail {
+      color: red;
+    }
+  }
+  .delete-btn{
+    cursor: pointer;
+    fill: @color;
+    margin-left: auto;
+    margin-right: 4px;
+  }
 }
 </style>
