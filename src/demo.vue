@@ -3,7 +3,6 @@
     {{error}}
     <div style="margin: 20px">
       <g-upload accept="image/*"
-      @addFile="addFile"
         :file-list.sync="fileList"
         :parseResponse="parseResponse" 
         action="http://127.0.0.1:3000/upload"
@@ -38,9 +37,6 @@ export default {
     }
   },
   methods: {
-    addFile(file){
-      this.fileList.push(file)
-    },
     onerror(error){
       alert(error)
     },

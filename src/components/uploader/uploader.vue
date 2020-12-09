@@ -90,16 +90,26 @@ export default {
       input.click()
     },
     // 上传前
-    beforeUploadFile(file, newName, url){
-      let {type, size} = file
-      if(size > this.sizeLimit){
-        this.$emit('error', '文件大于2MB')
-        return false;
-      } else {
-        // this.$emit('update:fileList', [...this.fileList, {name: newName, type, size, status: 'uploading'}])
-        this.$emit('addFile', {name: newName, type, size, status: 'uploading'})
-        return true;
+    // rawFiles 注意这里的这个是个文件对象需要转一下
+    beforeUploadFile(rawFiles, newNames){
+      rawFiles = Array.from(rawFiles)
+      for(let i=0; i<rawFiles.length; i++){
+        let {type, size} = rawFiles[i]
+        if(size > this.sizeLimit){
+          this.$emit('error', '文件大于2MB')
+          return false;
+        }
       }
+      // 所以这一步主要为了加上newName和status
+      let arr = rawFiles.map((rawFile, index)=> {
+        return {
+          name: newNames[index], 
+          type: rawFile.type, 
+          size: rawFile.size, 
+          status: 'uploading'
+        }})
+      this.$emit('update:fileList', [...this.fileList, ...arr])
+      return true;
     },
     // 上传成功后
     afterUploadFile(newName, url){
@@ -131,17 +141,25 @@ export default {
       this.$emit('error', error)
     },
     uploadFile(rawFiles){
+      let newNames = []
+      for(let i=0; i<rawFiles.length; i++){
+        let rawFile = rawFiles[i]
+        let {name} = rawFile
+        let newName = this.generateName(name)
+        // 不改变真实的rawFiles， 将新的name用数组存起来
+        newNames[i] = newName
+      }
+      // 在真正上传成功之前将上传的文件改为loading状态
+      if(!this.beforeUploadFile(rawFiles, newNames)){ return };
       for(let i=0; i<rawFiles.length; i++){
         let rawFile = rawFiles[i]
         let {name, type, size} = rawFile
-        let newName = this.generateName(name)
-        // 在真正上传成功之前将上传的文件改为loading状态
-        if(!this.beforeUploadFile(rawFile, newName)){ return };
+        let newName = newNames[i]
+
         let formData = new FormData()
         formData.append(this.name, rawFile)
         this.doUploadFile(formData, 
         (res)=>{
-          console.log(this.fileList)
           this.imgUrl = this.parseResponse(res)
           this.afterUploadFile(newName, this.imgUrl)
         }, (xhr)=>{
