@@ -3,11 +3,11 @@
     {{error}}
     <div style="margin: 20px">
       <g-upload accept="image/*"
+      @addFile="addFile"
         :file-list.sync="fileList"
         :parseResponse="parseResponse" 
         action="http://127.0.0.1:3000/upload"
         @error="error = $event"
-        :sizeLimit="1"
         name="file">
         <g-button icon="upload">上传</g-button>
       </g-upload>
@@ -34,10 +34,13 @@ export default {
   },
   watch: {
     fileList(val){
-      console.log(val)
+      // console.log(val)
     }
   },
   methods: {
+    addFile(file){
+      this.fileList.push(file)
+    },
     onerror(error){
       alert(error)
     },

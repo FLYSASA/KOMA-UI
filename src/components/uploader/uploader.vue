@@ -80,8 +80,11 @@ export default {
       let input = this.createInput()
       // listen to input
       input.addEventListener('change', ()=>{
-        let rawFile = input.files[0]
-        this.uploadFile(rawFile)
+        // let rawFile = input.files[0]
+        // this.uploadFile(rawFile)
+        // 将之前的单文件改为多文件上传处理
+        let rawFiles = input.files
+        this.uploadFile(rawFiles)
         input.remove()
       })
       input.click()
@@ -89,12 +92,12 @@ export default {
     // 上传前
     beforeUploadFile(file, newName, url){
       let {type, size} = file
-      console.log(this.sizeLimit)
       if(size > this.sizeLimit){
         this.$emit('error', '文件大于2MB')
         return false;
       } else {
-        this.$emit('update:fileList', [...this.fileList, {name: newName, type, size, status: 'uploading'}])
+        // this.$emit('update:fileList', [...this.fileList, {name: newName, type, size, status: 'uploading'}])
+        this.$emit('addFile', {name: newName, type, size, status: 'uploading'})
         return true;
       }
     },
@@ -127,21 +130,24 @@ export default {
       }
       this.$emit('error', error)
     },
-    uploadFile(rawFile){
-      let {name, type, size} = rawFile
-      let newName = this.generateName(name)
-      // 在真正上传成功之前将上传的文件改为loading状态
-      if(!this.beforeUploadFile(rawFile, newName)){ return };
-      let formData = new FormData()
-      formData.append(this.name, rawFile)
-      this.doUploadFile(formData, 
-      (res)=>{
-        this.imgUrl = this.parseResponse(res)
-        this.afterUploadFile(newName, this.imgUrl)
-      }, (xhr)=>{
-        console.log(xhr)
-        this.uploadError(newName, xhr)
-      })
+    uploadFile(rawFiles){
+      for(let i=0; i<rawFiles.length; i++){
+        let rawFile = rawFiles[i]
+        let {name, type, size} = rawFile
+        let newName = this.generateName(name)
+        // 在真正上传成功之前将上传的文件改为loading状态
+        if(!this.beforeUploadFile(rawFile, newName)){ return };
+        let formData = new FormData()
+        formData.append(this.name, rawFile)
+        this.doUploadFile(formData, 
+        (res)=>{
+          console.log(this.fileList)
+          this.imgUrl = this.parseResponse(res)
+          this.afterUploadFile(newName, this.imgUrl)
+        }, (xhr)=>{
+          this.uploadError(newName, xhr)
+        })
+      }
     },
     // 上传中
     doUploadFile(formData, success, fail) {
@@ -169,6 +175,7 @@ export default {
       this.$refs.temp.innerHTML = ''
       let input = document.createElement('input')
       input.type = 'file'
+      input.multiple = true
       this.$refs.temp.appendChild(input)
       return input;
     },
