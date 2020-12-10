@@ -15,12 +15,12 @@ describe('Uploader.vue', () => {
     http.post = (url, options) => {
       setTimeout(()=>{
         options.success('{"id": "123"}')
-        setTimeout(()=>{
-          expect(wrapper.find('.file-name').classes()).contain('success')
-          expect(wrapper.find('img').exists()).to.eq(true)
-          expect(wrapper.find('img').attributes('src')).to.eq('/preview/123')
-          done()
-        })
+        // setTimeout(()=>{
+        //   expect(wrapper.find('.file-name').classes()).contain('success')
+        //   expect(wrapper.find('img').exists()).to.eq(true)
+        //   expect(wrapper.find('img').attributes('src')).to.eq('/preview/123')
+        //   done()
+        // })
       }, 1000)
     }
     const wrapper = mount(Uploader, {
@@ -30,7 +30,6 @@ describe('Uploader.vue', () => {
         method: 'post',
         parseResponse: (response)=> {
           let res = JSON.parse(response)
-          console.log(res)
           return `/preview/${res.id}`
         },
         fileList: []
@@ -42,6 +41,13 @@ describe('Uploader.vue', () => {
       listeners: {
         'update:fileList': (fileList)=>{
           wrapper.setProps({fileList})
+        },
+        'uploaded': ()=>{
+          setTimeout(()=>{
+            expect(wrapper.find('.file-name').classes()).contain('success')
+            expect(wrapper.find('img').attributes('src')).to.eq('/preview/123')
+            done()
+          })
         }
       }
     })

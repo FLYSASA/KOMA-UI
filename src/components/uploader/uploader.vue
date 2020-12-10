@@ -132,6 +132,7 @@ export default {
         }
       })
       this.$emit('update:fileList', copyFileList)
+      this.$emit('uploaded')
     },
     // 上传失败
     uploadError(newName, xhr){
@@ -171,7 +172,7 @@ export default {
           // success
           (res)=>{
             this.imgUrl = this.parseResponse(res)
-            console.log(this.imgUrl)
+            
             this.afterUploadFile(newName, this.imgUrl)
           }, 
           // error
