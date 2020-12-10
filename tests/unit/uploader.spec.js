@@ -12,17 +12,17 @@ describe('Uploader.vue', () => {
   })
   it('可以上传一个文件', (done)=>{
     // 模拟一个post请求
-    http.post = (url, options) => {
+    // http.post = (url, options) => {
+    //   setTimeout(()=>{
+    //     options.success('{"id": "123"}')
+    //   }, 1000)
+    // }
+    // 改为 sinon 模拟 http的post方法
+    let stub = sinon.stub(http, 'post').callsFake((url, options)=>{
       setTimeout(()=>{
         options.success('{"id": "123"}')
-        // setTimeout(()=>{
-        //   expect(wrapper.find('.file-name').classes()).contain('success')
-        //   expect(wrapper.find('img').exists()).to.eq(true)
-        //   expect(wrapper.find('img').attributes('src')).to.eq('/preview/123')
-        //   done()
-        // })
       }, 1000)
-    }
+    })
     const wrapper = mount(Uploader, {
       propsData: {
         name: 'file',
@@ -46,6 +46,8 @@ describe('Uploader.vue', () => {
           setTimeout(()=>{
             expect(wrapper.find('.file-name').classes()).contain('success')
             expect(wrapper.find('img').attributes('src')).to.eq('/preview/123')
+            // 将http.post方法重置成默认的，以免影响下个测试用例
+            stub.restore()
             done()
           })
         }
@@ -68,5 +70,10 @@ describe('Uploader.vue', () => {
       let use = wrapper.find('use').element
       expect(use.getAttribute('xlink:href')).to.eq('#i-loading')
     })
+  })
+
+  it('test', ()=>{
+    console.log('test')
+    http.post()
   })
 })
