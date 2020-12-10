@@ -71,9 +71,4 @@ describe('Uploader.vue', () => {
       expect(use.getAttribute('xlink:href')).to.eq('#i-loading')
     })
   })
-
-  it('test', ()=>{
-    console.log('test')
-    http.post()
-  })
 })
