@@ -20,7 +20,6 @@
           </template>
         </div>
         <span class="file-name" :class="{[file.status]: file.status}" >{{file.name}}</span>
-        
         <g-icon name="delete" class="delete-btn" @click="onRemoveFile(file)"></g-icon>
       </li>
     </ol>
@@ -28,6 +27,7 @@
 </template>
 
 <script>
+import http from '@/defs/http'
 import GIcon from '@/components/icon'
 export default {
   name: 'KomaUploader',
@@ -62,6 +62,7 @@ export default {
     // 接收文件类型
     accept: {
       type: String,
+      default: '*'
     },
     // 是否支持多选
     multiple: {
@@ -89,9 +90,7 @@ export default {
       // create input
       let input = this.createInput()
       // listen to input
-      input.addEventListener('change', ()=>{
-        // let rawFile = input.files[0]
-        // this.uploadFile(rawFile)
+      input.addEventListener('change', (e)=>{
         // 将之前的单文件改为多文件上传处理
         let rawFiles = input.files
         this.uploadFile(rawFiles)
@@ -169,26 +168,22 @@ export default {
         let formData = new FormData()
         formData.append(this.name, rawFile)
         this.doUploadFile(formData, 
-        (res)=>{
-          this.imgUrl = this.parseResponse(res)
-          this.afterUploadFile(newName, this.imgUrl)
-        }, (xhr)=>{
-          this.uploadError(newName, xhr)
-        })
+          // success
+          (res)=>{
+            this.imgUrl = this.parseResponse(res)
+            console.log(this.imgUrl)
+            this.afterUploadFile(newName, this.imgUrl)
+          }, 
+          // error
+          (xhr)=>{
+            this.uploadError(newName, xhr)
+          }
+        )
       }
     },
     // 上传中
     doUploadFile(formData, success, fail) {
-      let xhr = new XMLHttpRequest()
-      xhr.open(this.method, this.action)
-      xhr.onload = () => {
-        // const res = JSON.parse(xhr.response)   // 反序列化, 将服务端返回的字符串转成对象, 现在将序列化步骤交给使用者
-        success(xhr.response)
-      }
-      xhr.onerror = ()=>{
-        fail(xhr)
-      }
-      xhr.send(formData)
+      http[this.method.toLowerCase()](this.action, { success, fail, formData })
     },
     generateName(name){
       while(this.fileList.filter(f=> f.name === name).length > 0) {
