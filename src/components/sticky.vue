@@ -19,6 +19,7 @@ export default {
       left: null,
       width: null,
       height: null,
+      timerId: null,
     };
   },
   computed:{
@@ -44,17 +45,24 @@ export default {
   },
   methods: {
     _windowScrollHandler () {
-      // top为负值时就滚过去了
-      if(window.scrollY > this.top){
-        // 改变状态时才去获取高度，保证图片加载时，时间过长获取高度不准确的问题
-        let { height, left, width } = this.$refs.wrapper.getBoundingClientRect()
-        this.height = height + 'px'
-        this.left = left + 'px'
-        this.width = width + 'px'
-        this.sticky = true
-      } else {
-        this.sticky = false
+      let stickyIt = ()=>{
+        // top为负值时就滚过去了
+        if(window.scrollY > this.top){
+          // 改变状态时才去获取高度，保证图片加载时，时间过长获取高度不准确的问题
+          let { height, left, width } = this.$refs.wrapper.getBoundingClientRect()
+          this.height = height + 'px'
+          this.left = left + 'px'
+          this.width = width + 'px'
+          this.sticky = true
+        } else {
+          this.sticky = false
+        }
       }
+      stickyIt();
+      // 下面这段代码是防抖，为了sitcky的流畅性，去掉
+      // 其实下面这个timerId是一直都有的，因为每次都赋予了新的
+      // if(this.timerId) { window.clearTimeout(this.timerId) }
+      // this.timerId = setTimeout(stickyIt, 1000);
     }
   },
 };
