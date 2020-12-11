@@ -1,7 +1,7 @@
 {
-  "name": "KOMA-UI",
-  "version": "0.1.0",
-  "private": true,
+  "name": "koma-ui",
+  "version": "0.0.6",
+  "main": "dist/koma.umd.min.js",
   "scripts": {
     "start": "npm run serve",
     "serve": "vue-cli-service serve --open",
