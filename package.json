@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run serve",
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name koma src/index.js",
     "test": "karma start --single-run",
     "test:unit": "karma start",
     "test:unit:cli": "vue-cli-service test:unit",
