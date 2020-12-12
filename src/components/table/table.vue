@@ -7,17 +7,17 @@
             <th v-if="expandKey" :style="{width: '50px'}" class="table-center"></th>
             <th v-if="checkable" :style="{width: '50px'}" class="table-center"><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
             <th v-if="numberVisible" :style="{width: '50px'}">#</th>
-            <th :style="{width: `${column.width}px`}" v-for="column in columns" :key="column.key">
+            <th :style="{width: `${column.width}px`}" v-for="column in columns" :key="column.prop">
               <div class="kama-table-name" 
-                @click="changeOrderBy(column.key)">
+                @click="changeOrderBy(column.prop)">
                 {{column.text}}
-                <span class="koma-sorter" v-if="column.key in orderBy" >
-                  <g-icon name="ascending" :class="{active: orderBy[column.key] === 'asc'}"></g-icon>
-                  <g-icon name="descending" :class="{active: orderBy[column.key] === 'desc'}"></g-icon>
+                <span class="koma-sorter" v-if="column.prop in orderBy" >
+                  <g-icon name="ascending" :class="{active: orderBy[column.prop] === 'asc'}"></g-icon>
+                  <g-icon name="descending" :class="{active: orderBy[column.prop] === 'desc'}"></g-icon>
                 </span>
               </div>
             </th>
-            <th ref="actionsHeader" v-if="$scopedSlots.default"></th>
+            <th ref="actionsHeader" v-if="$scopedSlots.default && false"></th>
             <!-- 因为滚动条占据宽度，导致表头与列不对齐，这里给表头一个gutter来让其等于滚动条的宽度保证对齐 -->
             <th class="gutter" ref="gutter"></th>
           </tr>
@@ -37,9 +37,16 @@
               </td>
               <td v-if="numberVisible" :style="{width: '50px'}">{{index + 1}}</td>
               <template v-for="column in columns">
-                <td :style="{width: `${column.width}px`}" :key="column.key">{{item[column.key]}}</td>
+                <td :style="{width: `${column.width}px`}" :key="column.prop">
+                  <template v-if="column.render">
+                    <vnodes :vnodes="column.render({row: item})"></vnodes>
+                  </template>
+                  <template v-else>
+                    {{item[column.prop]}}
+                  </template>
+                </td>
               </template>
-              <td v-if="$scopedSlots.default">
+              <td v-if="$scopedSlots.default && false">
                 <div ref="actions" style="display: inline-block;">
                   <slot :row="item"></slot>
                 </div>
@@ -65,7 +72,13 @@
 import GIcon from '../icon';
 export default {
   name: 'KomaTable',
-  components: { GIcon },
+  components: { 
+    GIcon,
+    Vnodes: {
+      functional: true,
+      render: (h, ctx) => ctx.props.vnodes
+    }
+  },
   props: {
     dataSource: {
       type: Array,
@@ -76,10 +89,10 @@ export default {
       }
     },
     // 列
-    columns: {
-      type: Array,
-      required: true
-    },
+    // columns: {
+    //   type: Array,
+    //   required: true
+    // },
     numberVisible: {
       type: Boolean,
       default: false
@@ -129,7 +142,8 @@ export default {
   },
   data() {
     return {
-      expendedItemKeys: []
+      expendedItemKeys: [],
+      columns: []
     };
   },
   watch:{
@@ -178,12 +192,20 @@ export default {
     },
   },
   mounted() {
+    this.columns = this.$slots.default.map(node => {
+      // node.componentOptions.propsData 即挂载在插槽组件的prop上的
+      let { text, prop, width} = node.componentOptions.propsData
+      let render = node.data.scopedSlots && node.data.scopedSlots.default
+      console.log(node.data, render)
+      return {text, prop, width, render}
+    })
+    console.log(this.columns)
     // 固定表头
     this.fixedHeader()
     // 给表头追加滚动条的宽度
     this.addThGutter()
     // 计算操作列的宽度
-    this.updateActionWidth()
+    // this.updateActionWidth()
   },
   beforeDestroy(){
     this.cloneTable.remove()
@@ -265,15 +287,15 @@ export default {
         cloneTableHead.children[0].children[index].style.width = width + 'px'
       })
     },
-    changeOrderBy(key){
+    changeOrderBy(prop){
       const copy = JSON.parse(JSON.stringify(this.orderBy))
-      let oldValue = copy[key]
+      let oldValue = copy[prop]
       if (oldValue === 'asc') {
-        copy[key] = 'desc'
+        copy[prop] = 'desc'
       } else if (oldValue === 'desc') {
-        copy[key] = true
+        copy[prop] = true
       } else {
-        copy[key] = 'asc'
+        copy[prop] = 'asc'
       }
       this.$emit('update:orderBy', copy)
     },
