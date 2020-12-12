@@ -43,9 +43,11 @@ describe('Button.vue', () => {
       }
     })
     const vm = wrapper.vm
-    const icon = vm.$el.querySelector('svg')
-    expect(getComputedStyle(icon).order).to.eq('1')
-    wrapper.destroy()
+    vm.$nextTick().then(()=>{
+      const icon = vm.$el.querySelector('svg')
+      expect(getComputedStyle(icon).order).to.eq('1')
+      wrapper.destroy()
+    })
   })
 
   it('设置 iconPosition 可以改变 order', () => {
@@ -61,9 +63,11 @@ describe('Button.vue', () => {
       }
     })
     const vm = wrapper.vm
-    const icon = vm.$el.querySelector('svg')
-    expect(getComputedStyle(icon).order).to.eq('2')
-    wrapper.destroy()
+    vm.$nextTick().then(()=>{
+      const icon = vm.$el.querySelector('svg')
+      expect(getComputedStyle(icon).order).to.eq('2')
+      wrapper.destroy()
+    })
   })
   it('点击 button 触发 click 事件', () => {
     const wrapper = mount(Button, {

@@ -54,7 +54,10 @@
     &:hover {border-color: @border-color-hover;}
     &:active { background-color: @button-active-bg; }
     &:focus { outline: none; }
-    > .icon { order: 1; margin-right: .3em; }
+    > .icon { 
+      order: 1; 
+      margin-right: .3em; 
+    }
     > .content{
       order: 2;
     }
