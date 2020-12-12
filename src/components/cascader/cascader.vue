@@ -18,7 +18,7 @@
 
 <script>
 import cascaderItem from './cascader-item'
-import ClickOutside from '../../directives/click-outside';
+import ClickOutside from '@/components/directives/click-outside';
 
 export default {
   name: 'KomaCascader',

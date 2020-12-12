@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import {shallowMount, mount} from '@vue/test-utils'
 import Uploader from '@/components/uploader/uploader'
-import http from '@/defs/http'
+import http from '@/components/defs/http'
 chai.use(sinonChai)
 
 describe('Uploader.vue', () => {

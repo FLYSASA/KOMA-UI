@@ -23,7 +23,7 @@
 
 <script>
 import GIcon from '../icon'
-import ClickOutside from '../../directives/click-outside';
+import ClickOutside from '@/components/directives/click-outside';
 export default {
   name: 'KomaSubNav',
   components: {

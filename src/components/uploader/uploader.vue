@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import http from '@/defs/http'
+import http from '@/components/defs/http'
 import GIcon from '@/components/icon'
 export default {
   name: 'KomaUploader',

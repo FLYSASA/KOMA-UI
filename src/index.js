@@ -39,7 +39,7 @@ export {default as Popover} from '@/components/popover'
 export {default as Sticky} from '@/components/sticky'
 export {default as Toast} from '@/components/toast'
 
-export {default as Http} from '@/defs/http'
-export {default as ClickOutside} from '@/directives/click-outside'
+export {default as Http} from '@/components/defs/http'
+export {default as ClickOutside} from '@/components/directives/click-outside'
 
 
