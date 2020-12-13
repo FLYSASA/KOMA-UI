@@ -17,7 +17,7 @@
                 </span>
               </div>
             </th>
-            <th ref="actionsHeader" v-if="$scopedSlots.default && false"></th>
+            <th ref="actionsHeader" v-if="$scopedSlots.action">操作</th>
             <!-- 因为滚动条占据宽度，导致表头与列不对齐，这里给表头一个gutter来让其等于滚动条的宽度保证对齐 -->
             <th class="gutter" ref="gutter"></th>
           </tr>
@@ -39,6 +39,7 @@
               <template v-for="column in columns">
                 <td :style="{width: `${column.width}px`}" :key="column.prop">
                   <template v-if="column.render">
+                    <!-- 使用render的方式，可以将孙组件里的html直接渲染到父组件上，并且可以通过传递参数到slot-scope上 -->
                     <vnodes :vnodes="column.render({row: item})"></vnodes>
                   </template>
                   <template v-else>
@@ -46,9 +47,9 @@
                   </template>
                 </td>
               </template>
-              <td v-if="$scopedSlots.default && false">
+              <td v-if="$scopedSlots.action">
                 <div ref="actions" style="display: inline-block;">
-                  <slot :row="item"></slot>
+                  <slot :row="item" name="action"></slot>
                 </div>
               </td>
             </tr>
@@ -192,20 +193,19 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$slots, this.$scopedSlots)
     this.columns = this.$slots.default.map(node => {
       // node.componentOptions.propsData 即挂载在插槽组件的prop上的
       let { text, prop, width} = node.componentOptions.propsData
       let render = node.data.scopedSlots && node.data.scopedSlots.default
-      console.log(node.data, render)
       return {text, prop, width, render}
     })
-    console.log(this.columns)
     // 固定表头
     this.fixedHeader()
     // 给表头追加滚动条的宽度
     this.addThGutter()
     // 计算操作列的宽度
-    // this.updateActionWidth()
+    this.updateActionWidth()
   },
   beforeDestroy(){
     this.cloneTable.remove()
@@ -238,8 +238,7 @@ export default {
       }
     },
     updateActionWidth(){
-      console.log(this.$scopedSlots)
-      if(this.$scopedSlots.default) {
+      if(this.$scopedSlots.action) {
         let div = this.$refs.actions[0]
         let {width} = div.getBoundingClientRect()
         let parent = div.parentNode   // td

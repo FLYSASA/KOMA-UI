@@ -10,21 +10,24 @@
       :loading="loading"
       @selectedChange="selectedChange"
       :selectedItems.sync="selectedItems">
-        <!-- <template #default="scope">
-          <button>查看</button>
-          <button>编辑</button>
-        </template> -->
-
+      
         <g-table-column prop="name" text="姓名" :width="100">
           <template slot-scope="scope">
-            <span>{{scope}}</span>
+            <span>{{scope.row.name}}</span>
           </template>
         </g-table-column>
+
         <g-table-column prop="score" text="分数">
           <template slot-scope="scope">
             <span>{{scope.row.score}}</span>
           </template>
         </g-table-column>
+
+        <template #action="row">
+          {{row}}
+          <button>查看</button>
+          <button>编辑</button>
+        </template>
 
       </g-table>
     </div>

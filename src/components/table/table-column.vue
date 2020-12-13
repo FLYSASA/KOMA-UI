@@ -18,20 +18,6 @@ export default {
     width: {
       type: Number,
     }
-  },
-  data() {
-    return {
-
-    };
-  },
-
-  computed: {},
-
-  created() {},
-
-  methods: {},
+  }
 };
 </script>
-<style lang='less' scoped>
-
-</style>
