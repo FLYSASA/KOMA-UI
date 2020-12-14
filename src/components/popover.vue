@@ -1,6 +1,6 @@
 <template>
   <div class="popover" ref="popover">
-    <div ref="popoverContent" class="content-wrapper" v-if="visible"
+    <div ref="popoverContent" class="koma-popover-content-wrapper" v-if="visible"
       :class="{[`position-${position}`]:true}">
       <slot name="content" :close="close"></slot>
     </div>
@@ -27,6 +27,9 @@ export default {
       validator(val){
         return ['click', 'hover'].indexOf(val) >= 0
       }
+    },
+    container: {
+      type: Element
     }
   },
   data() {
@@ -62,7 +65,7 @@ export default {
       const { popoverContent, triggerWrapper } = this.$refs
       if(!popoverContent){return;}
       // 需要先挂载到页面上，才能设样式
-      document.body.appendChild(popoverContent)
+      (this.container || document.body).appendChild(popoverContent)
 
       const { left, top, height, width } = triggerWrapper.getBoundingClientRect()
       const { height: height2 } = popoverContent.getBoundingClientRect()
@@ -132,7 +135,7 @@ export default {
     vertical-align: top;
     position: relative;
   }
-  .content-wrapper {
+  .koma-popover-content-wrapper {
     position: absolute;
     border: 1px solid @color;
     border-radius: @border-radius;
