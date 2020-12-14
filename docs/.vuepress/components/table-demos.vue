@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div style="margin: 20px">
-      <g-table :data-source="tableData" :columns="columns" border
+      <g-table :data-source="tableData" border
       expand-key="description"
       :height="400"
       :orderBy.sync="sortRules"
@@ -10,12 +10,26 @@
       :loading="loading"
       @selectedChange="selectedChange"
       :selectedItems.sync="selectedItems">
-        <template #default="scope">
+      
+        <g-table-column prop="name" text="姓名" :width="100">
+          <template slot-scope="scope">
+            <span>{{scope.row.name}}</span>
+          </template>
+        </g-table-column>
+
+        <g-table-column prop="score" text="分数">
+          <template slot-scope="scope">
+            <span>{{scope.row.score}}</span>
+          </template>
+        </g-table-column>
+
+        <template #action="row">
+          {{row}}
           <button>查看</button>
           <button>编辑</button>
         </template>
+
       </g-table>
-      <g-table style="margin-top: 20px" :data-source="tableData" :columns="columns" border compact :striped="false"></g-table>
     </div>
     <div style="margin: 20px">
       <g-pager :total-page="20" :current-page.sync="currentPage"></g-pager>
@@ -26,12 +40,14 @@
 <script>
 import GPager from '@/components/pager/pager';
 import GTable from '@/components/table/table';
+import GTableColumn from '@/components/table/table-column'
 
 export default {
   name: 'ButtonDemo',
   components: {
     GPager,
-    GTable
+    GTable,
+    GTableColumn
   },
   props: {},
   data () {
@@ -59,10 +75,10 @@ export default {
         { id: 19, name: '小绿', score: 5},
         { id: 20, name: '安安', score: 100},
       ],
-      columns: [
-        {text: '姓名', key: 'name', width: 200},
-        {text: '分数', key: 'score'},
-      ],
+      // columns: [
+      //   {text: '姓名', prop: 'name', width: 200},
+      //   {text: '分数', prop: 'score'},
+      // ],
       sortRules: {
         score: 'des'
       },
