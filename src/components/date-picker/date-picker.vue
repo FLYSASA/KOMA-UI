@@ -22,7 +22,7 @@
                 </span>
               </div>
               <div :class="c('row')" v-for="i in helper.getRange(1, 6)">
-                <span :class="c('col')" v-for="j in helper.getRange(1, 7)">
+                <span :class="c('cell')" v-for="j in helper.getRange(1, 7)">
                   {{visibleDays[(i-1)*7 + j - 1].getDate()}}
                 </span>
               </div>
@@ -71,25 +71,14 @@ export default {
       let last = helper.lastDayOfMonth(date)
       let arr = []
       let [year, month, day] = helper.getYearMonthDate(date)
-      // getDate() 返回1-31的整数值
-      for(let i = first.getDate(); i <= last.getDate(); i++){
-        arr.push(new Date(year, month, i))
+      // getDate() 返回1-31的整数值,  getDay() 返回 0-6 0代表星期日
+      let weekDay = first.getDay()  // 算出当月第一天是星期几
+      let x = first - (weekDay === 0 ? 6 : weekDay - 1) * 3600 * 24 * 1000  // 计算第一排第一个的天数
+      for (let i = 0; i < 42; i++) {
+        arr.push(new Date(x + i*3600*24*1000)) // 从第一天每次加一天
       }
-      let n = first.getDay() === 0 ? 6 : first.getDay() - 1   // getDay返回0-6， 0代表星期天
-      let arr2 = []
-      for(let i = 0; i < n; i++){
-        arr2.push(new Date(year, month, -i))
-      }
-      arr2 = arr2.reverse()
-      console.log(arr2)
-      let m = 42 - arr.length - arr2.length
-      let arr3 = []
-      for(let i = 1; i <= m; i++){
-        arr3.push(new Date(year, month + 1, i))
-      }
-      let arr4 = [...arr2, ...arr, ...arr3]
-      console.log(arr4)
-      return arr4;
+      return arr;
+      
     }
   },
   mounted() {
