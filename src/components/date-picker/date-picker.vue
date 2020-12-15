@@ -1,7 +1,7 @@
 <template>
   <div style="border: 1px solid;" class="koma-date-picker-wrapper" ref="dateWrapper">
     <g-popover position="bottom" :container="dateWrapper">
-      <g-input type="text"></g-input>
+      <g-input type="text" :value="formattedValue"></g-input>
       <template slot="content">
         <div class="koma-date-picker-pop">
           <div class="koma-date-picker-nav">
@@ -24,8 +24,11 @@
                 </span>
               </div>
               <div :class="c('row')" v-for="i in helper.getRange(1, 6)" :key="i">
-                <span :class="c('cell')" v-for="j in helper.getRange(1, 7)" :key="j">
-                  {{visibleDays[(i-1)*7 + j - 1].getDate()}}
+                <span 
+                  :class="[c('cell'), {currentMonth: isCurrentMonth(getVisibleDay(i, j))}]" 
+                  @click="onClickCell(getVisibleDay(i, j))"
+                  v-for="j in helper.getRange(1, 7)" :key="j">
+                    {{ getVisibleDay(i, j).getDate() }}
                 </span>
               </div>
             </div>
@@ -55,17 +58,24 @@ export default {
     GIcon,
     GPopover,
   },
-  props: {},
+  props: {
+    value: {
+      type: Date,
+    }
+  },
   data() {
     return {
       mode: 'days',
-      value: new Date(),
       helper,
       weekdays: ['一', '二', '三', '四','五','六','日'],
       dateWrapper: null
     };
   },
   computed: {
+    formattedValue(){
+      const [ year, month, day] = helper.getYearMonthDate(this.value)
+      return `${year}-${month + 1}-${day}`
+    },
     visibleDays(){
       // 验证正确性的时候，可以let date = new Date(2020, 0, 30)  随便写个日期去验证，比如这里的2020年1月（月要-1）30号
       let date = this.value
@@ -80,7 +90,6 @@ export default {
         arr.push(new Date(x + i*3600*24*1000)) // 从第一天每次加一天
       }
       return arr;
-      
     }
   },
   mounted() {
@@ -90,16 +99,30 @@ export default {
     c(...classNames) {
       return classNames.map(className => `koma-date-picker-${className}`)
     },
-    onClickYear(){
+    isCurrentMonth(date) {
+      let [year1, month1] = helper.getYearMonthDate(date)
+      let [year2, month2] = helper.getYearMonthDate(this.value) // 当前年月
+      return year1 === year2 && month1 === month2
+    },
+    getVisibleDay (row, col) {
+      return this.visibleDays[(row-1)*7 + col - 1]
+    },
+    onClickCell (date) {
+      if(this.isCurrentMonth(date)) {
+        this.$emit('input', date)
+      }
+    },
+    onClickYear () {
       this.mode = 'years'
     },
-    onClickMonth(){
+    onClickMonth () {
       this.mode = 'month'
     },
   },
 };
 </script>
 <style lang='less' scoped>
+@import 'css/_var';
 .koma-date-picker {
   &-wrapper {
     /deep/ .koma-popover-content-wrapper {
@@ -119,6 +142,12 @@ export default {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+  }
+  &-cell {
+    color: @darken-gray;
+    &.currentMonth {
+      color: @color;
+    }
   }
 }
 </style>
