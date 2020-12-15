@@ -5,24 +5,26 @@
       <template slot="content">
         <div class="koma-date-picker-pop">
           <div class="koma-date-picker-nav">
-            <span><g-icon name="double-left"></g-icon></span>
-            <span><g-icon name="left"></g-icon></span>
-            <span @click="onClickYear">2012年</span>
-            <span @click="onClickMonth">8月</span>
-            <span><g-icon name="right"></g-icon></span>
-            <span><g-icon name="double-right"></g-icon></span>
+            <span :class="c('prevYear', 'navItem')"><g-icon name="double-left"></g-icon></span>
+            <span :class="c('prevMonth', 'navItem')"><g-icon name="left"></g-icon></span>
+            <span :class="c('yearAndMonth')">
+            	<span @click="onClickYear">2012年</span>
+            	<span @click="onClickMonth">8月</span>
+            </span>
+            <span :class="c('nextMonth', 'navItem')"><g-icon name="right"></g-icon></span>
+            <span :class="c('nextYear', 'navItem')"><g-icon name="double-right"></g-icon></span>
           </div>
           <div class="koma-date-picker-panels">
             <div v-if="mode==='years'" class="koma-date-picker-content">年</div>
             <div v-else-if="mode === 'month'" class="koma-date-picker-content">月</div>
             <div v-else class="koma-date-picker-content">
               <div :class="c('weekdays')">
-                <span v-for="i in 7">
+                <span v-for="i in 7"  :key="i" :class="c('weekday')">
                   {{weekdays[i-1]}}
                 </span>
               </div>
-              <div :class="c('row')" v-for="i in helper.getRange(1, 6)">
-                <span :class="c('cell')" v-for="j in helper.getRange(1, 7)">
+              <div :class="c('row')" v-for="i in helper.getRange(1, 6)" :key="i">
+                <span :class="c('cell')" v-for="j in helper.getRange(1, 7)" :key="j">
                   {{visibleDays[(i-1)*7 + j - 1].getDate()}}
                 </span>
               </div>
@@ -85,8 +87,8 @@ export default {
     this.dateWrapper = this.$refs['dateWrapper']
   },
   methods: {
-    c(className) {
-      return `koma-date-picker-${className}`
+    c(...classNames) {
+      return classNames.map(className => `koma-date-picker-${className}`)
     },
     onClickYear(){
       this.mode = 'years'
@@ -103,6 +105,20 @@ export default {
     /deep/ .koma-popover-content-wrapper {
       padding: 0;
     }
+  }
+  &-nav {
+    display: flex;
+  }
+  &-yearAndMonth {
+    margin: auto;
+  }
+  &-navItem, &-cell, &-weekday {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
