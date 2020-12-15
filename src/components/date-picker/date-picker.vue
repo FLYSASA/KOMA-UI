@@ -1,6 +1,6 @@
 <template>
   <div style="border: 1px solid;" class="koma-date-picker-wrapper" ref="dateWrapper">
-    <g-popover position="bottom" :container="dateWrapper">
+    <g-popover position="bottom" :container="dateWrapper" ref="popover">
       <g-input type="text" :value="formattedValue"></g-input>
       <template slot="content">
         <!-- @selectstart.prevent 取消选择文本事件 -->
@@ -19,12 +19,17 @@
             <div class="koma-date-picker-content">
               <template v-if="mode === 'month'">
                 <div :class="c('selectMonth')">
-                  <select @change="onSelectYear" :value="display.year">
-                    <option :value="year" v-for="year in years" :key="year">{{ year }}</option>
-                  </select>年
-                  <select @change="onSelectMonth" :value="display.month">
-                    <option :value="month - 1" v-for="month in 12" :key="month">{{month}}</option>
-                  </select>
+                  <div :class="c('selects')">
+                    <select @change="onSelectYear" :value="display.year">
+                      <option :value="year" v-for="year in years" :key="year">{{ year }}</option>
+                    </select>年
+                    <select @change="onSelectMonth" :value="display.month">
+                      <option :value="month - 1" v-for="month in 12" :key="month">{{month}}</option>
+                    </select>月
+                  </div>
+                  <div :class="c('returnDayMode')">
+                    <g-button @click.stop="mode = 'day'">返回</g-button>
+                  </div>
                 </div>
               </template>
               <template v-else>
@@ -95,7 +100,7 @@ export default {
       weekdays: ['一', '二', '三', '四','五','六','日'],
       dateWrapper: null,
       // 要展示的日期，默认和value 同年同月, 没有value就展示当年当月
-      display: { year, month }
+      display: { year, month },
     };
   },
   computed: {
@@ -157,6 +162,7 @@ export default {
     },
     onClickClear() {
       this.$emit('input', null)
+      this.$refs['popover'].close()
     },
     onSelectYear(e) {
       const year = e.target.value - 0
@@ -269,6 +275,12 @@ export default {
   &-actions {
     padding: 8px;
     text-align: right;
+  }
+  &-returnDayMode {
+    /deep/ .koma-button {
+      height: 20px;
+      padding: 10px;
+    }
   }
 }
 </style>
