@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-date-picker :value="d" @input="d = $event" :scope="scope"></g-date-picker>
+    <g-date-picker :value="d" @input="d = $event"></g-date-picker>
   </div>
 </template>
 

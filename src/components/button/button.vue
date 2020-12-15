@@ -1,5 +1,5 @@
 <template>
-  <button class="g-button" :class="{[`icon-${iconPosition}`]: true}" @click="$emit('click')">
+  <button class="koma-button" :class="{[`icon-${iconPosition}`]: true}" @click="$emit('click')">
     <g-icon class="loading icon" name="loading" v-if="loading"></g-icon>
     <g-icon  class="icon" v-if="icon && !loading" :name="icon"></g-icon>
     <div class="content">
@@ -37,7 +37,7 @@
 </script>
 <style lang='less' scoped>
   @import 'css/_var';
-  .g-button {
+  .koma-button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -73,6 +73,9 @@
     }
     .loading {
       animation: spin 1s infinite linear; // infinite 无限循环， linear 线性匀速
+    }
+    & + & {
+      margin-left: 4px;
     }
   }
 </style>

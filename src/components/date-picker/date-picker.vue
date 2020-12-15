@@ -36,7 +36,11 @@
                   </div>
                   <div :class="c('row')" v-for="i in helper.getRange(1, 6)" :key="i">
                     <span 
-                      :class="[c('cell'), {currentMonth: isCurrentMonth(getVisibleDay(i, j))}]" 
+                      :class="[c('cell'), 
+                        { currentMonth: isCurrentMonth(getVisibleDay(i, j)) }, 
+                        { isSelected: isSelected(getVisibleDay(i, j)) },
+                        { today: isToday(getVisibleDay(i, j)) }
+                        ]" 
                       @click="onClickCell(getVisibleDay(i, j))"
                       v-for="j in helper.getRange(1, 7)" :key="j">
                         {{ getVisibleDay(i, j).getDate() }}
@@ -47,7 +51,8 @@
             </div>
           </div>
           <div class="koma-date-picker-actions">
-            <button>清除</button>
+            <g-button @click="onClickToday">今天</g-button>
+            <g-button @click="onClickClear">清除</g-button>
           </div>
         </div>
       </template>
@@ -59,6 +64,7 @@
 import GInput from '@/components/input';
 import GIcon from '@/components/icon';
 import GPopover from '@/components/popover';
+import GButton from '@/components/button/button'
 import ClickOutside from '@/components/directives/click-outside';
 import helper from './helper';
 export default {
@@ -70,6 +76,7 @@ export default {
     GInput,
     GIcon,
     GPopover,
+    GButton
   },
   props: {
     value: {
@@ -81,18 +88,21 @@ export default {
     }
   },
   data() {
-    let [ year, month ] = helper.getYearMonthDate(this.value)
+    let [ year, month ] = helper.getYearMonthDate(this.value || new Date())
     return {
-      mode: 'month',
+      mode: 'day',
       helper,
       weekdays: ['一', '二', '三', '四','五','六','日'],
       dateWrapper: null,
-      // 要展示的日期，默认和value 同年同月
+      // 要展示的日期，默认和value 同年同月, 没有value就展示当年当月
       display: { year, month }
     };
   },
   computed: {
     formattedValue(){
+      if(!this.value){
+        return '';
+      }
       const [ year, month, day] = helper.getYearMonthDate(this.value)
       return `${year}-${month + 1}-${day}`
     },
@@ -124,8 +134,29 @@ export default {
       let [year1, month1] = helper.getYearMonthDate(date)
       return year1 === this.display.year && month1 === this.display.month
     },
+    isToday(date) {
+      const [y, m, d] = helper.getYearMonthDate(date)
+      const [y1, m1, d1] = helper.getYearMonthDate(new Date)
+      return y === y1 && m === m1 && d === d1
+    },
+    isSelected(date) {
+      if(!this.value) {
+        return;
+      }
+      const [y, m, d] = helper.getYearMonthDate(date)
+      const [y1, m1, d1] = helper.getYearMonthDate(this.value)
+      return y === y1 && m === m1 && d === d1
+    },
     getVisibleDay (row, col) {
       return this.visibleDays[(row-1)*7 + col - 1]
+    },
+    onClickToday() {
+      const [ year, month, day ] = helper.getYearMonthDate(new Date())
+      this.display = { year, month }
+      this.$emit('input', new Date(year, month, day))
+    },
+    onClickClear() {
+      this.$emit('input', null)
     },
     onSelectYear(e) {
       const year = e.target.value - 0
@@ -143,7 +174,6 @@ export default {
         this.display.month = month
       } else {
         e.target.value = this.display.month
-        alert('chaole')
       }
     },
     onClickCell (date) {
@@ -212,17 +242,33 @@ export default {
   }
   &-cell {
     color: @darken-gray;
+    border-radius: @border-radius;
     &.currentMonth {
       color: @color;
+      &:hover {
+        background: @blue;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+    &.today {
+      border: 1px solid @blue;
+    }
+    &.isSelected {
+      background: @blue;
+      color: #fff;
     }
   }
-
   &-selectMonth {
     width: 224px;
     height: 224px;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  &-actions {
+    padding: 8px;
+    text-align: right;
   }
 }
 </style>
