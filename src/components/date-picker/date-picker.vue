@@ -1,7 +1,7 @@
 <template>
   <div style="border: 1px solid;" class="koma-date-picker-wrapper" ref="dateWrapper">
-    <g-popover position="bottom" :container="dateWrapper" ref="popover">
-      <g-input type="text" :value="formattedValue"></g-input>
+    <g-popover position="bottom" :container="dateWrapper" ref="popover" @open="onOpen">
+      <g-input ref="input" type="text" :value="formattedValue" @input="onInput" @change="onchange"></g-input>
       <template slot="content">
         <!-- @selectstart.prevent 取消选择文本事件 -->
         <div class="koma-date-picker-pop" @selectstart.prevent>
@@ -27,8 +27,8 @@
                       <option :value="month - 1" v-for="month in 12" :key="month">{{month}}</option>
                     </select>月
                   </div>
-                  <div :class="c('returnDayMode')">
-                    <g-button @click.stop="mode = 'day'">返回</g-button>
+                  <div :class="c('returnDayMode')" @click.stop>
+                    <g-button @click="mode = 'day'">返回</g-button>
                   </div>
                 </div>
               </template>
@@ -109,7 +109,7 @@ export default {
         return '';
       }
       const [ year, month, day] = helper.getYearMonthDate(this.value)
-      return `${year}-${month + 1}-${day}`
+      return `${year}-${helper.padLeft(month + 1)}-${helper.padLeft(day)}`
     },
     visibleDays(){
       // 验证正确性的时候，可以let date = new Date(2020, 0, 30)  随便写个日期去验证，比如这里的2020年1月（月要-1）30号
@@ -155,6 +155,26 @@ export default {
     getVisibleDay (row, col) {
       return this.visibleDays[(row-1)*7 + col - 1]
     },
+    onchange(value) {
+      // input 组件的value 和 input value还是有区别的
+      // input 组件的value 无法直接修改
+      this.$refs['input'].setRawValue(this.formattedValue)
+    },
+    onInput(value) {
+      // 简单的日期匹配，其实很不严谨
+      let reg = /^\d{4}-\d{2}-\d{2}$/g
+      if(reg.test(value)){
+        let [ year, month, day ] = value.split('-')
+        month = month - 1;
+        year = year - 0; // 转成数值，不然判断是否当年当月无法全等
+        this.display = { year, month }
+        this.$emit('input', new Date(year, month, day))
+        console.log('符合')
+      }
+    },
+    onOpen() {
+      this.mode = 'day'
+    },
     onClickToday() {
       const [ year, month, day ] = helper.getYearMonthDate(new Date())
       this.display = { year, month }
@@ -185,6 +205,7 @@ export default {
     onClickCell (date) {
       if(this.isCurrentMonth(date)) {
         this.$emit('input', date)
+        this.$refs.popover.close()
       }
     },
     onClickYear () {

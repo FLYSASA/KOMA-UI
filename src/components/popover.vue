@@ -113,11 +113,13 @@ export default {
     },
     close() {
       this.visible = false
+      this.$emit('close')
       // 每次关闭都要清除上一次的监听器，不然open的时候又会添加一个监听器
       document.removeEventListener('click', this.onClickDocument)
     },
     open () {
       this.visible = true
+      this.$emit('open')
       // 不加延时的话 冒泡机制会立刻转成false
       setTimeout(()=>{
         this.positionPopover()

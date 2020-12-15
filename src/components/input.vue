@@ -1,6 +1,6 @@
 <template>
    <div class="wrapper" :class="{error}">
-      <input :value="value" :disabled="disabled" :readonly="readonly" 
+      <input ref="input" :value="value" :disabled="disabled" :readonly="readonly" 
       @change="$emit('change', $event.target.value)"
       @blur="$emit('blur', $event.target.value)"
       @focus="$emit('focus', $event.target.value)"
@@ -43,7 +43,11 @@ export default {
    },
    computed: {},
 
-   methods: {}
+   methods: {
+      setRawValue (value) {
+         this.$refs.input.value = value
+      }
+   }
 }
 </script>
 <style lang='less' scoped>
