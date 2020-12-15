@@ -3,34 +3,47 @@
     <g-popover position="bottom" :container="dateWrapper">
       <g-input type="text" :value="formattedValue"></g-input>
       <template slot="content">
-        <div class="koma-date-picker-pop">
+        <!-- @selectstart.prevent 取消选择文本事件 -->
+        <div class="koma-date-picker-pop" @selectstart.prevent>
           <div class="koma-date-picker-nav">
             <span :class="c('prevYear', 'navItem')" @click="onClickPrevYear"><g-icon name="double-left"></g-icon></span>
             <span :class="c('prevMonth', 'navItem')" @click="onClickPrevMonth"><g-icon name="left"></g-icon></span>
-            <span :class="c('yearAndMonth')">
-            	<span @click="onClickYear">{{ display.year }}年</span>
-            	<span @click="onClickMonth">{{ display.month + 1 }}月</span>
+            <span :class="c('yearAndMonth')" @click="onClickMonth">
+            	<span>{{ display.year }}年</span>
+            	<span>{{ display.month + 1 }}月</span>
             </span>
             <span :class="c('nextMonth', 'navItem')" @click="onClickNextMonth"><g-icon name="right"></g-icon></span>
             <span :class="c('nextYear', 'navItem')" @click="onClickNextYear"><g-icon name="double-right"></g-icon></span>
           </div>
           <div class="koma-date-picker-panels">
-            <div v-if="mode==='years'" class="koma-date-picker-content">年</div>
-            <div v-else-if="mode === 'month'" class="koma-date-picker-content">月</div>
-            <div v-else class="koma-date-picker-content">
-              <div :class="c('weekdays')">
-                <span v-for="i in 7"  :key="i" :class="c('weekday')">
-                  {{weekdays[i-1]}}
-                </span>
-              </div>
-              <div :class="c('row')" v-for="i in helper.getRange(1, 6)" :key="i">
-                <span 
-                  :class="[c('cell'), {currentMonth: isCurrentMonth(getVisibleDay(i, j))}]" 
-                  @click="onClickCell(getVisibleDay(i, j))"
-                  v-for="j in helper.getRange(1, 7)" :key="j">
-                    {{ getVisibleDay(i, j).getDate() }}
-                </span>
-              </div>
+            <div class="koma-date-picker-content">
+              <template v-if="mode === 'month'">
+                <div :class="c('selectMonth')">
+                  <select @change="onSelectYear" :value="display.year">
+                    <option :value="year" v-for="year in years" :key="year">{{ year }}</option>
+                  </select>年
+                  <select @change="onSelectMonth" :value="display.month">
+                    <option :value="month - 1" v-for="month in 12" :key="month">{{month}}</option>
+                  </select>
+                </div>
+              </template>
+              <template v-else>
+                <div class="koma-date-picker-content">
+                  <div :class="c('weekdays')">
+                    <span v-for="i in 7"  :key="i" :class="c('weekday')">
+                      {{weekdays[i-1]}}
+                    </span>
+                  </div>
+                  <div :class="c('row')" v-for="i in helper.getRange(1, 6)" :key="i">
+                    <span 
+                      :class="[c('cell'), {currentMonth: isCurrentMonth(getVisibleDay(i, j))}]" 
+                      @click="onClickCell(getVisibleDay(i, j))"
+                      v-for="j in helper.getRange(1, 7)" :key="j">
+                        {{ getVisibleDay(i, j).getDate() }}
+                    </span>
+                  </div>
+                </div>
+              </template>
             </div>
           </div>
           <div class="koma-date-picker-actions">
@@ -61,12 +74,16 @@ export default {
   props: {
     value: {
       type: Date,
+    },
+    scope: {
+      type: Array,
+      default: () => [new Date(1900, 0, 1), helper.addYear(new Date(), 100)]
     }
   },
   data() {
     let [ year, month ] = helper.getYearMonthDate(this.value)
     return {
-      mode: 'days',
+      mode: 'month',
       helper,
       weekdays: ['一', '二', '三', '四','五','六','日'],
       dateWrapper: null,
@@ -91,6 +108,9 @@ export default {
         arr.push(new Date(x + i*3600*24*1000)) // 从第一天每次加一天
       }
       return arr;
+    },
+    years () {
+      return helper.getRange(this.scope[0].getFullYear(), this.scope[1].getFullYear())
     }
   },
   mounted() {
@@ -107,6 +127,25 @@ export default {
     getVisibleDay (row, col) {
       return this.visibleDays[(row-1)*7 + col - 1]
     },
+    onSelectYear(e) {
+      const year = e.target.value - 0
+      const d = new Date(year, this.display.month)
+      if(d > this.scope[0] && d <= this.scope[1]) {
+        this.display.year = year
+      } else {
+        e.target.value = this.display.year
+      }
+    },
+    onSelectMonth(e) {
+      const month = e.target.value - 0
+      const d = new Date(this.display.year, month)
+      if(d > this.scope[0] && d <= this.scope[1]) {
+        this.display.month = month
+      } else {
+        e.target.value = this.display.month
+        alert('chaole')
+      }
+    },
     onClickCell (date) {
       if(this.isCurrentMonth(date)) {
         this.$emit('input', date)
@@ -116,7 +155,11 @@ export default {
       this.mode = 'years'
     },
     onClickMonth () {
-      this.mode = 'month'
+      if(this.mode !== 'month') {
+        this.mode = 'month'
+      } else {
+        this.mode = 'day'
+      }
     },
     onClickPrevYear(){
       const oldDate = new Date( this.display.year, this.display.month )
@@ -172,6 +215,14 @@ export default {
     &.currentMonth {
       color: @color;
     }
+  }
+
+  &-selectMonth {
+    width: 224px;
+    height: 224px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

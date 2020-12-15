@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <g-date-picker :value="d" @input="d = $event"></g-date-picker>
+    <g-date-picker :value="d" @input="d = $event" :scope="scope"></g-date-picker>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
   props: {},
   data () {
     return {
-      d: new Date()
+      d: new Date(),
+      scope: [new Date(1918, 1), new Date(2020, 6)]
     };
   },
   watch: {
