@@ -5,14 +5,14 @@
       <template slot="content">
         <div class="koma-date-picker-pop">
           <div class="koma-date-picker-nav">
-            <span :class="c('prevYear', 'navItem')"><g-icon name="double-left"></g-icon></span>
-            <span :class="c('prevMonth', 'navItem')"><g-icon name="left"></g-icon></span>
+            <span :class="c('prevYear', 'navItem')" @click="onClickPrevYear"><g-icon name="double-left"></g-icon></span>
+            <span :class="c('prevMonth', 'navItem')" @click="onClickPrevMonth"><g-icon name="left"></g-icon></span>
             <span :class="c('yearAndMonth')">
-            	<span @click="onClickYear">2012年</span>
-            	<span @click="onClickMonth">8月</span>
+            	<span @click="onClickYear">{{ display.year }}年</span>
+            	<span @click="onClickMonth">{{ display.month + 1 }}月</span>
             </span>
-            <span :class="c('nextMonth', 'navItem')"><g-icon name="right"></g-icon></span>
-            <span :class="c('nextYear', 'navItem')"><g-icon name="double-right"></g-icon></span>
+            <span :class="c('nextMonth', 'navItem')" @click="onClickNextMonth"><g-icon name="right"></g-icon></span>
+            <span :class="c('nextYear', 'navItem')" @click="onClickNextYear"><g-icon name="double-right"></g-icon></span>
           </div>
           <div class="koma-date-picker-panels">
             <div v-if="mode==='years'" class="koma-date-picker-content">年</div>
@@ -64,11 +64,14 @@ export default {
     }
   },
   data() {
+    let [ year, month ] = helper.getYearMonthDate(this.value)
     return {
       mode: 'days',
       helper,
       weekdays: ['一', '二', '三', '四','五','六','日'],
-      dateWrapper: null
+      dateWrapper: null,
+      // 要展示的日期，默认和value 同年同月
+      display: { year, month }
     };
   },
   computed: {
@@ -78,11 +81,9 @@ export default {
     },
     visibleDays(){
       // 验证正确性的时候，可以let date = new Date(2020, 0, 30)  随便写个日期去验证，比如这里的2020年1月（月要-1）30号
-      let date = this.value
+      let date = new Date(this.display.year, this.display.month, 1)
       let first = helper.firstDayOfMonth(date)
-      let last = helper.lastDayOfMonth(date)
       let arr = []
-      let [year, month, day] = helper.getYearMonthDate(date)
       // getDate() 返回1-31的整数值,  getDay() 返回 0-6 0代表星期日
       let weekDay = first.getDay()  // 算出当月第一天是星期几
       let x = first - (weekDay === 0 ? 6 : weekDay - 1) * 3600 * 24 * 1000  // 计算第一排第一个的天数
@@ -101,8 +102,7 @@ export default {
     },
     isCurrentMonth(date) {
       let [year1, month1] = helper.getYearMonthDate(date)
-      let [year2, month2] = helper.getYearMonthDate(this.value) // 当前年月
-      return year1 === year2 && month1 === month2
+      return year1 === this.display.year && month1 === this.display.month
     },
     getVisibleDay (row, col) {
       return this.visibleDays[(row-1)*7 + col - 1]
@@ -117,6 +117,30 @@ export default {
     },
     onClickMonth () {
       this.mode = 'month'
+    },
+    onClickPrevYear(){
+      const oldDate = new Date( this.display.year, this.display.month )
+      const newDate = helper.addYear(oldDate, -1)
+      const [ year, month ] = helper.getYearMonthDate(newDate)
+      this.display = { year, month }
+    },
+    onClickPrevMonth(){
+      const oldDate = new Date( this.display.year, this.display.month )
+      const newDate = helper.addMonth(oldDate, -1)
+      const [ year, month ] = helper.getYearMonthDate(newDate)
+      this.display = { year, month }
+    },
+    onClickNextYear(){
+      const oldDate = new Date( this.display.year, this.display.month )
+      const newDate = helper.addYear(oldDate, 1)
+      const [ year, month ] = helper.getYearMonthDate(newDate)
+      this.display = { year, month }
+    },
+    onClickNextMonth(){
+      const oldDate = new Date( this.display.year, this.display.month )
+      const newDate = helper.addMonth(oldDate, 1)
+      const [ year, month ] = helper.getYearMonthDate(newDate)
+      this.display = { year, month }
     },
   },
 };

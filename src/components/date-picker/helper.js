@@ -16,6 +16,20 @@ export default {
     }
     return arr;
   },
+  addMonth(date, n){
+    const [_1, month, _2] = getYearMonthDate(date)
+    const newMonth = month + n
+    const copy = new Date(date)
+    copy.setMonth(newMonth) // 返回基于 1 January 1970 00:00:00 UTC 开始计算的毫秒数
+    return copy;
+  },
+  addYear(date, n) {
+    const [year] = getYearMonthDate(date)
+    const newYear = year + n
+    const copy = new Date(date)
+    copy.setFullYear(newYear)
+    return copy;
+  },
   getYearMonthDate
 }
 // 获取年月日
