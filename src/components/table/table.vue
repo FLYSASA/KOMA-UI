@@ -238,7 +238,8 @@ export default {
       }
     },
     updateActionWidth(){
-      if(this.$scopedSlots.action) {
+      if(this.$scopedSlots.action && this.dataSource.length) {
+        console.log(this.$refs.actions)
         let div = this.$refs.actions[0]
         let {width} = div.getBoundingClientRect()
         let parent = div.parentNode   // td
