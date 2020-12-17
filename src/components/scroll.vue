@@ -1,7 +1,11 @@
 <template>
-  <div ref="parent" class="koma-scroll-wrapper">
+  <div ref="parent" class="koma-scroll-wrapper" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div ref="child" class="koma-scroll">
       <slot></slot>
+    </div>
+    <div class="koma-scroll-track" v-show="scrollBarVisible">
+      <div class="koma-scroll-bar" ref="bar">
+      </div>
     </div>
   </div>
 </template>
@@ -13,7 +17,7 @@ export default {
   props: {},
   data() {
     return {
-
+      scrollBarVisible: false,
     };
   },
   computed: {},
@@ -28,6 +32,7 @@ export default {
     borderBottomWidth = parseInt(borderBottomWidth)
     paddingTop = parseInt(paddingTop)
     paddingBottom = parseInt(paddingBottom)
+    // 最大可滚动的高度
     let maxHeight = childHeight - parentHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
     parent.addEventListener('wheel', (e)=>{
       if(e.deltaY > 20) {
@@ -46,18 +51,55 @@ export default {
         e.preventDefault();
       }
       child.style.transform = `translateY(${translateY}px)`
+      this.updateScrollBar(parentHeight, childHeight, translateY)
     })
+    this.updateScrollBar(parentHeight, childHeight, translateY)
   },
-  methods: {},
+  methods: {
+    updateScrollBar (parentHeight, childHeight, translateY) {
+      // 计算滚动条高度 parentHeight / childHeight = barHeight / parentHeight
+      let barHeight = parentHeight * parentHeight / childHeight
+      let bar = this.$refs.bar
+      bar.style.height = barHeight + 'px'
+      // 计算滚动条位置 translateY / childHeight = y / parentHeight
+      let y = parentHeight * translateY / childHeight
+      bar.style.transform = `translateY(${-y}px)`
+    },
+    onMouseEnter () {
+      this.scrollBarVisible = true
+    },
+    onMouseLeave () {
+      this.scrollBarVisible = false
+    }
+  },
 };
 </script>
 <style lang='less' scoped>
 .koma-scroll {
-  border: 5px solid green;
   transition: transform 0.05s ease;
   &-wrapper {
-    border: 5px solid red;
     overflow: hidden;
+    position: relative;
+  }
+  &-track{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 100%;
+    background: #f1f1f1;
+    opacity: .8;
+  }
+  &-bar {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 4px;
+    background: rgba(144,147,153,.3);
+    &:hover {
+      background: rgba(144,147,153,.5);
+    }
   }
 }
 </style>
