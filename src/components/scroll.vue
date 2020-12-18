@@ -2,13 +2,15 @@
   <div ref="parent" class="koma-scroll-wrapper"
   @wheel="onWheel"
   @mouseenter="onMouseEnter" 
-  @mouseleave="onMouseLeave">
+  @mouseleave="onMouseLeave"
+  @mousemove="onMouseMove">
     <div ref="child" class="koma-scroll" :style="{ transform: `translateY(${contentY}px)`}">
       <slot></slot>
     </div>
-    <div class="koma-scroll-track" v-show="scrollBarVisible" 
-    @selectstart="onSelectStartScrollBar">
-      <div class="koma-scroll-bar" ref="bar" @mousedown="onMouseDownScrollBar">
+    <div class="koma-scroll-track" v-show="scrollBarVisible">
+      <div class="koma-scroll-bar" ref="bar" 
+      @mousedown="onMouseDownScrollBar" 
+      @selectstart="onSelectStartScrollBar">
       </div>
     </div>
   </div>
@@ -23,6 +25,7 @@ export default {
     return {
       scrollBarVisible: false,
       isScrolling: false,
+      mouseIn: false,
       // 拖动的scrollbar初始位置
       startPosition: undefined,
       endPosition: undefined,
@@ -38,6 +41,7 @@ export default {
       return this.parentHeight - this.barHeight
     }
   },
+  watch: {},
   mounted() {
     this.listenToDocument()
     this.parentHeight = this.$refs['parent'].getBoundingClientRect().height
@@ -118,7 +122,6 @@ export default {
     },
     // 拖动滚动条
     onMouseMoveScrollbar(e) {
-      this.scrollBarVisible = true
       if(!this.isScrolling) {return;}
       this.endPosition = [ e.screenX, e.screenY ]
       let deltaY = this.endPosition[1] - this.startPosition[1]
@@ -134,10 +137,8 @@ export default {
     // 松开滚动条
     onMouseUpScrollbar(e) {
       this.isScrolling = false
-      if(this.$refs.parent && !this.$refs.parent.contains(e.target)){
-        setTimeout(()=>{
-          this.scrollBarVisible = false
-        }, 350)
+      if( !this.mouseIn ) {
+        this.scrollBarVisible = false
       }
     },
     // 去掉文本选中
@@ -147,9 +148,16 @@ export default {
     // 鼠标悬浮展示滚动条
     onMouseEnter () {
       this.scrollBarVisible = true
+      this.mouseIn = true
+    },
+    onMouseMove () {
+      this.mouseIn = true
     },
     onMouseLeave () {
-      this.scrollBarVisible = false
+      this.mouseIn = false
+      if( !this.isScrolling ) {
+        this.scrollBarVisible = false
+      }
     }
   },
 };
@@ -160,6 +168,7 @@ export default {
   &-wrapper {
     overflow: hidden;
     position: relative;
+    border: 1px solid;
   }
   &-track{
     position: absolute;
