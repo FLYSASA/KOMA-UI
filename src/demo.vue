@@ -1,39 +1,8 @@
 <template>
   <div id="app">
-    <!-- <div style="margin: 20px">
-      <g-table :data-source="tableData" border
-      expand-key="description"
-      :height="400"
-      :orderBy.sync="sortRules"
-      checkable
-      @update:orderBy="x"
-      :loading="loading"
-      @selectedChange="selectedChange"
-      :selectedItems.sync="selectedItems">
-      
-        <g-table-column prop="name" text="姓名" :width="100">
-          <template slot-scope="scope">
-            <span>{{scope.row.name}}</span>
-          </template>
-        </g-table-column>
-
-        <g-table-column prop="score" text="分数">
-          <template slot-scope="scope">
-            <span>{{scope.row.score}}</span>
-          </template>
-        </g-table-column>
-
-        <template #action="row">
-          {{row}}
-          <button>查看</button>
-          <button>编辑</button>
-        </template>
-
-      </g-table>
-    </div> -->
     <g-scroll style="width: 400px; height: 400px;">
         <p style="width: 1000px;">1</p>
-        <p>2</p>
+        <p id="test2">2</p>
         <p>3</p>
         <p>4</p>
         <p>5</p>
@@ -42,6 +11,7 @@
         <p>8</p>
         <p>9</p>
         <p>10</p>
+        <img src="https://www.guidedogs.org/wp-content/uploads/2017/07/2O17-8819-purple-2-min-400x400.jpg" alt="">
         <p>11</p>
         <p>12</p>
         <p>13</p>
@@ -133,6 +103,10 @@
         <p>99</p>
         <p>100</p>
     </g-scroll>
+
+    <g-scroll style="width: 400px; height: 400px;">
+      <p v-for="(i, index) in arr" :key="index">{{i}}</p>
+    </g-scroll>
   </div>
 </template>
 
@@ -141,33 +115,7 @@ import GPager from '@/components/pager/pager';
 import GTable from '@/components/table/table';
 import GTableColumn from '@/components/table/table-column'
 import GScroll from '@/components/scroll'
-let arr = [
-  { name: '花花', score: 100, description: '展示一段描述'},
-  { name: '大白', score: 99},
-  { name: '小绿', score: 5},
-  { name: '安安', score: 100},
-  { name: '西西', score: 99},
-  { name: '欧欧', score: 5},
-  { name: '小绿', score: 5},
-  { name: '安安', score: 100},
-  { name: '西西', score: 99},
-  { name: '欧欧', score: 5},
-  { name: '小绿', score: 5},
-  { name: '安安', score: 100},
-  { name: '西西', score: 99},
-  { name: '欧欧', score: 5},
-  { name: '小绿', score: 5},
-  { name: '安安', score: 100},
-  { name: '西西', score: 99},
-  { name: '欧欧', score: 5},
-  { name: '小绿', score: 5},
-  { name: '安安', score: 100},
-]
-let bigArray = []
-// for(let i=0; i<500; i++){
-//   bigArray.push(...arr.map((item, index) => ({id: 20*i + index, ...item})))
-// }
-console.log(bigArray)
+
 export default {
   name: 'ButtonDemo',
   components: {
@@ -179,39 +127,20 @@ export default {
   props: {},
   data () {
     return {
-      currentPage: 1,
-      tableData: bigArray,
-      // columns: [
-      //   {text: '姓名', prop: 'name', width: 200},
-      //   {text: '分数', prop: 'score'},
-      // ],
-      sortRules: {
-        score: 'des'
-      },
-      selectedItems: [],
-      loading: false
+      arr: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
     };
   },
   mounted() {
+    setTimeout(() => {
+      let img = document.createElement('img')
+      img.src = 'https://developer.mozilla.org/static/browsers/samsung-internet.8faa2ee1b8a1.svg'
+      img.height = 1000
+      window.test2.appendChild(img)
 
+      this.arr.push(20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,40,20,30,)
+    }, 3000)
   },
-  watch: {
-    selectedItems(val){
-      console.log(val)
-    }
-  },
-  methods: {
-    selectedChange(obj){
-      console.log(obj)
-    },
-    x(){
-      this.loading = true
-      setTimeout(()=>{
-        this.tableData.sort((a, b) => a.score - b.score)
-        this.loading = false
-      }, 3000)
-    },
-  },
+  methods: {},
 }
 
 </script>

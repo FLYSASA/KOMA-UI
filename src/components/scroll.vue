@@ -39,16 +39,42 @@ export default {
   computed: {
     maxScrollHeight () { 
       return this.parentHeight - this.barHeight
-    }
+    },
+    // childHeight () {
+    //   return this.$refs.child.getBoundingClientRect().height
+    // }
   },
   watch: {},
   mounted() {
     this.listenToDocument()
     this.parentHeight = this.$refs['parent'].getBoundingClientRect().height
-    this.childHeight = this.$refs['child'].getBoundingClientRect().height
     this.updateScrollBar()
+    this.listenToRemoteResources()
+    this.listenToDomChange()
   },
   methods: {
+    // 等图片等资源完全load后，加一个data-koma-listened属性，并再一次更新scrollBar
+    listenToRemoteResources () {
+      let tags = this.$refs.parent.querySelectorAll('img, video, audio')
+      Array.from(tags).map((tag) => {
+        if (tag.hasAttribute('data-koma-listened')) { return }
+        tag.setAttribute('data-koma-listened', 'yes')
+        tag.addEventListener('load', () => {
+          this.updateScrollBar()
+        })
+      })
+    },
+    listenToDomChange () {
+      const targetNode = this.$refs.child
+      const config = {attributes: true, childList: true, subtree: true};
+      const callback = () => {
+        this.listenToRemoteResources()
+      }
+      // 监视对DOM树更改
+      const observer = new MutationObserver(callback);
+      // 配置开始观察目标节点
+      observer.observe(targetNode, config);
+    },
     listenToDocument () {
       // 鼠标拖动移动
       // 监听document的原因时以防移动过快，导致拖动失效
@@ -87,6 +113,7 @@ export default {
       }
     },
     updateScrollBar () {
+      this.childHeight = this.$refs['child'].getBoundingClientRect().height
       let { parentHeight, childHeight, contentY: translateY } = this
       // 计算滚动条高度 parentHeight / childHeight = barHeight / parentHeight
       this.barHeight = parentHeight * parentHeight / childHeight;
