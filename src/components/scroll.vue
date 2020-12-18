@@ -1,9 +1,13 @@
 <template>
-  <div ref="parent" class="koma-scroll-wrapper" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @selectstart="onSelectStartScrollBar">
+  <div ref="parent" class="koma-scroll-wrapper"
+  @wheel="onWheel"
+  @mouseenter="onMouseEnter" 
+  @mouseleave="onMouseLeave">
     <div ref="child" class="koma-scroll" :style="{ transform: `translateY(${contentY}px)`}">
       <slot></slot>
     </div>
-    <div class="koma-scroll-track" v-show="scrollBarVisible">
+    <div class="koma-scroll-track" v-show="scrollBarVisible" 
+    @selectstart="onSelectStartScrollBar">
       <div class="koma-scroll-bar" ref="bar" @mousedown="onMouseDownScrollBar">
       </div>
     </div>
@@ -26,62 +30,86 @@ export default {
       scrollBarY: 0,
       barHeight: undefined,
       parentHeight: undefined,
+      childHeight: undefined,
     };
   },
-  // watch: {
-  //   // contantY(内容滚动距离) / parentHeight(内容器的高) = scrollBarY(滚动条滚动距离) / barHeight(滚动条高度)
-  //   scrollBarY (val) {
-  //     this.contentY = -(this.parentHeight * val / this.barHeight)
-  //   }
-  // },
-  computed: {},
+  computed: {
+    maxScrollHeight () { 
+      return this.parentHeight - this.barHeight
+    }
+  },
   mounted() {
-    // 鼠标拖动移动
-    // 监听document的原因时以防移动过快，导致拖动失效
-    document.addEventListener('mousemove', (e)=>{
-      this.onMouseMoveScrollbar(e)
-    })
-    // 鼠标松开
-    document.addEventListener('mouseup', (e)=>{
-      this.onMouseUpScrollbar(e)
-    })
-    let parent  = this.$refs['parent']
-    let child = this.$refs['child']
-    let {height: childHeight} = child.getBoundingClientRect()
-    let {height: parentHeight} = parent.getBoundingClientRect()
-    this.parentHeight = parentHeight
-    let {borderTopWidth, borderBottomWidth, paddingTop, paddingBottom} = window.getComputedStyle(parent)
-    borderTopWidth = parseInt(borderTopWidth)
-    borderBottomWidth = parseInt(borderBottomWidth)
-    paddingTop = parseInt(paddingTop)
-    paddingBottom = parseInt(paddingBottom)
-    // 最大可滚动的高度
-    let maxHeight = childHeight - parentHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
-    // 为什么是20 无非让滚动更自然
-    parent.addEventListener('wheel', (e)=>{
-      if(e.deltaY > 20) {
-        this.contentY -= 20 * 3 
-      } else if (e.deltaY < -20) {
-        this.contentY -= -20 * 3
+    this.listenToDocument()
+    this.parentHeight = this.$refs['parent'].getBoundingClientRect().height
+    this.childHeight = this.$refs['child'].getBoundingClientRect().height
+    this.updateScrollBar()
+  },
+  methods: {
+    listenToDocument () {
+      // 鼠标拖动移动
+      // 监听document的原因时以防移动过快，导致拖动失效
+      document.addEventListener('mousemove', e=> this.onMouseMoveScrollbar(e))
+      // 鼠标松开
+      document.addEventListener('mouseup', e=> this.onMouseUpScrollbar(e))
+    },
+    calcContentYFromDeltaY(deltaY) {
+      let contentY = this.contentY;
+      // 为什么是20 无非让滚动更自然
+      if (deltaY > 20) {
+        contentY -= 20 * 3 
+      } else if (deltaY < -20) {
+        contentY -= -20 * 3
       } else {
-        this.contentY -= e.deltaY * 3
+        contentY -= deltaY * 3
       }
+      return contentY;
+    },
+    onWheel (e) {
+      this.updateContentY(e)
+      this.updateScrollBar()
+    },
+    updateContentY (e) {
+      // 获取 maxHeight, 最大可滚动的高度, 用于限制 contentY
+      let maxHeight = this.getContentYMax()
+      this.contentY = this.calcContentYFromDeltaY(e.deltaY)
+      // 给 contentY 加限制
       if(this.contentY > 0) {
         this.contentY = 0
-      }else if(this.contentY < -maxHeight){
+      }else if(this.contentY <  -maxHeight){
         this.contentY = -maxHeight;
       } else {
         // 防止在页面滚动时抖动
         e.preventDefault();
       }
-      this.updateScrollBar(parentHeight, childHeight, this.contentY)
-    })
-    this.updateScrollBar(parentHeight, childHeight, this.contentY)
-  },
-  beforeDestroy () {
-
-  },
-  methods: {
+    },
+    updateScrollBar () {
+      let { parentHeight, childHeight, contentY: translateY } = this
+      // 计算滚动条高度 parentHeight / childHeight = barHeight / parentHeight
+      this.barHeight = parentHeight * parentHeight / childHeight;
+      let bar = this.$refs.bar
+      bar.style.height = this.barHeight + 'px'
+      // 计算滚动条位置 translateY / childHeight = y / parentHeight
+      this.scrollBarY = - parentHeight * translateY / childHeight
+      bar.style.transform = `translateY( ${this.scrollBarY }px)`
+    },
+    getContentYMax () {
+      let {borderTopWidth, borderBottomWidth, paddingTop, paddingBottom} = window.getComputedStyle(this.$refs.parent)
+      borderTopWidth = parseInt(borderTopWidth)
+      borderBottomWidth = parseInt(borderBottomWidth)
+      paddingTop = parseInt(paddingTop)
+      paddingBottom = parseInt(paddingBottom)
+      let maxHeight = this.childHeight - this.parentHeight + borderTopWidth + borderBottomWidth + paddingTop + paddingBottom
+      return maxHeight;
+    },
+    calcScrollBarY (deltaY) {
+      let newValue = parseInt(this.scrollBarY) + deltaY
+      if(newValue < 0) {
+        newValue = 0
+      } else if (newValue > this.maxScrollHeight) {
+        newValue = this.maxScrollHeight;
+      }
+      return newValue;
+    },
     // 鼠标按下滚动条
     onMouseDownScrollBar(e) {
       this.isScrolling = true
@@ -92,18 +120,11 @@ export default {
     onMouseMoveScrollbar(e) {
       this.scrollBarVisible = true
       if(!this.isScrolling) {return;}
-
-      let maxScrollHeight = this.parentHeight - this.barHeight;
-      let {screenX: x, screenY: y} = e
-      this.endPosition = [x, y]
-      let deltaX = this.endPosition[0] - this.startPosition[0]
+      this.endPosition = [ e.screenX, e.screenY ]
       let deltaY = this.endPosition[1] - this.startPosition[1]
-      this.scrollBarY = parseInt(this.scrollBarY) + deltaY
-      if(this.scrollBarY < 0) {
-        this.scrollBarY = 0
-      } else if (this.scrollBarY > maxScrollHeight) {
-        this.scrollBarY = maxScrollHeight;
-      }
+      // 用于限制scrollBarY
+      this.scrollBarY = this.calcScrollBarY(deltaY)
+      // contantY(内容滚动距离) / parentHeight(内容器的高) = scrollBarY(滚动条滚动距离) / barHeight(滚动条高度)
       this.contentY = -(this.parentHeight * this.scrollBarY / this.barHeight)
       // 因为mousemove过程中，translate会保留上次的值，所以基于这个值去做累加就好
       this.startPosition = this.endPosition
@@ -122,17 +143,6 @@ export default {
     // 去掉文本选中
     onSelectStartScrollBar(e) {
       e.preventDefault();
-    },
-    updateScrollBar (parentHeight, childHeight, translateY) {
-      // 计算滚动条高度 parentHeight / childHeight = barHeight / parentHeight
-      let barHeight = parentHeight * parentHeight / childHeight
-      this.barHeight = barHeight;
-      let bar = this.$refs.bar
-      bar.style.height = barHeight + 'px'
-      // 计算滚动条位置 translateY / childHeight = y / parentHeight
-      let y = parentHeight * translateY / childHeight
-      bar.style.transform = `translateY(${-y}px)`
-      this.scrollBarY = -y
     },
     // 鼠标悬浮展示滚动条
     onMouseEnter () {
