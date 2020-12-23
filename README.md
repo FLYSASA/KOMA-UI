@@ -53,6 +53,15 @@
 
 
 ## 文档
+运行测试用例：
+`npm run test:unit`
+
+运行文档：
+`npm run docs:dev`
+
+部署文档：
+`npm run d`
+
 
 ## 提问
 

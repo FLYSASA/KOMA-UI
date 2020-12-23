@@ -9,7 +9,10 @@
     "test": "cross-env NODE_ENV=test karma start --single-run",
     "test:unit": "cross-env NODE_ENV=test karma start",
     "test:unit:cli": "vue-cli-service test:unit",
-    "watch": "vue-cli-service test:unit --watch"
+    "watch": "vue-cli-service test:unit --watch",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "d": "bash deploy.sh"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -34,7 +37,8 @@
     "less-loader": "^5.0.0",
     "sinon": "^9.2.1",
     "sinon-chai": "^3.5.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.7.1"
   },
   "browserslist": [
     "> 1%",
