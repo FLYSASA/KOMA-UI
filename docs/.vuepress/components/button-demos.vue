@@ -12,7 +12,7 @@
 <script>
 import Button from '../../../src/components/button/button';
 export default {
-  name: '',
+  name: 'KomaButton',
   components: {
     'g-button': Button
   },

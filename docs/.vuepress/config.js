@@ -1,37 +1,34 @@
 module.exports = {
   // 部署的仓库名
   base: '/KOMA-UI/',
-  title: 'KOMA-UI1',
-  description: '一个好用的UI框架',
+  title: 'KOMA-UI',
+  description: '一个基于vue的UI框架',
   themeConfig: {
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' },
-      { text: 'External', link: 'https://google.com' },
+      { text: '首页', link: '/' },
+      { text: '指南', link: '/guide/' },
+      { text: '组件', link: '/components/install' },
+      { text: 'github', link: 'https://github.com/FLYSASA/KOMA-UI' },
     ],
-    sidebar: [
-      {
-        title: '入门',
-        // 不折叠
-        collapsable: false,
-        children: [
-          '/install/',
-          '/get-started/',
-        ]
-      },
-      {
-        title: '组件',
-        collapsable: false,
-        children: [
-          '/components/button',
-          '/components/grid',
-          '/components/input',
-          '/components/layout',
-          '/components/popover',
-          '/components/tabs',
-          '/components/toast',
-        ]
-      },
-    ]
+    sidebar: {
+      // 组件
+      '/components/': [
+        {
+          title: '基础',
+          collapsable: false,
+          children: [
+            '/components/install',
+            '/components/get-started',
+          ]
+        },
+        {
+          title: '组件',
+          collapsable: false,
+          children: [
+            '/components/button',
+          ]
+        },
+      ]
+    }
   }
 }
