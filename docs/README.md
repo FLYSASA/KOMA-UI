@@ -1,8 +1,8 @@
 ---
 home: true
 lang: zh-CN
-heroText: KOMA-UI
-heroImage: /logo.png
+heroText:
+heroImage: /home.png
 actionText: 快速上手 →
 actionLink: /guide/
 features:

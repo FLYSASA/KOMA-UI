@@ -36,7 +36,7 @@
   }
 </script>
 <style lang='less' scoped>
-  @import 'css/_var';
+  @import '../../css/_var';
   .koma-button {
     display: inline-flex;
     justify-content: center;
