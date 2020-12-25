@@ -4,6 +4,7 @@ module.exports = {
   title: 'KOMA-UI',
   description: '一个基于vue的UI框架',
   themeConfig: {
+    logo: '/logo.png',
     nav: [
       { text: '首页', link: '/' },
       { text: '指南', link: '/guide/' },
