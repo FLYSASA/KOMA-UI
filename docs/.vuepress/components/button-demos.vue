@@ -11,7 +11,7 @@
         <g-button :loading="true">加载中</g-button>
         <g-button disabled>禁用按钮</g-button>
       </div>
-      <div class="code-content" style="height: 0;">
+      <div class="code-content" style="height: 0;" v-highlight>
         <div class="code-content-height">
           <!-- <div class="code-user-desc">
             组件描述说明
@@ -48,11 +48,13 @@ export default {
         <g-button icon="shezhi">图标按钮</g-button>
         <g-button :loading="true">加载中</g-button>
         <g-button disabled>禁用按钮</g-button>
-      `.replace(/\t+| +/g, '').trim()
+      `.replace(/\t+|  +/g, '').trim()
     };
   },
   computed: {},
-  created () {},
+  created () {
+    console.log(this.content)
+  },
   methods: {}
 }
 
