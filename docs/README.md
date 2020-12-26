@@ -4,7 +4,7 @@ lang: zh-CN
 heroText:
 heroImage: /home.png
 actionText: 快速上手 →
-actionLink: /guide/
+actionLink: /components/
 features:
 - title: Vue 驱动
   details: 这是一个基于vue的UI框架，适合移动端和pc端使用
