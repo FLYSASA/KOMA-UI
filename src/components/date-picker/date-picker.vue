@@ -273,16 +273,16 @@ export default {
     &.currentMonth {
       color: @color;
       &:hover {
-        background: @blue;
+        background: @primary-color;
         color: #fff;
         cursor: pointer;
       }
     }
     &.today {
-      border: 1px solid @blue;
+      border: 1px solid @primary-color;
     }
     &.isSelected {
-      background: @blue;
+      background: @primary-color;
       color: #fff;
     }
   }

@@ -1,5 +1,7 @@
-
+// 折叠代码块样式
 import './public/index.less'
+// 表格样式
+import './public/table.less'
 // 代码高亮文件引入
 import Vue from 'vue'
 import hljs from 'highlight.js'

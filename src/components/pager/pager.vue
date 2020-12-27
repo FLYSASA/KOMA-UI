@@ -126,13 +126,13 @@ export default {
     min-width: @width;
     height: @height;
     &:hover {
-      border-color: @blue;
-      color: @blue;
+      border-color: @primary-color;
+      color: @primary-color;
     }
     cursor: pointer;
     &.active {
-      border-color: @blue;
-      color: @blue;
+      border-color: @primary-color;
+      color: @primary-color;
     }
   }
 }

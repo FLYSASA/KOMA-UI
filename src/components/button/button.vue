@@ -1,7 +1,7 @@
 <template>
-  <button class="koma-button" :class="{[`icon-${iconPosition}`]: true}" @click="$emit('click')">
-    <g-icon class="loading icon" name="loading" v-if="loading"></g-icon>
-    <g-icon  class="icon" v-if="icon && !loading" :name="icon"></g-icon>
+  <button class="k-button" :class="{[`icon-${iconPosition}`]: true}" @click="$emit('click')">
+    <k-icon class="loading icon" name="loading" v-if="loading"></k-icon>
+    <k-icon  class="icon" v-if="icon && !loading" :name="icon"></k-icon>
     <div class="content">
       <slot></slot>
     </div>
@@ -14,7 +14,7 @@
   export default {
     name: 'KomaButton',
     components: {
-      'g-icon': Icon
+      'k-icon': Icon
     },
     props: {
       icon:{
@@ -37,7 +37,7 @@
 </script>
 <style lang='less' scoped>
   @import '../../css/_var';
-  .koma-button {
+  .k-button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -48,11 +48,24 @@
     border: 1px solid @border-color;
     background: @button-bg;
     vertical-align: middle;
-    &[disabled="disabled"]{
+    cursor: pointer;
+    &[disabled="disabled"] {
       cursor: not-allowed;
     }
-    &:hover {border-color: @border-color-hover;}
-    &:active { background-color: @button-active-bg; }
+    &:hover {
+      color: @active-color;
+      border-color: @border-color-hover;
+      > .icon {
+        fill: @active-color;
+      }
+    }
+    &:active { 
+      color: @active-color;
+      background-color: @button-active-bg;
+      > .icon {
+        fill: @active-color;
+      }
+    }
     &:focus { outline: none; }
     > .icon { 
       order: 1; 

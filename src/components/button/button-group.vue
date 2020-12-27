@@ -1,5 +1,5 @@
 <template>
-  <div class="g-button-group">
+  <div class="k-button-group">
     <slot></slot>
   </div>
 </template>
@@ -14,19 +14,19 @@
     mounted() {
       for (let node of this.$el.children) {
         if (node.nodeName.toLowerCase() === 'div') {
-          console.warn(`g-button-group 的子元素应该全是g-button, 但是你写的是 ${ node.nodeName }`)
+          console.warn(`k-button-group 的子元素应该全是g-button, 但是你写的是 ${ node.nodeName }`)
         }
       }
     }
   }
 </script>
 <style lang='less' scoped>
-  @import 'css/_var';
-  .g-button-group {
+  @import '../../css/_var';
+  .k-button-group {
     display: inline-flex;
     vertical-align: middle;
 
-    >.g-button {
+    >.k-button {
       border-radius: 0;
 
       &:not(:first-child) {
