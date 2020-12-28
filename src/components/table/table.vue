@@ -12,8 +12,8 @@
                 @click="changeOrderBy(column.prop)">
                 {{column.text}}
                 <span class="koma-sorter" v-if="column.prop in orderBy" >
-                  <g-icon name="ascending" :class="{active: orderBy[column.prop] === 'asc'}"></g-icon>
-                  <g-icon name="descending" :class="{active: orderBy[column.prop] === 'desc'}"></g-icon>
+                  <k-icon name="ascending" :class="{active: orderBy[column.prop] === 'asc'}"></k-icon>
+                  <k-icon name="descending" :class="{active: orderBy[column.prop] === 'desc'}"></k-icon>
                 </span>
               </div>
             </th>
@@ -27,7 +27,7 @@
             <!-- 主体内容 -->
             <tr :key="item.id">
               <td v-if="expandKey" :style="{width: '50px'}" @click="onExpand(item)" class="table-center">
-                <g-icon name="right" class="expand-icon" :class="{active: expendedItemKeys.indexOf(item.id) > -1}"></g-icon>
+                <k-icon name="right" class="expand-icon" :class="{active: expendedItemKeys.indexOf(item.id) > -1}"></k-icon>
               </td>
               <td v-if="checkable" :style="{width: '50px'}" class="table-center">
                 <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
@@ -64,7 +64,7 @@
       </table>
     </div>
     <div class="koma-table-loading" v-if="loading">
-      <g-icon name="loading"></g-icon>
+      <k-icon name="loading"></k-icon>
     </div>
   </div>
 </template>

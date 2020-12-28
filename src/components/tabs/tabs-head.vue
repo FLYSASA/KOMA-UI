@@ -46,7 +46,7 @@ export default {
   align-items: center;
   justify-content: start;
   position: relative;
-  border-bottom: 1px solid @border-color;
+  border-bottom: 1px solid #ddd;
   > .actions-wrapper {
     margin-left: auto;
   }

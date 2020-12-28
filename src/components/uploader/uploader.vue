@@ -8,7 +8,7 @@
     <ol class="koma-uploader-fileList">
       <li v-for="file in fileList" :key="file.name">
         <template v-if="file.status === 'uploading'">
-          <g-icon name="loading" class="loading-icon"></g-icon>
+          <k-icon name="loading" class="loading-icon"></k-icon>
         </template>
         <div class="image-wrapper">
           <!-- type: "image/png" -->
@@ -20,7 +20,7 @@
           </template>
         </div>
         <span class="file-name" :class="{[file.status]: file.status}" >{{file.name}}</span>
-        <g-icon name="delete" class="delete-btn" @click="onRemoveFile(file)"></g-icon>
+        <k-icon name="delete" class="delete-btn" @click="onRemoveFile(file)"></k-icon>
       </li>
     </ol>
   </div>

@@ -13,7 +13,7 @@
     </div>
     <div class="g-carousel-dots">
       <span @click="select(selectedIndex - 1)">
-        <g-icon name="left"></g-icon>
+        <k-icon name="left"></k-icon>
       </span>
       <!-- 不能直接使用$children, 因为他不是响应式的所以不会刷新视图 -->
       <span v-for="n in childrenLength"
@@ -24,7 +24,7 @@
         {{ n }}
       </span>
       <span @click="select(selectedIndex + 1)">
-        <g-icon name="right"></g-icon>
+        <k-icon name="right"></k-icon>
       </span>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <span class="g-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
       <span class="g-sub-nav-icon" :class="{ open, vertical }">
-        <g-icon name="right"></g-icon>
+        <k-icon name="right"></k-icon>
       </span>
     </span>
     <template v-if="vertical">

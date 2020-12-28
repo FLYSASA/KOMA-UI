@@ -26,7 +26,9 @@ module.exports = {
           title: '组件',
           collapsable: false,
           children: [
+            '/components/icon',
             '/components/button',
+            '/components/tabs',
           ]
         },
       ]

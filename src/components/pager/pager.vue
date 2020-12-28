@@ -2,14 +2,14 @@
   <div class="koma-pager" v-if="!(hideIfOnePage && totalPage <= 1)">
     <span class="koma-pager-nav prev" :class="{disabled: currentPage === 1}"
       @click="change(currentPage - 1)">
-      <g-icon name="left"></g-icon>
+      <k-icon name="left"></k-icon>
     </span>
     <template v-for="(page, index) in pages">
       <template v-if="page === currentPage">
         <span :key="index" class="koma-pager-item active">{{page}}</span>
       </template>
       <template v-else-if="page === '...'">
-        <g-icon name="more" :key="index" class="separator"></g-icon>
+        <k-icon name="more" :key="index" class="separator"></k-icon>
       </template>
       <template v-else>
         <span :key="index" class="koma-pager-item other" @click="change(page)">{{page}}</span>
@@ -17,7 +17,7 @@
     </template>
     <span class="koma-pager-nav next"  :class="{disabled: currentPage === totalPage}"
       @click="change(currentPage + 1)">
-      <g-icon name="right"></g-icon>
+      <k-icon name="right"></k-icon>
     </span>
   </div>
 </template>

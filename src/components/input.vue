@@ -7,7 +7,7 @@
       @input="$emit('input', $event.target.value)"
       type="text"/>
       <template v-if="error">
-         <g-icon name="error" class="icon-error" v-if="error"></g-icon>
+         <k-icon name="error" class="icon-error" v-if="error"></k-icon>
          <span class="errorMessage">{{error}}</span>
       </template>
    </div>
@@ -18,7 +18,7 @@ import Icon from './icon.vue';
 export default {
    name: 'KomaInput',
    components: {
-      'g-icon': Icon
+      'k-icon': Icon
     },
    props: {
       value: {

@@ -1,5 +1,5 @@
 <template>
-	<svg class="g-icon" @click="$emit('click', $event)">
+	<svg class="k-icon" @click="$emit('click', $event)">
 		<use :xlink:href="`#i-${name}`" />
 	</svg>
 </template>
@@ -19,7 +19,7 @@
 	};
 </script>
 <style lang='less' scoped>
-	.g-icon {
+	.k-icon {
 		width: 1em;
 		height: 1em;
 	}

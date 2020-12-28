@@ -6,14 +6,14 @@
         <!-- @selectstart.prevent 取消选择文本事件 -->
         <div class="koma-date-picker-pop" @selectstart.prevent>
           <div class="koma-date-picker-nav">
-            <span :class="c('prevYear', 'navItem')" @click="onClickPrevYear"><g-icon name="double-left"></g-icon></span>
-            <span :class="c('prevMonth', 'navItem')" @click="onClickPrevMonth"><g-icon name="left"></g-icon></span>
+            <span :class="c('prevYear', 'navItem')" @click="onClickPrevYear"><k-icon name="double-left"></k-icon></span>
+            <span :class="c('prevMonth', 'navItem')" @click="onClickPrevMonth"><k-icon name="left"></k-icon></span>
             <span :class="c('yearAndMonth')" @click="onClickMonth">
             	<span>{{ display.year }}年</span>
             	<span>{{ display.month + 1 }}月</span>
             </span>
-            <span :class="c('nextMonth', 'navItem')" @click="onClickNextMonth"><g-icon name="right"></g-icon></span>
-            <span :class="c('nextYear', 'navItem')" @click="onClickNextYear"><g-icon name="double-right"></g-icon></span>
+            <span :class="c('nextMonth', 'navItem')" @click="onClickNextMonth"><k-icon name="right"></k-icon></span>
+            <span :class="c('nextYear', 'navItem')" @click="onClickNextYear"><k-icon name="double-right"></k-icon></span>
           </div>
           <div class="koma-date-picker-panels">
             <div class="koma-date-picker-content">
