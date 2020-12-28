@@ -27,7 +27,7 @@ import Cascader from './components/cascader/cascader.vue'
 Vue.component('g-button', Button)
 Vue.component('k-icon', Icon)
 Vue.component('g-button-group', ButtonGroup)
-Vue.component('g-input', Input)
+Vue.component('k-tabs', Input)
 Vue.component('g-row', Row)
 Vue.component('g-col', Col)
 Vue.component('g-layout', Layout)

@@ -29,6 +29,7 @@ module.exports = {
             '/components/icon',
             '/components/button',
             '/components/tabs',
+            '/components/input',
           ]
         },
       ]

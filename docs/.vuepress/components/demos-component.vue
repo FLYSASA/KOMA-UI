@@ -1,5 +1,5 @@
 <template>
-  <div class="demo">
+  <div class="demo component-demo">
     <!-- <h2>{{ title }}</h2> -->
     <!-- <p>组件描述</p> -->
     <h3>📚{{ name }}</h3>
@@ -66,3 +66,13 @@ export default {
 
 }
 </script>
+<style lang="less" scoped>
+.component-demo {
+  > p {
+    font-size: 14px;
+    color: #5e6d82;
+    line-height: 1.5em;
+    margin-bottom: 20px;
+  }
+}
+</style>

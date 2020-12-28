@@ -2,10 +2,10 @@
 title: Input - 输入框
 ---
 
-# 输入框
-
-使用方法： 
+# Input输入框
 
 <ClientOnly>
-  <button-demos></button-demos>
+  <input-demos></input-demos>
 </ClientOnly>
+
+<input-attributes></input-attributes>
