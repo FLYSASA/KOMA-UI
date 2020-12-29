@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper"  :class="computedClass">
+  <div class="koma-toast-wrapper"  :class="computedClass">
     <div class="toast" ref="toast">
       <div class="message-wrapper">
         <slot v-if="!enableHtml"></slot>
@@ -111,10 +111,11 @@ export default {
 
 @animation-duration: 300ms;
 
-.wrapper {
+.koma-toast-wrapper {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 99999 !important;
   &.position-top {
     top: 0;
     .toast {
@@ -140,7 +141,7 @@ export default {
   }
 }
 .toast {
-  font-size: @font-size;
+  font-size: @middle-font-size;
   line-height: 1.8;
   min-height: @toast-min-height;
   background: @toast-bg;

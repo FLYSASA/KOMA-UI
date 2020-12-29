@@ -1,5 +1,11 @@
 ---
-title: Toast
+title: Toast - 提示框
 ---
 
-# Toast
+# Toast 提示框
+
+<ClientOnly>
+  <toast-demos></toast-demos>
+</ClientOnly>
+
+<toast-attributes></toast-attributes>
