@@ -38,7 +38,7 @@ export default {
 }
 // 动画
 .slide-enter-active, .slide-leave-active {
-  transition: all 1s;
+  transition: all 0.5s;
 }
 // 这里绝对定位的目的是为了让走的那个不占位置
 .slide-leave-active {
@@ -50,19 +50,19 @@ export default {
 }
 .slide-enter {
   transform: translateX(100%);
-  opacity: 0;
+  // opacity: 0;
 }
 .slide-enter.reverse {
   transform: translateX(-100%);
-  opacity: 0;
+  // opacity: 0;
 }
 
 .slide-leave-to {
   transform: translateX(-100%);
-  opacity: 0;
+  // opacity: 0;
 }
 .slide-leave-to.reverse {
   transform: translateX(100%);
-  opacity: 0;
+  // opacity: 0;
 }
 </style>

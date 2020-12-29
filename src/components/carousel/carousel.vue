@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import GIcon from '../icon';
+import KIcon from '../icon';
 export default {
   name: 'KomaCarousel',
   components: {
-    GIcon
+    KIcon
   },
   props: {
     selected: {
@@ -43,7 +43,7 @@ export default {
     },
     autoPlay: {
       type: Boolean,
-      default: true
+      default: false
     },
     autoPlayDelay: {
       type: Number,
@@ -74,9 +74,7 @@ export default {
   },
   mounted () {
     this.updateChildren()
-    if(this.autoPlay){
-      this.playAutomatically()
-    }
+    this.playAutomatically()
     this.childrenLength = this.items.length
   },
   // 外面selected值更新后, 需要重新通知每一个子组件新的值
@@ -132,6 +130,7 @@ export default {
       this.$emit('update:selected', this.names[newIndex])
     },
     playAutomatically() {
+      if(!this.autoPlay){return;}
       if(this.timerId) {return;}
       // setInterval在极端情况下，会有问题
       // 用 setTimeout 模拟 setInterval
@@ -164,15 +163,13 @@ export default {
         // 新选中的在现在的左边 就是反向的
         let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
         // 只有在自动播放的时候才去无缝轮播
-        if(this.timerId){
-          // 保证右向无缝轮播
-          if(this.lastSelectedIndex === this.items.length - 1 && this.selectedIndex === 0){
-            reverse = false;
-          }
-          // 保证左向无缝轮播
-          if(this.lastSelectedIndex === 0 && this.selectedIndex === this.items.length - 1) {
-            reverse = true;
-          }
+        // 保证右向无缝轮播
+        if(this.lastSelectedIndex === this.items.length - 1 && this.selectedIndex === 0){
+          reverse = false;
+        }
+        // 保证左向无缝轮播
+        if(this.lastSelectedIndex === 0 && this.selectedIndex === this.items.length - 1) {
+          reverse = true;
         }
         vm.reverse = reverse
         // 这里加nextTick的原因是保证reverse 在新的选中时是对的
