@@ -1,6 +1,6 @@
 <template>
   <div class="popover" ref="popover">
-    <div ref="popoverContent" class="koma-popover-content-wrapper" v-if="visible"
+    <div ref="contentWrapper" class="koma-popover-content-wrapper" v-if="visible"
       :class="{[`position-${position}`]:true}">
       <slot name="content" :close="close"></slot>
     </div>
@@ -37,38 +37,46 @@ export default {
       visible: false
     };
   },
-
-  computed: {},
-
   mounted() {
-    if(this.trigger === 'click'){
-      this.$refs['popover'].addEventListener('click', this.clickPopover)
-    } else {
-      this.$refs['popover'].addEventListener('mouseenter', this.open)
-      this.$refs['popover'].addEventListener('mouseleave', this.close)
-    }
+    this.addPopoverListeners()
   },
 
   beforeDestroy() {
-    if(!this.$refs['popover']){return;}
-    if(this.trigger === 'click'){
-      this.$refs['popover'].removeEventListener('click', this.clickPopover)
-    } else {
-      this.$refs['popover'].removeEventListener('mouseenter', this.open)
-      this.$refs['popover'].removeEventListener('mouseleave', this.close)
-    }
+    this.recoverElContent();
+    this.removePopoverListeners();
   },
 
   methods: {
+    removePopoverListeners() {
+      if(!this.$refs['popover']){return;}
+      if(this.trigger === 'click'){
+        this.$refs['popover'].removeEventListener('click', this.clickPopover)
+      } else {
+        this.$refs['popover'].removeEventListener('mouseenter', this.open)
+        this.$refs['popover'].removeEventListener('mouseleave', this.close)
+      }
+    },
+    addPopoverListeners() {
+      if(this.trigger === 'click'){
+        this.$refs['popover'].addEventListener('click', this.clickPopover)
+      } else {
+        this.$refs['popover'].addEventListener('mouseenter', this.open)
+        this.$refs['popover'].addEventListener('mouseleave', this.close)
+      }
+    },
+    recoverElContent(){
+      const {contentWrapper, popover} = this.$refs
+      if(!contentWrapper){return}
+      popover.appendChild(contentWrapper)
+    },
     // 重新定位，避免overflow: hidden;的问题
-    positionPopover () {
-      const { popoverContent, triggerWrapper } = this.$refs
-      if(!popoverContent){return;}
+    positionContent () {
+      const { contentWrapper, triggerWrapper } = this.$refs;
+      if(!contentWrapper){return;}
       // 需要先挂载到页面上，才能设样式
-      (this.container || document.body).appendChild(popoverContent)
-
+      (this.container || document.body).appendChild(contentWrapper)
       const { left, top, height, width } = triggerWrapper.getBoundingClientRect()
-      const { height: height2 } = popoverContent.getBoundingClientRect()
+      const { height: height2 } = contentWrapper.getBoundingClientRect()
 
       let positions = {
         top: {
@@ -88,18 +96,18 @@ export default {
           left: left + width + window.scrollX
         }
       }
-      popoverContent.style.left = positions[this.position].left + 'px'
-      popoverContent.style.top = positions[this.position].top + 'px';
+      contentWrapper.style.left = positions[this.position].left + 'px'
+      contentWrapper.style.top = positions[this.position].top + 'px';
 
     },
     onClickDocument (e) {
-      if(this.$refs['popoverContent'] && this.$refs['popoverContent'].contains(e.target)) {
-          return;
-      }
+      if (this.$refs.popover &&
+        (this.$refs.popover === e.target || this.$refs.popover.contains(e.target))
+      ) { return }
+      if (this.$refs.contentWrapper &&
+        (this.$refs.contentWrapper === e.target || this.$refs.contentWrapper.contains(e.target))
+      ) { return }
       this.close()
-    },
-    listenToDocument(){
-      document.addEventListener('click', this.onClickDocument)
     },
     clickPopover (e) {
       // 点的触发器的话就关闭popover, 点popover内容不关闭
@@ -121,10 +129,10 @@ export default {
       this.visible = true
       this.$emit('open')
       // 不加延时的话 冒泡机制会立刻转成false
-      setTimeout(()=>{
-        this.positionPopover()
+      this.$nextTick(()=>{
+        this.positionContent()
         // 给document加上监听事件，是为了能点body关闭掉popover
-        this.listenToDocument()
+        document.addEventListener('click', this.onClickDocument)
       })
     }
   },
