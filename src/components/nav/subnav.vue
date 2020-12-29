@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import GIcon from '../icon'
+import KIcon from '../icon'
 import ClickOutside from '@/components/directives/click-outside';
 export default {
   name: 'KomaSubNav',
   components: {
-    GIcon
+    KIcon
   },
   inject: ['root', 'vertical'],
   directives: {

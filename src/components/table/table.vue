@@ -70,11 +70,11 @@
 </template>
 
 <script>
-import GIcon from '../icon';
+import KIcon from '../icon';
 export default {
   name: 'KomaTable',
   components: { 
-    GIcon,
+    KIcon,
     Vnodes: {
       functional: true,
       render: (h, ctx) => ctx.props.vnodes

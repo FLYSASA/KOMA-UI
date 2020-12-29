@@ -28,11 +28,11 @@
 
 <script>
 import http from '@/components/defs/http'
-import GIcon from '@/components/icon'
+import KIcon from '@/components/icon'
 export default {
   name: 'KomaUploader',
   components: {
-    GIcon
+    KIcon
   },
   props: {
     name: {

@@ -106,6 +106,8 @@ export default {
          }
          .icon-error {
             fill: @red;
+            width: 1.5em;
+            height: 1.5em;
          }
          .errorMessage {
             color:@red;

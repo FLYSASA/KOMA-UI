@@ -33,10 +33,10 @@ function unique(array) {
   // 注意这里返回的都是字符串，不再是number
   return Object.keys(obj).map(i => parseInt(i))
 }
-import GIcon from '../icon';
+import KIcon from '../icon';
 export default {
   name: 'KomaPager',
-  components: { GIcon },
+  components: { KIcon },
   props: {
     totalPage: {
       type: Number,

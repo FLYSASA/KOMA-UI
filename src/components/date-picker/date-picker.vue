@@ -67,7 +67,7 @@
 
 <script>
 import GInput from '@/components/input';
-import GIcon from '@/components/icon';
+import KIcon from '@/components/icon';
 import GPopover from '@/components/popover';
 import GButton from '@/components/button/button'
 import ClickOutside from '@/components/directives/click-outside';
@@ -79,7 +79,7 @@ export default {
   },
   components: {
     GInput,
-    GIcon,
+    KIcon,
     GPopover,
     GButton
   },
