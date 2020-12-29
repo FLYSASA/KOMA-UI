@@ -10,9 +10,9 @@
       </div>
       <div class="code-content" style="height: 0;" v-highlight>
         <div class="code-content-height">
-          <!-- <div class="code-user-desc">
-            组件描述说明
-          </div> -->
+          <div class="code-user-desc" v-if="codedes">
+            {{ codedes }}
+          </div>
           <pre><code class="vue">{{ computedCodeStr }}</code></pre>
         </div>
       </div>
@@ -50,6 +50,10 @@ export default {
     },
     // 组件介绍
     description: {
+      type: String
+    },
+    // 代码块描述
+    codedes: {
       type: String
     },
     // 代码块

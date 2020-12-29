@@ -5,8 +5,8 @@ title: Grid - 网格
 
 # 网格
 
-使用方法： 
-
 <ClientOnly>
-  <button-demos></button-demos>
+  <grid-demos></grid-demos>
 </ClientOnly>
+
+<grid-attributes></grid-attributes>

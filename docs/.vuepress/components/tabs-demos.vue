@@ -125,11 +125,6 @@ export default {
       selected2: '2'
     };
   },
-  computed: {},
-  created () {
-    console.log(this.codeStr1)
-  },
-  methods: {}
 }
 
 </script>

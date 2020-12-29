@@ -88,7 +88,7 @@ export default {
 </script>
 <style lang='less'>
   .col{
-    height: 100px;
+    // height: 100px;
     // &.col-1{
     //   width: 1/24%;
     // }
