@@ -1,5 +1,5 @@
 <template>
-  <div class="collapse">
+  <div class="koma-collapse">
     <slot></slot>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
 </script>
 <style lang='less' scoped>
   @import '../../css/_var';
-  .collapse {
+  .koma-collapse {
     border: 1px solid @gray;
     border-radius: @border-radius;
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="popover" ref="popover">
+  <div class="koma-popover" ref="popover">
     <div ref="contentWrapper" class="koma-popover-content-wrapper" v-if="visible"
       :class="{[`position-${position}`]:true}">
       <slot name="content" :close="close"></slot>
@@ -140,7 +140,7 @@ export default {
 </script>
 <style lang='less' scoped>
   @import '../css/_var';
-  .popover {
+  .koma-popover {
     display: inline-block;
     vertical-align: top;
     position: relative;

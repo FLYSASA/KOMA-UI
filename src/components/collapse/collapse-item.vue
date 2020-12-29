@@ -3,9 +3,9 @@
     <div class="title" @click="click">
       {{title}}
     </div>
-    <div class="content" v-if="open">
-      <slot></slot>
-    </div>
+      <div class="content" v-if="open">
+        <slot></slot>
+      </div>
   </div>
 </template>
 
@@ -60,7 +60,8 @@
       min-height: 32px;
       display: flex;
       align-items: center;
-      padding: 0 8px;
+      padding: 10px 16px;
+      cursor: pointer;
     }
     &:first-child {
       >.title {
@@ -77,7 +78,7 @@
       }
     }
     >.content {
-      padding: 0 8px;
+      padding: 10px 24px;
     }
   }
 </style>
