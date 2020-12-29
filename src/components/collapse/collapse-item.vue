@@ -1,18 +1,23 @@
 <template>
   <div class="collapse-item">
     <div class="title" @click="click">
-      {{title}}
+      <span>{{title}}</span>
+      <k-icon name="right" class="collapse-icon" :class="{'expand-icon': open}"></k-icon>
     </div>
-      <div class="content" v-if="open">
+    <collapse-transition>
+      <div class="content" v-show="open">
         <slot></slot>
       </div>
+    </collapse-transition>
   </div>
 </template>
 
 <script>
+import KIcon from '../../../src/components/icon';
+import CollapseTransition from '../../transitions/collapse-transition'
   export default {
     name: 'KomaCollapseItem',
-    components: {},
+    components: { CollapseTransition, KIcon },
     props: {
       title: {
         type: String,
@@ -60,8 +65,11 @@
       min-height: 32px;
       display: flex;
       align-items: center;
-      padding: 10px 16px;
+      padding: 0 8px;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     &:first-child {
       >.title {
@@ -78,7 +86,13 @@
       }
     }
     >.content {
-      padding: 10px 24px;
+      padding: 0 8px;
+    }
+    .collapse-icon {
+      transition: all 0.3s;
+      &.expand-icon {
+        transform: rotate(90deg);
+      }
     }
   }
 </style>

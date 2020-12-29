@@ -1,7 +1,7 @@
 <template>
   <div class="base">
     <section>
-      <h2>k-popover Attributes</h2>
+      <h2>k-collapse Attributes</h2>
       <!-- <p class="des">
         不同于其它组件，toast是以插件的形式挂载到vue上的。我们可以传入一个option对象，来展示不同提示框。
         调用方式：<span class="code">this.$toast(MESSAGE, OPTIONS)。</span>
@@ -19,25 +19,73 @@
           </thead>
           <tbody>
             <tr>
-              <td>position</td>
-              <td class="des">弹出位置</td>
-              <td class="type">String</td>
-              <td>top，bottom，left，right</td>
-              <td>top</td>
-            </tr>
-            <tr>
-              <td>trigger</td>
-              <td class="des">触发方式</td>
-              <td class="type">String</td>
-              <td>click，hover</td>
-              <td>click</td>
-            </tr>
-            <tr>
-              <td>container</td>
-              <td class="des">container的值应该是一个dom元素</td>
-              <td class="type">Element</td>
+              <td>selected</td>
+              <td class="des">当前展开折叠项的 name 组成的数组。可以用 .sync 修饰符修饰。</td>
+              <td class="type">Array</td>
               <td>——</td>
-              <td>body</td>
+              <td>——</td>
+            </tr>
+            <tr>
+              <td>single</td>
+              <td class="des">是否允许同时展开多个折叠项。</td>
+              <td class="type">Boolean</td>
+              <td>true, false</td>
+              <td>false</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>k-collapse-item Attributes</h2>
+      <div class="attr">
+        <table>
+          <thead>
+            <tr>
+              <th>参数</th>
+              <th class="des">说明</th>
+              <th class="type">类型</th>
+              <th>可选值</th>
+              <th>默认值</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>name</td>
+              <td class="des">唯一标识符，必填。</td>
+              <td class="type">String</td>
+              <td>——</td>
+              <td>——</td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td class="des">标题</td>
+              <td class="type">String</td>
+              <td>——</td>
+              <td>——</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>k-collapse Events</h2>
+      <div class="attr">
+        <table>
+          <thead>
+            <tr>
+              <th>事件名称</th>
+              <th class="des">说明</th>
+              <th class="type">回调参数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>change</td>
+              <td class="des">当前激活面板改变时触发，参数为选择项的name组成的数组。</td>
+              <td class="type">(activeNames: array)</td>
             </tr>
           </tbody>
         </table>

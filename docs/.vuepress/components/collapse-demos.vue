@@ -1,15 +1,38 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper collapse-demo">
     <demos-component
       name="基础用法"
       demokey="0"
-      description="可以设定提示框的弹出方向。"
+      description="selected接受一个数组，可以定义初始化要展开的项。"
       :codeStr="codeStr1">
       <template v-slot:code>
         <k-collapse :selected.sync="selected">
-          <k-collapse-item title="标题1" name="1">内容1</k-collapse-item>
-          <k-collapse-item title="标题2" name="2">内容2</k-collapse-item>
-          <k-collapse-item title="标题3" name="3">内容3</k-collapse-item>
+          <k-collapse-item title="标题1" name="1">
+            <div class="demo-content">当你足够好时，周围的一切都会自然地变得更好。</div></k-collapse-item>
+          <k-collapse-item title="标题2" name="2">
+            <div class="demo-content">你目前所做的可能暂时看不到结果，但不要灰心或焦虑，你没有成长，而是在扎根。</div></k-collapse-item>
+          </k-collapse-item>
+          <k-collapse-item title="标题3" name="3">
+            <div class="demo-content">成功需要成本，时间也是成本，珍惜时间就是节省成本。</div></k-collapse-item>
+          </k-collapse-item>
+        </k-collapse>
+      </template>
+    </demos-component>
+    <demos-component
+      name="手风琴效果"
+      demokey="1"
+      description="single 传 true，开启手风琴效果。"
+      :codeStr="codeStr2">
+      <template v-slot:code>
+        <k-collapse :selected.sync="selected2" single>
+          <k-collapse-item title="标题1" name="1">
+            <div class="demo-content">当你足够好时，周围的一切都会自然地变得更好。</div></k-collapse-item>
+          <k-collapse-item title="标题2" name="2">
+            <div class="demo-content">你目前所做的可能暂时看不到结果，但不要灰心或焦虑，你没有成长，而是在扎根。</div></k-collapse-item>
+          </k-collapse-item>
+          <k-collapse-item title="标题3" name="3">
+            <div class="demo-content">成功需要成本，时间也是成本，珍惜时间就是节省成本。</div></k-collapse-item>
+          </k-collapse-item>
         </k-collapse>
       </template>
     </demos-component>
@@ -37,71 +60,61 @@ export default {
     return {
       codeStr1: 
       `
-        <k-popover>
-          <k-button>上方弹出</k-button>
-          <template slot="content">弹出内容</template>
-        </k-popover>
-        <k-popover position="bottom">
-          <k-button>下方弹出</k-button>
-          <template slot="content">弹出内容</template>
-        </k-popover>
-        <k-popover position="left">
-          <k-button>左方弹出</k-button>
-          <template slot="content">弹出内容</template>
-        </k-popover>
-        <k-popover position="right">
-          <k-button>右方弹出</k-button>
-          <template slot="content">弹出内容</template>
-        </k-popover>
+        <k-collapse :selected.sync="selected">
+          <k-collapse-item title="标题1" name="1">
+            <div class="demo-content">当你足够好时，周围的一切都会自然地变得更好。</div></k-collapse-item>
+          <k-collapse-item title="标题2" name="2">
+            <div class="demo-content">你目前所做的可能暂时看不到结果，但不要灰心或焦虑，你没有成长，而是在扎根。</div></k-collapse-item>
+          </k-collapse-item>
+          <k-collapse-item title="标题3" name="3">
+            <div class="demo-content">成功需要成本，时间也是成本，珍惜时间就是节省成本。</div></k-collapse-item>
+          </k-collapse-item>
+        </k-collapse>
+        
+        data() {
+          return {
+            selected: ['2']
+          }
+        }
+
+        <style>
+          .demo-content {
+            padding: 15px 8px;
+          }
+        </style>
       `,
-      selected: ['2']
+      codeStr2: 
+      `
+        <k-collapse :selected.sync="selected2" single>
+          <k-collapse-item title="标题1" name="1">
+            <div class="demo-content">当你足够好时，周围的一切都会自然地变得更好。</div></k-collapse-item>
+          <k-collapse-item title="标题2" name="2">
+            <div class="demo-content">你目前所做的可能暂时看不到结果，但不要灰心或焦虑，你没有成长，而是在扎根。</div></k-collapse-item>
+          </k-collapse-item>
+          <k-collapse-item title="标题3" name="3">
+            <div class="demo-content">成功需要成本，时间也是成本，珍惜时间就是节省成本。</div></k-collapse-item>
+          </k-collapse-item>
+        </k-collapse>
+      `,
+      selected: ['2'],
+      selected2: [],
     };
   },
   mounted() {
-    this.demoPopoverWrapper = this.$refs.demoPopoverWrapper
   },
   methods: {
-    clickBtn(){
-      this.$toast('<span style="color: red;">越努力的人越幸运吗？</span>', {
-        enableHtml: true,
-        closeButton: {
-          text: '是的',
-          callback(){
-            console.log('越努力的人越幸运。')
-          }
-        }
-      })
-    }
   }
 }
 
 </script>
 
 <style lang="less" scoped>
-  .demo-layout {
-    color: #fff;
-    margin-bottom: 20px;
-    .flex-center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .demo-header {
-      height: 50px;
-      background:lightskyblue;
-    }
-    .demo-sider {
-      height: 200px;
-      width: 200px;
-      background:  rgb(4, 173, 230);
-    }
+* {
+    box-sizing: border-box;
+  }
+  .collapse-demo {
     .demo-content {
-      height: 200px;
-      background: deepskyblue;
-    }
-    .demo-footer {
-      height: 50px;
-      background:lightskyblue;
+      padding: 15px 8px;
     }
   }
 </style>

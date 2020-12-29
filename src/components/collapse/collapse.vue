@@ -17,7 +17,8 @@ export default {
       }
     },
     single: {
-      dafault: false
+      type: Boolean,
+      default: false
     },
   },
   data() {
