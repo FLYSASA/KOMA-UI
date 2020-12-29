@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="koma-footer">
     <slot></slot>
   </div>
 </template>
@@ -12,7 +12,4 @@ export default {
     };
   },
 }
-
 </script>
-<style lang='less' scoped>
-</style>

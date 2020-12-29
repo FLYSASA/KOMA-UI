@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" :class="layoutClass" ref="layout">
+  <div class="koma-layout" :class="layoutClass" ref="layout">
     <slot></slot>
   </div>
 </template>
@@ -7,7 +7,6 @@
 <script>
 export default {
   name: 'KomaLayout',
-  props: {},
   data () {
     return {
       layoutClass: {
@@ -16,7 +15,6 @@ export default {
     };
   },
   mounted () {
-    console.log(this.$refs['layout'].children, this.$children)
     this.$children.forEach((vm) => {
      if(vm.$options.name === 'KomaSider') {
        this.layoutClass.hasSider = true
@@ -27,10 +25,11 @@ export default {
 
 </script>
 <style lang='less' scoped>
-  .layout {
+  .koma-layout {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     &.hasSider {
       flex-direction: row;
     }

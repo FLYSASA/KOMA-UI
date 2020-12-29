@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="koma-content">
     <slot></slot>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-.content {
+.koma-content {
   flex-grow: 1;
 }
 </style>
