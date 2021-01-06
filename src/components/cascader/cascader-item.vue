@@ -1,5 +1,5 @@
 <template>
-  <div class="cascader-item" :style="{ height }">
+  <div class="koma-cascader-item" :style="{ height }">
     <div class="left">
       <div class="label" v-for="(item, index) in items"
         :key="index"
@@ -79,7 +79,7 @@ export default {
     rightArrowVisible(item) {
       return this.loadData ? !item.isLeaf : item.children;
     },
-    onUpdateSelected(val){
+    onUpdateSelected(val) {
       this.$emit('update:selected', val)
     },
     onclickLable(item) {
@@ -97,15 +97,14 @@ export default {
 </script>
 <style lang='less' scoped>
 @import '../../css/_var';
-.cascader-item {
+.koma-cascader-item {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 100px;
+  height: 200px;
   cursor: pointer;
   .left {
     height: 100%;
-    padding: .3em 0;
     overflow: auto;
   }
   .right {

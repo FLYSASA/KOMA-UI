@@ -62,7 +62,7 @@ import CollapseTransition from '../../transitions/collapse-transition'
       margin-top: -1px;
       margin-left: -1px;
       margin-right: -1px;
-      min-height: 32px;
+      min-height: 42px;
       display: flex;
       align-items: center;
       padding: 0 8px;

@@ -1,7 +1,7 @@
 <template>
-  <div class="cascader" ref="cascader" v-click-outside="close">
+  <div class="koma-cascader" ref="cascader" v-click-outside="close">
     <div class="trigger" @click="toggle">
-      {{computedSelectedName }}
+      {{ computedSelectedName }}
     </div>
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-item class="popover"
@@ -18,7 +18,7 @@
 
 <script>
 import cascaderItem from './cascader-item'
-import ClickOutside from '@/components/directives/click-outside';
+import ClickOutside from '../directives/click-outside';
 
 export default {
   name: 'KomaCascader',
@@ -30,12 +30,12 @@ export default {
     datas: {
       type: Array
     },
-    popoverHeight:{
-      type: String
-    },
     selected: {
       type: Array,
       default: () => []
+    },
+    popoverHeight:{
+      type: String
     },
     loadData: {
       type: Function,
@@ -50,7 +50,7 @@ export default {
 
   computed: {
     computedSelectedName() {
-      return this.selected.map(i => i.name).join('-')
+      return this.selected.map(i => i.name).join(' / ')
     }
   },
 
@@ -127,9 +127,10 @@ export default {
 </script>
 <style lang='less' scoped>
   @import '../../css/_var';
-  .cascader {
+  .koma-cascader {
     display: inline-block;
     position: relative;
+    cursor: pointer;
     .trigger {
       border: 1px solid @border-color;
       border-radius: @border-radius;
