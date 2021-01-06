@@ -1,7 +1,13 @@
 <template>
-  <div style="border: 1px solid;" class="koma-date-picker-wrapper" ref="dateWrapper">
+  <div class="koma-date-picker-wrapper" ref="dateWrapper">
     <g-popover position="bottom" :container="dateWrapper" ref="popover" @open="onOpen">
-      <g-input ref="input" type="text" :value="formattedValue" @input="onInput" @change="onchange"></g-input>
+      <g-input 
+        ref="input" 
+        type="text" 
+        :value="formattedValue"
+        placeholder="请选择日期"
+        @input="onInput" 
+        @change="onchange"></g-input>
       <template slot="content">
         <!-- @selectstart.prevent 取消选择文本事件 -->
         <div class="koma-date-picker-pop" @selectstart.prevent>
@@ -22,18 +28,20 @@
                   <div :class="c('selects')">
                     <select @change="onSelectYear" :value="display.year">
                       <option :value="year" v-for="year in years" :key="year">{{ year }}</option>
-                    </select>年
+                    </select>
+                    <span class="text">年</span>
                     <select @change="onSelectMonth" :value="display.month">
                       <option :value="month - 1" v-for="month in 12" :key="month">{{month}}</option>
-                    </select>月
+                    </select>
+                    <span class="text">月</span>
                   </div>
                   <div :class="c('returnDayMode')" @click.stop>
-                    <g-button @click="mode = 'day'">返回</g-button>
+                    <span @click="mode = 'day'">返回</span>
                   </div>
                 </div>
               </template>
               <template v-else>
-                <div class="koma-date-picker-content">
+                <div :class="c('selectWeek')">
                   <div :class="c('weekdays')">
                     <span v-for="i in 7"  :key="i" :class="c('weekday')">
                       {{weekdays[i-1]}}
@@ -66,11 +74,11 @@
 </template>
 
 <script>
-import GInput from '@/components/input';
-import KIcon from '@/components/icon';
-import GPopover from '@/components/popover';
-import GButton from '@/components/button/button'
-import ClickOutside from '@/components/directives/click-outside';
+import GInput from '../../../src/components/input';
+import KIcon from '../../../src/components/icon';
+import GPopover from '../../../src/components/popover';
+import GButton from '../../../src/components/button/button'
+import ClickOutside from '../../../src/components/directives/click-outside';
 import helper from './helper';
 export default {
   name: 'KomaDatePicker',
@@ -246,11 +254,16 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-@import 'css/_var';
+@import '../../css/_var';
 .koma-date-picker {
   &-wrapper {
     /deep/ .koma-popover-content-wrapper {
-      padding: 0;
+      z-index: 99;
+      padding: 16px;
+      border: none;
+      &::before {
+        border: none;
+      }
     }
   }
   &-nav {
@@ -258,6 +271,17 @@ export default {
   }
   &-yearAndMonth {
     margin: auto;
+  }
+  &-navItem {
+    cursor: pointer;
+    &:hover {
+      svg {
+        fill: @primary-color;
+      }
+    }
+  }
+  &-content {
+    font-size: 14px;
   }
   &-navItem, &-cell, &-weekday {
     width: 32px;
@@ -298,9 +322,12 @@ export default {
     text-align: right;
   }
   &-returnDayMode {
-    /deep/ .koma-button {
-      height: 20px;
-      padding: 10px;
+    span {
+      margin-left: 10px;
+      cursor: pointer;
+      &:hover {
+        color: @primary-color;
+      }
     }
   }
 }

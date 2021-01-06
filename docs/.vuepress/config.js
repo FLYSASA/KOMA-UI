@@ -37,6 +37,7 @@ module.exports = {
             '/components/collapse',
             '/components/carousel',
             '/components/cascader',
+            '/components/datePicker',
           ]
         },
       ]

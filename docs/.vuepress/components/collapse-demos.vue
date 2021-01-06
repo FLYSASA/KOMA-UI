@@ -47,7 +47,7 @@ import CollapseItem from '../../../src/components/collapse/collapse-item';
 import demosComponent from './demos-component.vue';
 
 export default {
-  name: 'KomaButton',
+  name: 'KomaCollapseDemo',
   components: {
     demosComponent,
     'k-button': Button,

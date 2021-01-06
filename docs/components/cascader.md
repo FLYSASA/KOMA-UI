@@ -1,9 +1,9 @@
 ---
-title: Cascader - 级联选择
+title: Cascader - 级联选择器
 ---
 
 
-# Cascader级联选择
+# Cascader级联选择器
 
 <ClientOnly>
   <cascader-demos></cascader-demos>
