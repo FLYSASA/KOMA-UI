@@ -43,6 +43,7 @@ module.exports = {
             '/components/nav',
             '/components/uploader',
             '/components/form',
+            '/components/scroll',
           ]
         },
       ]
