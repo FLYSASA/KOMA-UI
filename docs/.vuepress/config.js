@@ -39,6 +39,8 @@ module.exports = {
             '/components/cascader',
             '/components/datePicker',
             '/components/sticky',
+            '/components/pager',
+            '/components/nav',
           ]
         },
       ]

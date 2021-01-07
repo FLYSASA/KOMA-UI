@@ -87,7 +87,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-@import "css/_var";
+@import "../../css/_var";
 @width: 25px;
 @height: 25px;
 .koma-pager {
