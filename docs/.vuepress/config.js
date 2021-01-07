@@ -42,6 +42,7 @@ module.exports = {
             '/components/pager',
             '/components/nav',
             '/components/uploader',
+            '/components/form',
           ]
         },
       ]

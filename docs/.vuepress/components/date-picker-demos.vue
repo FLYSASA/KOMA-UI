@@ -29,7 +29,7 @@ export default {
       date: new Date(),
       codeStr1: 
       `
-        <g-date-picker v-model="date"></g-date-picker>
+        <k-date-picker v-model="date"></k-date-picker>
 
         data() {
           return {

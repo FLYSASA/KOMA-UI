@@ -1,37 +1,45 @@
 <template>
-  <div id="app">
-    <div>
-      <div class="form-wrapper">
-        <g-form class="form" :model="model" :rules="rules" ref="form">
-          <h1>登录</h1>
-          <g-form-item label="邮箱" prop="email">
-            <g-input type="text" v-model="model.email"></g-input>
-          </g-form-item>
-          <g-form-item label="密码" prop="password">
-            <g-input type="password" v-model="model.password"></g-input>
-          </g-form-item>
-          <div>
-            <g-button class="ok" type="submit" @click="onSubmit">提交</g-button>
-          </div>
-        </g-form>
-      </div>
-    </div>
+  <div class="wrapper cascader-demo">
+    <demos-component
+      name="基础用法"
+      demokey="0"
+      description="传入规则对表单进行提交验证。"
+      :codeStr="codeStr1">
+      <template v-slot:code>
+        <div class="form-wrapper">
+          <k-form class="form" :model="model" :rules="rules" ref="form">
+            <h1>登录</h1>
+            <k-form-item label="邮箱" prop="email">
+              <k-input type="text" v-model="model.email"></k-input>
+            </k-form-item>
+            <k-form-item label="密码" prop="password">
+              <k-input type="password" v-model="model.password"></k-input>
+            </k-form-item>
+            <div class="submit">
+              <k-button type="submit" @click="onSubmit">提交</k-button>
+            </div>
+          </k-form>
+        </div>
+      </template>
+    </demos-component>
   </div>
 </template>
 
 <script>
-import GButton from '@/components/button/button';
-import GInput from '@/components/input';
-import GForm from '@/components/form/form';
-import GFormItem from '@/components/form/form-item';
+import Button from '../../../src/components/button/button';
+import Input from '../../../src/components/input';
+import Form from '../../../src/components/form/form';
+import FormItem from '../../../src/components/form/form-item';
+import demosComponent from './demos-component.vue';
 
 export default {
-  name: 'ButtonDemo',
+  name: 'KomaDatePickerDemo',
   components: {
-    GButton,
-    GInput,
-    GForm,
-    GFormItem
+    demosComponent,
+    'k-button': Button,
+    'k-input': Input,
+    'k-form': Form,
+    'k-form-item': FormItem,
   },
   props: {},
   data () {
@@ -43,31 +51,95 @@ export default {
       rules: [
         { key: 'email', pattern: 'email', required: true},
         { key: 'password', minLength: 6, required: true}
-      ]
+      ],
+      codeStr1: 
+      `
+        <div class="form-wrapper">
+          <k-form class="form" :model="model" :rules="rules" ref="form">
+            <h1>登录</h1>
+            <k-form-item label="邮箱" prop="email">
+              <k-input type="text" v-model="model.email"></k-input>
+            </k-form-item>
+            <k-form-item label="密码" prop="password">
+              <k-input type="password" v-model="model.password"></k-input>
+            </k-form-item>
+            <div class="submit">
+              <k-button type="submit" @click="onSubmit">提交</k-button>
+            </div>
+          </k-form>
+        </div>
+
+        data() {
+          return {
+            model: {
+              email: '',
+              password: ''
+            },
+            rules: [
+              { key: 'email', pattern: 'email', required: true},
+              { key: 'password', minLength: 6, required: true}
+            ],
+          }
+        },
+        methods: {
+          onSubmit () {
+            this.$refs['form'].validate((valid, error)=>{
+              if(valid){
+                console.log(valid, error)
+              }
+            })
+          }
+        }
+        <style lang="less" scoped>
+          .form-wrapper{
+            padding: 20px;
+            width: 50%;
+            height: 300px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            ::after {
+              clear: both;
+              content:'';
+              display: block;
+            }
+            .submit {
+              float: right;
+            }
+          }
+        </style>
+      `,
     };
   },
-  watch: {},
-  computed: {},
   methods: {
     onSubmit () {
-      this.$refs['form'].validate((valid)=>{
+      this.$refs['form'].validate((valid, error)=>{
         if(valid){
-          console.log(valid)
+          console.log(valid, error)
         }
       })
     }
-  },
+  }
 }
 
 </script>
-<style lang="less">
-  * {
-    margin: 0;
-    padding: 0;
+
+<style lang="less" scoped>
+* {
     box-sizing: border-box;
   }
   .form-wrapper{
     padding: 20px;
+    width: 50%;
+    height: 300px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    ::after {
+      clear: both;
+      content:'';
+      display: block;
+    }
+    .submit {
+      float: right;
+    }
   }
-
 </style>
