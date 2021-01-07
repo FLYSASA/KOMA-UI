@@ -42,7 +42,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-@import 'css/_var';
+@import '../../css/_var';
 .form-item {
   margin-bottom: 8px;
   display: flex;

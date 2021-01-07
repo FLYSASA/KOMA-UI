@@ -6,6 +6,17 @@
 
 <script>
 import Validate from './validate';
+function debounce(fn, delay) {
+  let _delay = delay || 200;
+  return function (args) {
+    let _this = this
+    let _args = args
+    fn.id && clearTimeout(fn.id)
+    fn.id = setTimeout(function () {
+      fn.call(_this, _args)
+    }, _delay)
+  }
+}
 export default {
   name: 'KomaForm',
   components: {},
@@ -17,6 +28,7 @@ export default {
   props: {
     model: {
       type: Object,
+      required: true
     },
     rules: {
       type: Array
@@ -30,19 +42,30 @@ export default {
     };
   },
 
-  computed: {},
-
-  mounted() {
-    this.updatedChildren()
+  watch: {
+    model: {
+      handler(val) {
+        this.checkError()
+      },
+      deep: true
+    }
   },
+  // updated(){
+  //   this.checkError()
+  // },
 
-  updated(){
-    this.checkError()
-    this.updatedChildren()
+  created() {
+    console.log(this.model)
   },
 
   methods: {
-    updatedChildren() {
+    addItem(item){
+      this.childItems.push(item)
+    },
+    checkError: debounce( function () {
+      const rules = this.rules
+      this.errors = this.validator.validate(this.model, rules)
+
       this.childItems.forEach((i)=>{
         if(this.errors[i.prop]) {
           i.error = this.errors[i.prop]
@@ -50,22 +73,12 @@ export default {
           i.error = {}
         }
       })
-    },
-    addItem(item){
-      this.childItems.push(item)
-    },
-    checkError(){
-      const rules = this.rules
-      this.errors = this.validator.validate(this.model, rules)
-    },
+    }),
     validate(fn){
       this.checkError()
-      this.updatedChildren()
       const valid = Object.keys(this.errors).length === 0
-      fn(valid);
+      fn(valid, this.errors);
     }
   },
 };
 </script>
-<style lang='less' scoped>
-</style>
