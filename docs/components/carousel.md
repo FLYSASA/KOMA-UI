@@ -3,7 +3,7 @@ title: Carousel - 轮播
 ---
 
 
-# Carousel轮播
+# Carousel 轮播
 
 <ClientOnly>
   <carousel-demos></carousel-demos>

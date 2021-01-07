@@ -3,7 +3,7 @@ title: Collapse - 折叠面板
 ---
 
 
-# Collapse折叠面板
+# Collapse 折叠面板
 常用的操作按钮。
 
 <ClientOnly>

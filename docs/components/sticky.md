@@ -3,7 +3,7 @@ title: Sticky - 粘滞
 ---
 
 
-# Sticky粘滞
+# Sticky 粘滞
 
 <ClientOnly>
   <sticky-demos></sticky-demos>

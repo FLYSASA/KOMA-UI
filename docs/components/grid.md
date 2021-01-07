@@ -3,7 +3,7 @@ title: Grid - 网格
 ---
 
 
-# Grid网格
+# Grid 网格
 
 <ClientOnly>
   <grid-demos></grid-demos>

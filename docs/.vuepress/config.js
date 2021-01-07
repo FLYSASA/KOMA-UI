@@ -41,6 +41,7 @@ module.exports = {
             '/components/sticky',
             '/components/pager',
             '/components/nav',
+            '/components/uploader',
           ]
         },
       ]

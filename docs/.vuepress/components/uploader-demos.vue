@@ -1,64 +1,64 @@
 <template>
-  <div id="app">
-    {{error}}
-    <div style="margin: 20px">
-      <g-upload accept="image/*"
-        :file-list.sync="fileList"
-        :parseResponse="parseResponse" 
-        action="http://127.0.0.1:3000/upload"
-        @error="error = $event"
-        name="file">
-        <g-button icon="upload">上传</g-button>
-      </g-upload>
-    </div>
+  <div class="wrapper cascader-demo">
+    <demos-component
+      name="基础用法"
+      demokey="0"
+      description="最简单的用法。"
+      codedes="当然你也可以直接在输入框里输入想要的日期，来直接定位对应的日期。"
+      :codeStr="codeStr1">
+      <template v-slot:code>
+        <k-date-picker v-model="date"></k-date-picker>
+      </template>
+    </demos-component>
   </div>
 </template>
 
 <script>
-import GButton from '@/components/button/button';
-import GUpload from '@/components/uploader/uploader';
+import DatePicker from '../../../src/components/date-picker/date-picker';
+import demosComponent from './demos-component.vue';
 
 export default {
-  name: 'ButtonDemo',
+  name: 'KomaDatePickerDemo',
   components: {
-    GUpload,
-    GButton
+    demosComponent,
+    'k-date-picker': DatePicker,
   },
   props: {},
   data () {
     return {
-      fileList: [],
-      error: ''
+      date: new Date(),
+      codeStr1: 
+      `
+        <g-date-picker v-model="date"></g-date-picker>
+
+        data() {
+          return {
+            date: new Date()
+          }
+        }
+      `,
     };
   },
-  watch: {
-    fileList(val){
-      // console.log(val)
-    }
-  },
   methods: {
-    onerror(error){
-      alert(error)
-    },
-    parseResponse(res){
-      let url = `http://127.0.0.1:3000/preview/${JSON.parse(res).id}`
-      return url;
-    },
-  },
+  }
 }
 
 </script>
-<style lang="less">
-  * {
-    margin: 0;
-    padding: 0;
+
+<style lang="less" scoped>
+* {
     box-sizing: border-box;
   }
-  ul, li {
-    list-style: none;
+  .carousel-demo {
+    .demo-content {
+      width: 100%;
+      height: 300px;
+      background:#00abd5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+    }
   }
-  #app {
-    margin: 20px;
-  }
-
 </style>
