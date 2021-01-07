@@ -38,7 +38,7 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      default: 'file'
     },
     action: {
       type: String,
