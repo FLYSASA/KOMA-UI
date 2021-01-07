@@ -5,7 +5,7 @@ title: Uploader - 上传
 # Uploader 上传
 
 <ClientOnly>
-  <toast-demos></toast-demos>
+  <uploader-demos></uploader-demos>
 </ClientOnly>
 
-<toast-attributes></toast-attributes>
+<uploader-attributes></uploader-attributes>

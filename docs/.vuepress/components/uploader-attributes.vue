@@ -1,7 +1,7 @@
 <template>
   <div class="base">
     <section>
-      <h2>k-date-picker Attributes</h2>
+      <h2>k-upload Attributes</h2>
       <div class="attr">
         <table>
           <thead>
@@ -15,8 +15,8 @@
           </thead>
           <tbody>
             <tr>
-              <td>value/v-model</td>
-              <td class="des">绑定值</td>
+              <td>name</td>
+              <td class="des">必填，</td>
               <td class="type">Date</td>
               <td>——</td>
               <td>——</td>

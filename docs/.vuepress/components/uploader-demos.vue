@@ -3,43 +3,115 @@
     <demos-component
       name="基础用法"
       demokey="0"
-      description="最简单的用法。"
-      codedes="当然你也可以直接在输入框里输入想要的日期，来直接定位对应的日期。"
+      description="简单的用法。"
+      codedes="parseResponse函数的作用是，文件上传成功后给uploader回传文件的预览地址。"
       :codeStr="codeStr1">
       <template v-slot:code>
-        <k-date-picker v-model="date"></k-date-picker>
+        <k-upload accept="image/*"
+          :file-list.sync="fileList"
+          :parseResponse="parseResponse"
+          action="http://127.0.0.1:3000/upload"
+          name="file">
+          <k-button icon="upload">上传</k-button>
+        </k-upload>
+      </template>
+    </demos-component>
+
+    <demos-component
+      name="上传失败提示"
+      demokey="1"
+      description="error事件会回传错误信息。"
+      :codeStr="codeStr2">
+      <template v-slot:code>
+        <k-upload accept="image/*"
+          :file-list.sync="fileList2"
+          :parseResponse="parseResponse"
+          action="http://127.0.0.1:3000/upload"
+          @error="onerror"
+          name="file">
+          <k-button icon="upload">上传</k-button>
+        </k-upload>
       </template>
     </demos-component>
   </div>
 </template>
 
 <script>
-import DatePicker from '../../../src/components/date-picker/date-picker';
+import Uploader from '../../../src/components/uploader/uploader';
+import Button from '../../../src/components/button/button';
 import demosComponent from './demos-component.vue';
 
 export default {
   name: 'KomaDatePickerDemo',
   components: {
     demosComponent,
-    'k-date-picker': DatePicker,
+    'k-upload': Uploader,
+    'k-button': Button
   },
   props: {},
   data () {
     return {
-      date: new Date(),
+      fileList: [],
+      fileList2: [],
       codeStr1: 
       `
-        <g-date-picker v-model="date"></g-date-picker>
+        <k-upload accept="image/*"
+          :file-list.sync="fileList"
+          :parseResponse="parseResponse" 
+          action="http://127.0.0.1:3000/upload"
+          name="file">
+          <k-button icon="upload">上传</k-button>
+        </k-upload>
 
         data() {
           return {
-            date: new Date()
+            fileList: [],
           }
+        },
+        methods: {
+          parseResponse(res){
+            let url = 'http://127.0.0.1:3000/preview/' + res.id
+            return url;
+          },
         }
+      `,
+      codeStr2: 
+      `
+        <k-upload accept="image/*"
+          :file-list.sync="fileList"
+          :parseResponse="parseResponse" 
+          action="http://127.0.0.1:3000/upload"
+          @error="onerror"
+          name="file">
+          <k-button icon="upload">上传</k-button>
+        </k-upload>
+
+        data() {
+          return {
+            fileList: [],
+          }
+        },
+        methods: {
+          onerror(error) {
+            alert(error)
+          },
+          parseResponse(res){
+            let url = 'http://127.0.0.1:3000/preview/' + res.id
+            return url;
+          },
+        }
+
       `,
     };
   },
   methods: {
+    onerror(error){
+      alert(error)
+    },
+    parseResponse(res){
+      let url = `http://127.0.0.1:3000/preview/${JSON.parse(res).id}`
+      return url;
+    },
   }
 }
 

@@ -13,7 +13,8 @@
         <div class="image-wrapper">
           <!-- type: "image/png" -->
           <template v-if="file.type.indexOf('image') === 0">
-            <img :src="file.url" width="32" height="32" alt="">
+            <k-icon v-if="!file.url" name="file" class="file-icon"></k-icon>
+            <img v-else :src="file.url" width="32" height="32" alt="">
           </template>
           <template v-else>
             <div class="koma-uploader-defaultImage"></div>
@@ -27,8 +28,8 @@
 </template>
 
 <script>
-import http from '@/components/defs/http'
-import KIcon from '@/components/icon'
+import http from '../defs/http'
+import KIcon from '../icon'
 export default {
   name: 'KomaUploader',
   components: {
@@ -208,13 +209,13 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-@import 'css/_var';
+@import '../../css/_var';
 .koma-uploader {
   &-fileList {
     > li {
       display: flex;
       align-items: center;
-      border: 1px solid @darken-gray;
+      // border: 1px solid @darken-gray;
       margin: 8px 0;
     }
   }
@@ -226,6 +227,9 @@ export default {
   .image-wrapper {
     display: inline-flex;
     margin-right: 8px;
+    .file-icon {
+      fill: @light-color;
+    }
   }
   .file-name {
     &.success {
