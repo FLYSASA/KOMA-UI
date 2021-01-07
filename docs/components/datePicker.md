@@ -6,7 +6,7 @@ title: DatePicker - 日期选择器
 # DatePicker日期选择器
 
 <ClientOnly>
-  <datePicker-demos></datePicker-demos>
+  <date-picker-demos></date-picker-demos>
 </ClientOnly>
 
-<datePicker-attributes></datePicker-attributes>
+<date-picker-attributes></date-picker-attributes>

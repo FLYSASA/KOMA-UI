@@ -1,42 +1,64 @@
 <template>
-  <div id="app">
-    <g-date-picker :value="d" @input="d = $event"></g-date-picker>
+  <div class="wrapper cascader-demo">
+    <demos-component
+      name="基础用法"
+      demokey="0"
+      description="最简单的用法。"
+      codedes="当然你也可以直接在输入框里输入想要的日期，来直接定位对应的日期。"
+      :codeStr="codeStr1">
+      <template v-slot:code>
+        <k-date-picker v-model="date"></k-date-picker>
+      </template>
+    </demos-component>
   </div>
 </template>
 
 <script>
-import GDatePicker from '@/components/date-picker/date-picker';
+import DatePicker from '../../../src/components/date-picker/date-picker';
+import demosComponent from './demos-component.vue';
 
 export default {
-  name: 'ButtonDemo',
+  name: 'KomaDatePickerDemo',
   components: {
-    GDatePicker
+    demosComponent,
+    'k-date-picker': DatePicker,
   },
-  
   props: {},
   data () {
     return {
-      d: new Date(),
-      scope: [new Date(1918, 1), new Date(2020, 6)]
+      date: new Date(),
+      codeStr1: 
+      `
+        <g-date-picker v-model="date"></g-date-picker>
+
+        data() {
+          return {
+            date: new Date()
+          }
+        }
+      `,
     };
   },
-  watch: {
-  },
   methods: {
-    
-  },
+  }
 }
 
 </script>
-<style lang="less">
-  * {
-    margin: 0;
-    padding: 0;
+
+<style lang="less" scoped>
+* {
     box-sizing: border-box;
   }
-  #app {
-    margin: 20px;
-    padding: 200px;
+  .carousel-demo {
+    .demo-content {
+      width: 100%;
+      height: 300px;
+      background:#00abd5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+    }
   }
-
 </style>

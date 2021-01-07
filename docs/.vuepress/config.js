@@ -38,6 +38,7 @@ module.exports = {
             '/components/carousel',
             '/components/cascader',
             '/components/datePicker',
+            '/components/sticky',
           ]
         },
       ]
