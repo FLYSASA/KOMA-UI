@@ -23,7 +23,7 @@
 
 <script>
 import KIcon from '../icon'
-import ClickOutside from '@/components/directives/click-outside';
+import ClickOutside from '../directives/click-outside';
 export default {
   name: 'KomaSubNav',
   components: {
@@ -51,7 +51,6 @@ export default {
     }
   },
 
-  created() {},
 
   methods: {
     enter(el, done) {
@@ -103,7 +102,8 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-@import 'css/_var';
+@import '../../css/_var';
+@animation_duration: 250ms;
 .g-sub-nav {
   position: relative;
   &:not(.vertical) {
@@ -111,7 +111,7 @@ export default {
       &::after{
         content: '';
         position: absolute;
-        bottom: 1px;
+        bottom: 0;
         left: 0;
         width: 100%;
         border-bottom: 2px solid @active-color;
@@ -127,11 +127,12 @@ export default {
     vertical-align: top;
   }
   &-popover {
+    transition: height @animation_duration;
+    background: #fff;
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 10;
-    margin-top: 1px;
+    margin-top: 4px;
     white-space: nowrap;
     background: #fff;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
@@ -139,12 +140,13 @@ export default {
     font-size: @font-size;
     color: @light-color;
     min-width: 8em;
-    transition: height 250ms;
+    z-index: 10;
     &.vertical {
       position: static;
       border-radius: 0;
       box-shadow: none;
       overflow: hidden;
+      padding-left: 10px;
     }
   }
   .g-sub-nav {
@@ -157,6 +159,7 @@ export default {
       top: 0;
       left: 100%;
       margin-left: 8px;
+      
     }
     .g-sub-nav-label {
       display: flex;
@@ -165,7 +168,7 @@ export default {
       cursor: pointer;
     }
     .g-sub-nav-icon {
-      transition: transform 200ms;
+      transition: transform @animation_duration;
       display: inline-flex;
       margin-left: 1em;
       svg {

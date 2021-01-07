@@ -44,9 +44,7 @@ export default {
     this.listenToChildren()
   },
   methods: {
-    updateNamePath() {
-      
-    },
+    updateNamePath() {},
     // 使用注入的好处是，让所有子组件自己告诉我它的存在，而不需要我去遍历找子组件
     addItem(vm){
       this.items.push(vm);
@@ -76,7 +74,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-@import 'css/_var';
+@import '../../css/_var';
 .g-nav {
   display: flex;
   border-bottom: 1px solid @gray;

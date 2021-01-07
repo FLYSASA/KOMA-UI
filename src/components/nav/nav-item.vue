@@ -39,7 +39,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-@import 'css/_var';
+@import '../../css/_var';
 .g-nav-item {
   padding: 10px 20px;
   position: relative;
@@ -48,7 +48,7 @@ export default {
       &::after{
         content: '';
         position: absolute;
-        bottom: 1px;
+        bottom: 0;
         left: 0;
         width: 100%;
         border-bottom: 2px solid @active-color;
