@@ -9,4 +9,3 @@ title: Scroll - 滚动条
   <scroll-demos></scroll-demos>
 </ClientOnly>
 
-<scroll-attributes></scroll-attributes>

@@ -195,27 +195,25 @@ export default {
   &-wrapper {
     overflow: hidden;
     position: relative;
-    border: 1px solid;
   }
   &-track{
     position: absolute;
     top: 0;
     right: 0;
-    width: 8px;
+    width: 12px;
     height: 100%;
-    background: #f1f1f1;
-    opacity: .8;
+    background: #fafafa;
+    opacity: .9;
+    border-left: 1px solid #e8e7e8;
   }
   &-bar {
     position: absolute;
-    width: 100%;
+    left: 2px;
+    width: 8px;
     height: 40px;
     cursor: pointer;
     border-radius: 4px;
-    background: rgba(144,147,153,.3);
-    &:hover {
-      background: rgba(144,147,153,.5);
-    }
+    background: rgba( 194, 194, 194);
   }
 }
 </style>
