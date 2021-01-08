@@ -19,7 +19,7 @@
             </th>
             <th ref="actionsHeader" v-if="$scopedSlots.action">操作</th>
             <!-- 因为滚动条占据宽度，导致表头与列不对齐，这里给表头一个gutter来让其等于滚动条的宽度保证对齐 -->
-            <th class="gutter" ref="gutter"></th>
+            <!-- <th class="gutter" ref="gutter"></th> -->
           </tr>
         </thead>
         <tbody>
@@ -194,18 +194,21 @@ export default {
   },
   mounted() {
     console.log(this.$slots, this.$scopedSlots)
-    this.columns = this.$slots.default.map(node => {
+    const filterArr = this.$slots.default.filter(i => i.tag)
+    this.columns = filterArr.map(node => {
       // node.componentOptions.propsData 即挂载在插槽组件的prop上的
       let { text, prop, width} = node.componentOptions.propsData
       let render = node.data.scopedSlots && node.data.scopedSlots.default
       return {text, prop, width, render}
     })
-    // 固定表头
-    this.fixedHeader()
-    // 给表头追加滚动条的宽度
-    this.addThGutter()
-    // 计算操作列的宽度
-    this.updateActionWidth()
+    this.$nextTick(()=>{
+      // 固定表头
+      this.fixedHeader()
+      // 给表头追加滚动条的宽度
+      this.addThGutter()
+      // 计算操作列的宽度
+      this.updateActionWidth()
+    })
   },
   beforeDestroy(){
     this.cloneTable.remove()
@@ -320,7 +323,17 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-@import 'css/_var';
+@import '../../css/_var';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+table {
+  display: table;
+  table-layout: fixed;
+}
+
 @grey: darken(@gray, 10%);
 .koma-table-wrapper {
   position: relative;

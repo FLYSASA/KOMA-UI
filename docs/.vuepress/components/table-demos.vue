@@ -1,119 +1,87 @@
 <template>
-  <div id="app">
-    <div style="margin: 20px">
-      <g-table :data-source="tableData" border
-      expand-key="description"
-      :height="400"
-      :orderBy.sync="sortRules"
-      checkable
-      @update:orderBy="x"
-      :loading="loading"
-      @selectedChange="selectedChange"
-      :selectedItems.sync="selectedItems">
-      
-        <g-table-column prop="name" text="姓名" :width="100">
-          <template slot-scope="scope">
-            <span>{{scope.row.name}}</span>
-          </template>
-        </g-table-column>
+  <div class="wrapper">
+    <demos-component
+      name="基础用法"
+      demokey="0"
+      description="data-source设置数据源。"
+      :codeStr="codeStr1">
+      <template v-slot:code>
+        <k-table :data-source="dataSource" :height="400">
+          <k-table-column text="姓名" prop="name" width="200"></k-table-column>
+          <k-table-column text="最爱" prop="favorite"></k-table-column>
+        </k-table>
+      </template>
+    </demos-component>
 
-        <g-table-column prop="score" text="分数">
-          <template slot-scope="scope">
-            <span>{{scope.row.score}}</span>
-          </template>
-        </g-table-column>
-
-        <template #action="row">
-          {{row}}
-          <button>查看</button>
-          <button>编辑</button>
-        </template>
-
-      </g-table>
-    </div>
-    <div style="margin: 20px">
-      <g-pager :total-page="20" :current-page.sync="currentPage"></g-pager>
-    </div>
   </div>
 </template>
 
 <script>
-import GPager from '@/components/pager/pager';
-import GTable from '@/components/table/table';
-import GTableColumn from '@/components/table/table-column'
+import Table from '../../../src/components/table/table';
+import TableColumn from '../../../src/components/table/table-column';
+import demosComponent from './demos-component.vue';
 
 export default {
-  name: 'ButtonDemo',
+  name: 'KomaTableDemo',
   components: {
-    GPager,
-    GTable,
-    GTableColumn
+    demosComponent,
+    'k-table': Table,
+    'k-table-column': TableColumn,
   },
   props: {},
   data () {
     return {
-      currentPage: 1,
-      tableData: [
-        { id: 1, name: '花花', score: 100, description: '展示一段描述'},
-        { id: 2, name: '大白', score: 99},
-        { id: 3, name: '小绿', score: 5},
-        { id: 4, name: '安安', score: 100},
-        { id: 5, name: '西西', score: 99},
-        { id: 6, name: '欧欧', score: 5},
-        { id: 7, name: '小绿', score: 5},
-        { id: 8, name: '安安', score: 100},
-        { id: 9, name: '西西', score: 99},
-        { id: 10, name: '欧欧', score: 5},
-        { id: 11, name: '小绿', score: 5},
-        { id: 12, name: '安安', score: 100},
-        { id: 13, name: '西西', score: 99},
-        { id: 14, name: '欧欧', score: 5},
-        { id: 15, name: '小绿', score: 5},
-        { id: 16, name: '安安', score: 100},
-        { id: 17, name: '西西', score: 99},
-        { id: 18, name: '欧欧', score: 5},
-        { id: 19, name: '小绿', score: 5},
-        { id: 20, name: '安安', score: 100},
-      ],
-      // columns: [
-      //   {text: '姓名', prop: 'name', width: 200},
-      //   {text: '分数', prop: 'score'},
-      // ],
-      sortRules: {
-        score: 'des'
-      },
-      selectedItems: [],
-      loading: false
-    };
-  },
-  watch: {
-    selectedItems(val){
-      console.log(val)
+      codeStr1: `
+        <k-table :data-source="dataSource" :height="400">
+          <k-table-column text="姓名" prop="name" width="200"></k-table-column>
+          <k-table-column text="最爱" prop="favorite"></k-table-column>
+        </k-table>
+
+        data() {
+          return {
+            dataSource:[
+              { id: 1, name: '花猫', favorite: '花'},
+              { id: 2, name: '白猫', favorite: '大白菜'},
+              { id: 3, name: '小猫', favorite: '小白'},
+              { id: 4, name: '波斯猫', favorite: '毛球'},
+              { id: 5, name: '卷猫', favorite: '卷子'},
+              { id: 6, name: '卡西欧', favorite: '卡卡'},
+              { id: 7, name: '绿猫', favorite: '绿帽'},
+              { id: 8, name: '狗的猫宁', favorite: '安安'},
+              { id: 9, name: '奋斗的小猫', favorite: '奋斗'},
+              { id: 10, name: '努力的小猫', favorite: '努力'},
+              { id: 11, name: '勤奋的小猫', favorite: '勤奋'},
+              { id: 12, name: '上进的小猫', favorite: '上进'},
+              { id: 13, name: '好学的小猫', favorite: '学习'},
+              { id: 14, name: '勤劳的小猫', favorite: '劳动'},
+              { id: 15, name: '可爱的小猫', favorite: '撒娇'},
+            ],
+          }
+        }
+      `,
+      dataSource:[
+        { id: 1, name: '花猫', favorite: '花'},
+        { id: 2, name: '白猫', favorite: '大白菜'},
+        { id: 3, name: '小猫', favorite: '小白'},
+        { id: 4, name: '波斯猫', favorite: '毛球'},
+        { id: 5, name: '卷猫', favorite: '卷子'},
+        { id: 6, name: '卡西欧', favorite: '卡卡'},
+        { id: 7, name: '绿猫', favorite: '绿帽'},
+        { id: 8, name: '狗的猫宁', favorite: '安安'},
+        { id: 9, name: '奋斗的小猫', favorite: '奋斗'},
+        { id: 10, name: '努力的小猫', favorite: '努力'},
+        { id: 11, name: '勤奋的小猫', favorite: '勤奋'},
+        { id: 12, name: '上进的小猫', favorite: '上进'},
+        { id: 13, name: '好学的小猫', favorite: '学习'},
+        { id: 14, name: '勤劳的小猫', favorite: '劳动'},
+        { id: 15, name: '可爱的小猫', favorite: '撒娇'},
+      ]
     }
   },
-  methods: {
-    selectedChange(obj){
-      console.log(obj)
-    },
-    x(){
-      this.loading = true
-      setTimeout(()=>{
-        this.tableData.sort((a, b) => a.score - b.score)
-        this.loading = false
-      }, 3000)
-    },
-  },
+  methods: {}
 }
 
 </script>
-<style lang="less">
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  #app {
-    margin: 20px;
-  }
 
+<style lang="less" scoped>
 </style>

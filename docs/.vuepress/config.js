@@ -44,6 +44,7 @@ module.exports = {
             '/components/uploader',
             '/components/form',
             '/components/scroll',
+            '/components/table',
           ]
         },
       ]
