@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div style="margin: 20px">
-      <g-table :data-source="tableData" border
+      <k-table :data-source="tableData" border
       expand-key="description"
       :height="400"
       :orderBy.sync="sortRules"
@@ -11,37 +11,37 @@
       @selectedChange="selectedChange"
       :selectedItems.sync="selectedItems">
       
-        <g-table-column prop="name" text="姓名" :width="100">
+        <k-table-column prop="name" text="姓名" :width="100">
           <template slot-scope="scope">
             <span>{{scope.row.name}}</span>
           </template>
-        </g-table-column>
+        </k-table-column>
 
-        <g-table-column prop="score" text="分数">
+        <k-table-column prop="score" text="分数">
           <template slot-scope="scope">
             <span>{{scope.row.score}}</span>
           </template>
-        </g-table-column>
+        </k-table-column>
 
-      </g-table>
+      </k-table>
     </div>
     <div style="margin: 20px">
-      <g-pager :total-page="20" :current-page.sync="currentPage"></g-pager>
+      <k-pager :total-page="20" :current-page.sync="currentPage"></k-pager>
     </div>
   </div>
 </template>
 
 <script>
-import GPager from '@/components/pager/pager';
-import GTable from '@/components/table/table';
-import GTableColumn from '@/components/table/table-column'
+import KPager from '@/components/pager/pager';
+import KTable from '@/components/table/table';
+import KTableColumn from '@/components/table/table-column'
 
 export default {
   name: 'ButtonDemo',
   components: {
-    GPager,
-    GTable,
-    GTableColumn
+    KPager,
+    KTable,
+    KTableColumn
   },
   props: {},
   data () {

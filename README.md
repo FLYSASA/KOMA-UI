@@ -41,7 +41,7 @@
  export default {
     name: 'app',
     components: {
-        g-button: Button
+        k-button: Button
     }
  }
 ```

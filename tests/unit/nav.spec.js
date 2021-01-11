@@ -13,22 +13,22 @@ describe('Nav.vue', () => {
     expect(Nav).to.exist
   })
   it('支持 selected 属性', (done)=>{
-    Vue.component('GNavItem', NavItem)
-    Vue.component('GSubNav', SubNav)
+    Vue.component('KNavItem', NavItem)
+    Vue.component('KSubNav', SubNav)
     const wrapper = mount(Nav, {
       propsData: {
         selected: 'home'
       },
       slots: {
         default: `
-          <g-nav-item name="home">首页
-          </g-nav-item>
-          <g-sub-nav name="about">
+          <k-nav-item name="home">首页
+          </k-nav-item>
+          <k-sub-nav name="about">
             <template #title>关于</template>
-            <g-nav-item name="developer">开发团队</g-nav-item>
-            <g-nav-item name="culture">企业文化</g-nav-item>
-          </g-sub-nav>
-          <g-nav-item name="news">资讯</g-nav-item>
+            <k-nav-item name="developer">开发团队</k-nav-item>
+            <k-nav-item name="culture">企业文化</k-nav-item>
+          </k-sub-nav>
+          <k-nav-item name="news">资讯</k-nav-item>
         `
       }
     })
@@ -39,8 +39,8 @@ describe('Nav.vue', () => {
   })
 
   it('会触发 update:selected 事件', (done)=>{
-    Vue.component('GNavItem', NavItem)
-    Vue.component('GSubNav', SubNav)
+    Vue.component('KNavItem', NavItem)
+    Vue.component('KSubNav', SubNav)
     const callback = sinon.fake();
     const wrapper = mount(Nav, {
       propsData: {
@@ -48,14 +48,14 @@ describe('Nav.vue', () => {
       },
       slots: {
         default: `
-          <g-nav-item name="home">首页
-          </g-nav-item>
-          <g-sub-nav name="about">
+          <k-nav-item name="home">首页
+          </k-nav-item>
+          <k-sub-nav name="about">
             <template #title>关于</template>
-            <g-nav-item name="developer">开发团队</g-nav-item>
-            <g-nav-item name="culture">企业文化</g-nav-item>
-          </g-sub-nav>
-          <g-nav-item name="news">资讯</g-nav-item>
+            <k-nav-item name="developer">开发团队</k-nav-item>
+            <k-nav-item name="culture">企业文化</k-nav-item>
+          </k-sub-nav>
+          <k-nav-item name="news">资讯</k-nav-item>
         `
       },
       listeners: {

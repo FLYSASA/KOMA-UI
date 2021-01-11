@@ -13,16 +13,16 @@ describe('Carousel.vue', () => {
   })
 
   it('接受 carousel-item, 默认展示第一个', (done)=>{
-    Vue.component('GCarouselItem', CarouselItem)
+    Vue.component('KCarouselItem', CarouselItem)
     const wrapper = mount(Carousel, {
       propsData: {
         autoPlay: false
       },
       slots: {
         default: `
-          <g-carousel-item name="1"><div class="box1">1</div></g-carousel-item>
-          <g-carousel-item name="2"><div class="box2">2</div></g-carousel-item>
-          <g-carousel-item name="3"><div class="box3">3</div></g-carousel-item>
+          <k-carousel-item name="1"><div class="box1">1</div></k-carousel-item>
+          <k-carousel-item name="2"><div class="box2">2</div></k-carousel-item>
+          <k-carousel-item name="3"><div class="box3">3</div></k-carousel-item>
         `
       }
     })
@@ -33,7 +33,7 @@ describe('Carousel.vue', () => {
   })
 
   it('selected是几, 选中的就是几', (done)=>{
-    Vue.component('GCarouselItem', CarouselItem)
+    Vue.component('KCarouselItem', CarouselItem)
     const wrapper = mount(Carousel, {
       propsData: {
         autoPlay: false,
@@ -41,9 +41,9 @@ describe('Carousel.vue', () => {
       },
       slots: {
         default: `
-          <g-carousel-item name="1"><div class="box1">1</div></g-carousel-item>
-          <g-carousel-item name="2"><div class="box2">2</div></g-carousel-item>
-          <g-carousel-item name="3"><div class="box3">3</div></g-carousel-item>
+          <k-carousel-item name="1"><div class="box1">1</div></k-carousel-item>
+          <k-carousel-item name="2"><div class="box2">2</div></k-carousel-item>
+          <k-carousel-item name="3"><div class="box3">3</div></k-carousel-item>
         `
       }
     })
@@ -54,7 +54,7 @@ describe('Carousel.vue', () => {
   })
 
   it('点击第二个就展示第二个', (done)=>{
-    Vue.component('GCarouselItem', CarouselItem)
+    Vue.component('KCarouselItem', CarouselItem)
     const wrapper = mount(Carousel, {
       propsData: {
         autoPlay: false,
@@ -62,9 +62,9 @@ describe('Carousel.vue', () => {
       },
       slots: {
         default: `
-          <g-carousel-item name="1"><div class="box1">1</div></g-carousel-item>
-          <g-carousel-item name="2"><div class="box2">2</div></g-carousel-item>
-          <g-carousel-item name="3"><div class="box3">3</div></g-carousel-item>
+          <k-carousel-item name="1"><div class="box1">1</div></k-carousel-item>
+          <k-carousel-item name="2"><div class="box2">2</div></k-carousel-item>
+          <k-carousel-item name="3"><div class="box3">3</div></k-carousel-item>
         `
       },
       listeners: {
@@ -80,7 +80,7 @@ describe('Carousel.vue', () => {
   })
 
   it('会自动播放', (done)=>{
-    Vue.component('GCarouselItem', CarouselItem)
+    Vue.component('KCarouselItem', CarouselItem)
     const callback = sinon.fake()
     const wrapper = mount(Carousel, {
       propsData: {
@@ -90,9 +90,9 @@ describe('Carousel.vue', () => {
       },
       slots: {
         default: `
-          <g-carousel-item name="1"><div class="box1">1</div></g-carousel-item>
-          <g-carousel-item name="2"><div class="box2">2</div></g-carousel-item>
-          <g-carousel-item name="3"><div class="box3">3</div></g-carousel-item>
+          <k-carousel-item name="1"><div class="box1">1</div></k-carousel-item>
+          <k-carousel-item name="2"><div class="box2">2</div></k-carousel-item>
+          <k-carousel-item name="3"><div class="box3">3</div></k-carousel-item>
         `
       },
       listeners: {

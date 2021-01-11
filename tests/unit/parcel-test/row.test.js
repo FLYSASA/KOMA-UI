@@ -12,15 +12,15 @@ describe('Row', () => {
   })
 
   it('接收 gutter 属性.', (done) => {
-    Vue.component('g-row', Row)
-    Vue.component('g-col', Col)
+    Vue.component('k-row', Row)
+    Vue.component('k-col', Col)
     const div = document.createElement('div')
     document.body.appendChild(div)
     div.innerHTML = `
-      <g-row gutter="20">
-        <g-col :span="12"></g-col>
-        <g-col :span="12"></g-col>
-      </g-row>
+      <k-row gutter="20">
+        <k-col :span="12"></k-col>
+        <k-col :span="12"></k-col>
+      </k-row>
     `
     const vm = new Vue({
       el: div

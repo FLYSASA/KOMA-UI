@@ -1,13 +1,13 @@
 <template>
   <div class="koma-date-picker-wrapper" ref="dateWrapper">
-    <g-popover position="bottom" :container="dateWrapper" ref="popover" @open="onOpen">
-      <g-input 
+    <k-popover position="bottom" :container="dateWrapper" ref="popover" @open="onOpen">
+      <k-input 
         ref="input" 
         type="text" 
         :value="formattedValue"
         placeholder="请选择日期"
         @input="onInput" 
-        @change="onchange"></g-input>
+        @change="onchange"></k-input>
       <template slot="content">
         <!-- @selectstart.prevent 取消选择文本事件 -->
         <div class="koma-date-picker-pop" @selectstart.prevent>
@@ -64,20 +64,20 @@
             </div>
           </div>
           <div class="koma-date-picker-actions">
-            <g-button @click="onClickToday">今天</g-button>
-            <g-button @click="onClickClear">清除</g-button>
+            <k-button @click="onClickToday">今天</k-button>
+            <k-button @click="onClickClear">清除</k-button>
           </div>
         </div>
       </template>
-    </g-popover>
+    </k-popover>
   </div>
 </template>
 
 <script>
-import GInput from '../../../src/components/input';
+import KInput from '../../../src/components/input';
 import KIcon from '../../../src/components/icon';
-import GPopover from '../../../src/components/popover';
-import GButton from '../../../src/components/button/button'
+import KPopover from '../../../src/components/popover';
+import KButton from '../../../src/components/button/button'
 import ClickOutside from '../../../src/components/directives/click-outside';
 import helper from './helper';
 export default {
@@ -86,10 +86,10 @@ export default {
     ClickOutside
   },
   components: {
-    GInput,
+    KInput,
     KIcon,
-    GPopover,
-    GButton
+    KPopover,
+    KButton
   },
   props: {
     value: {
