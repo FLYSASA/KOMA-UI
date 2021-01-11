@@ -5,6 +5,7 @@ module.exports = {
   description: '一个基于vue的UI框架',
   themeConfig: {
     logo: '/logo.png',
+    lastUpdated: 'Last Updated',
     nav: [
       { text: '首页', link: '/' },
       { text: '指南', link: '/guide/' },

@@ -137,7 +137,7 @@ export default {
       type: Boolean,
       default: false
     },
-    // 高度，用于出现固定表头
+    // 高度，用于固定表头
     height: {
       type: Number,
     },
