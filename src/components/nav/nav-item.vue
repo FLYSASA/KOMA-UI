@@ -1,5 +1,5 @@
 <template>
-  <div class="g-nav-item" :class="{active: selected, vertical}" @click="onclick" :data-name="name">
+  <div class="koma-nav-item" :class="{active: selected, vertical}" @click="onclick" :data-name="name">
     <slot></slot>
   </div>
 </template>
@@ -40,7 +40,7 @@ export default {
 </script>
 <style lang='less' scoped>
 @import '../../css/_var';
-.g-nav-item {
+.koma-nav-item {
   padding: 10px 20px;
   position: relative;
   &:not(.vertical){
@@ -66,7 +66,7 @@ export default {
   }
   cursor: pointer;
 }
-.g-sub-nav .g-nav-item:not(.vertical) {
+.koma-sub-nav .koma-nav-item:not(.vertical) {
   &.active {
     background: @gray;
     color: @color;

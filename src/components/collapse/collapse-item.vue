@@ -1,5 +1,5 @@
 <template>
-  <div class="collapse-item">
+  <div class="koma-collapse-item">
     <div class="title" @click="click">
       <span>{{title}}</span>
       <k-icon name="right" class="collapse-icon" :class="{'expand-icon': open}"></k-icon>
@@ -56,7 +56,7 @@ import CollapseTransition from '../../transitions/collapse-transition'
 </script>
 <style lang='less' scoped>
   @import '../../css/_var';
-  .collapse-item {
+  .koma-collapse-item {
     >.title {
       border: 1px solid @gray;
       margin-top: -1px;

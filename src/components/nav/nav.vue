@@ -1,5 +1,5 @@
 <template>
-  <div class="g-nav" :class="{ vertical }">
+  <div class="koma-nav" :class="{ vertical }">
     <slot></slot>
   </div>
 </template>
@@ -75,7 +75,7 @@ export default {
 </script>
 <style lang='less' scoped>
 @import '../../css/_var';
-.g-nav {
+.koma-nav {
   display: flex;
   border-bottom: 1px solid @gray;
   color: @color;

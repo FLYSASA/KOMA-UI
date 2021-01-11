@@ -1,5 +1,5 @@
 <template>
-  <div class="col" 
+  <div class="koma-col" 
     :class="colClass"
     :style="computedColStyle">
       <slot></slot>
@@ -87,7 +87,7 @@ export default {
 
 </script>
 <style lang='less'>
-  .col{
+  .koma-col{
     // height: 100px;
     // &.col-1{
     //   width: 1/24%;

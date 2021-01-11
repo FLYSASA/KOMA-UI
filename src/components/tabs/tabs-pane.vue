@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-pane" v-if="active">
+  <div class="koma-tabs-pane" v-if="active">
     <slot></slot>
   </div>
 </template>

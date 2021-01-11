@@ -1,17 +1,17 @@
 <template>
-  <div class="g-carousel" 
+  <div class="koma-crousel" 
     @mouseenter="onMouseEnter" 
     @mouseleave="onMouseLeave"
     @touchstart="onTouchStart"
     @touchmove="onTouchMove"
     @touchend="onTouchEnd"
     >
-    <div class="g-carousel-window">
-      <div class="g-carousel-wrapper">
+    <div class="koma-crousel-window">
+      <div class="koma-crousel-wrapper">
         <slot></slot>
       </div>
     </div>
-    <div class="g-carousel-dots">
+    <div class="koma-crousel-dots">
       <span @click="select(selectedIndex - 1)">
         <k-icon name="left"></k-icon>
       </span>
@@ -183,7 +183,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-.g-carousel {
+.koma-crousel {
   &-window {
     overflow: hidden;
   }
@@ -192,7 +192,7 @@ export default {
     position: relative;
     display: flex;
   }
-  .g-carousel-dots {
+  .koma-crousel-dots {
     padding: 8px 0;
     display: flex;
     justify-content: center;

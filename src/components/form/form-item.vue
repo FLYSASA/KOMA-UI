@@ -1,5 +1,5 @@
 <template>
-  <div class="form-item">
+  <div class="koma-form-item">
     <label>{{label}}</label>
     <div class="controls">
       <slot></slot>
@@ -43,7 +43,7 @@ export default {
 </script>
 <style lang='less' scoped>
 @import '../../css/_var';
-.form-item {
+.koma-form-item {
   margin-bottom: 8px;
   display: flex;
   label {

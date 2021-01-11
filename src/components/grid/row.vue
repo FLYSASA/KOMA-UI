@@ -1,5 +1,5 @@
 <template>
-  <div class="row" :style="computedRowStyle" :class="rowClass">
+  <div class="koma-row" :style="computedRowStyle" :class="rowClass">
     <slot></slot>
   </div>
 </template>
@@ -47,7 +47,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-    .row {
+    .koma-row {
       display: flex;
       flex-wrap: wrap;
       &.align-left {

@@ -1,20 +1,20 @@
 <template>
-  <div class="g-sub-nav" :class="{ active, vertical }" v-click-outside="close">
-    <span class="g-sub-nav-label" @click="onClick">
+  <div class="koma-sub-nav" :class="{ active, vertical }" v-click-outside="close">
+    <span class="koma-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
-      <span class="g-sub-nav-icon" :class="{ open, vertical }">
+      <span class="koma-sub-nav-icon" :class="{ open, vertical }">
         <k-icon name="right"></k-icon>
       </span>
     </span>
     <template v-if="vertical">
       <transition @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
-        <div class="g-sub-nav-popover" v-show="open" :class="{ vertical }">
+        <div class="koma-sub-nav-popover" v-show="open" :class="{ vertical }">
           <slot></slot>
         </div>
       </transition>
     </template>
     <template v-else>
-      <div class="g-sub-nav-popover" v-show="open" :class="{ vertical }">
+      <div class="koma-sub-nav-popover" v-show="open" :class="{ vertical }">
         <slot></slot>
       </div>
     </template>
@@ -104,7 +104,7 @@ export default {
 <style lang='less' scoped>
 @import '../../css/_var';
 @animation_duration: 250ms;
-.g-sub-nav {
+.koma-sub-nav {
   position: relative;
   &:not(.vertical) {
     &.active {
@@ -149,25 +149,25 @@ export default {
       padding-left: 10px;
     }
   }
-  .g-sub-nav {
+  .koma-sub-nav {
     &.active {
       &::after {
         display: none;
       }
     }
-    .g-sub-nav-popover {
+    .koma-sub-nav-popover {
       top: 0;
       left: 100%;
       margin-left: 8px;
       
     }
-    .g-sub-nav-label {
+    .koma-sub-nav-label {
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
     }
-    .g-sub-nav-icon {
+    .koma-sub-nav-icon {
       transition: transform @animation_duration;
       display: inline-flex;
       margin-left: 1em;

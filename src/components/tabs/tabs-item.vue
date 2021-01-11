@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-item" @click="onClick"
+  <div class="koma-tabs-item" @click="onClick"
   :data-name="name"
   :class="{active, disabled}">
     <slot></slot>
@@ -49,7 +49,7 @@ export default {
 </script>
 <style lang='less' scoped>
   @import '../../css/_var';
-  .tabs-item {
+  .koma-tabs-item {
     padding: 0 1em;
     height: 100%;
     display: flex;

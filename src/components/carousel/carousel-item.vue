@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="g-crousel-item" v-if="visible" :class="{ reverse }">
+    <div class="koma-crousel-item" v-if="visible" :class="{ reverse }">
       <slot></slot>
     </div>
   </transition>
@@ -33,7 +33,7 @@ export default {
 
 </script>
 <style lang='less' scoped>
-.g-crousel-item {
+.koma-crousel-item {
   width: 100%;
 }
 // 动画

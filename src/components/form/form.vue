@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit.prevent>
+  <form class="koma-form" @submit.prevent>
     <slot></slot>
   </form>
 </template>

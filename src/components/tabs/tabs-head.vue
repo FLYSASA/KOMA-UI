@@ -1,5 +1,5 @@
 <template>
-  <div ref="tabsHead" class="tabs-head">
+  <div ref="tabsHead" class="koma-tabs-head">
     <!-- 独立line出来是为了做动画 -->
     <div ref="activeLine" class="active-line"></div>
     <slot></slot>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'KomaTabshead',
+  name: 'KomaTabsHead',
   inject: ['eventBus'],
   components: {},
   props: {},
@@ -40,7 +40,7 @@ export default {
 </script>
 <style lang='less' scoped>
 @import '../../css/_var';
-.tabs-head {
+.koma-tabs-head {
   display: flex;
   height: @tab-height;
   align-items: center;

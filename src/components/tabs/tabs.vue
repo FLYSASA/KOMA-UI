@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs">
+  <div class="koma-tabs">
     <slot></slot>
   </div>
 </template>

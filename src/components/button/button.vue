@@ -1,5 +1,5 @@
 <template>
-  <button class="k-button" :class="{[`icon-${iconPosition}`]: true}" @click="$emit('click')">
+  <button class="koma-button" :class="{[`icon-${iconPosition}`]: true}" @click="$emit('click')">
     <k-icon class="loading icon" name="loading" v-if="loading"></k-icon>
     <k-icon  class="icon" v-if="icon && !loading" :name="icon"></k-icon>
     <div class="content">
@@ -37,7 +37,7 @@
 </script>
 <style lang='less' scoped>
   @import '../../css/_var';
-  .k-button {
+  .koma-button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
