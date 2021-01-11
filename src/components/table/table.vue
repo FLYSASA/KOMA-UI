@@ -1,13 +1,15 @@
 <template>
-  <div class="koma-table-wrapper" ref="wrapper">
-    <div :style="{overflow: 'auto'}" ref="tableWrapper">
+  <div class="koma-table-wrapper" ref="wrapper"  :class="{ border }">
+    <div class="koma-table-wrapper-content" :style="{overflow: 'auto'}" ref="tableWrapper">
       <table class="koma-table" ref="table" :class="{border, compact, striped}">
         <thead>
           <tr>
             <th v-if="expandKey" :style="{width: '50px'}" class="table-center"></th>
-            <th v-if="checkable" :style="{width: '50px'}" class="table-center"><input ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected"></th>
-            <th v-if="numberVisible" :style="{width: '50px'}">#</th>
-            <th :style="{width: `${column.width}px`}" v-for="column in columns" :key="column.prop">
+            <th v-if="checkable" :style="{width: '50px'}" class="table-center">
+              <input class="pointer" ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected">
+            </th>
+            <th v-if="numberVisible" :style="{width: '50px'}" class="table-center">#</th>
+            <th :style="{width: `${column.width}px`}" v-for="(column, idx) in columns" :key="column.prop"  :class="{last: idx === columns.length - 1 && !$scopedSlots.action}">
               <div class="kama-table-name" 
                 @click="changeOrderBy(column.prop)">
                 {{column.text}}
@@ -19,7 +21,7 @@
             </th>
             <th ref="actionsHeader" v-if="$scopedSlots.action">操作</th>
             <!-- 因为滚动条占据宽度，导致表头与列不对齐，这里给表头一个gutter来让其等于滚动条的宽度保证对齐 -->
-            <!-- <th class="gutter" ref="gutter"></th> -->
+            <th class="gutter" ref="gutter" style="padding: 0;"></th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +37,7 @@
                 :checked="inselectedItems(item)"
                 @change="onChangeItem(item, index, $event)">
               </td>
-              <td v-if="numberVisible" :style="{width: '50px'}">{{index + 1}}</td>
+              <td v-if="numberVisible" :style="{width: '50px'}" class="table-center">{{index + 1}}</td>
               <template v-for="column in columns">
                 <td :style="{width: `${column.width}px`}" :key="column.prop">
                   <template v-if="column.render">
@@ -49,7 +51,7 @@
               </template>
               <td v-if="$scopedSlots.action">
                 <div ref="actions" style="display: inline-block;">
-                  <slot :row="item" name="action"></slot>
+                  <slot :row="item" :$index="index"  name="action"></slot>
                 </div>
               </td>
             </tr>
@@ -62,6 +64,9 @@
           </template>
         </tbody>
       </table>
+      <div class="no-data" v-if="!dataSource.length">
+        暂无数据
+      </div>
     </div>
     <div class="koma-table-loading" v-if="loading">
       <k-icon name="loading"></k-icon>
@@ -101,7 +106,7 @@ export default {
     // 边框
     border: {
       type: Boolean,
-      default: false
+      default: true
     },
     // 是否紧凑型
     compact: {
@@ -114,6 +119,10 @@ export default {
       default: true
     },
     // 勾选项
+    checkable: {
+      type: Boolean,
+      default: false
+    },
     selectedItems: {
       type: Array,
       default: () => []
@@ -135,10 +144,6 @@ export default {
     // 展开内容的key
     expandKey: {
       type: String
-    },
-    checkable: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -156,6 +161,13 @@ export default {
       } else {
         this.$refs['allCheckBox'].indeterminate = false
       }
+    },
+    'dataSource.length'(val){
+      this.$nextTick(()=>{
+        let wrapperWidth = this.$refs['tableWrapper'].getBoundingClientRect().width
+        let tbodyWidth = this.$refs['table'].getBoundingClientRect().width
+        this.addThGutter()
+      })
     }
   },
   computed: {
@@ -193,7 +205,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$slots, this.$scopedSlots)
     const filterArr = this.$slots.default.filter(i => i.tag)
     this.columns = filterArr.map(node => {
       // node.componentOptions.propsData 即挂载在插槽组件的prop上的
@@ -204,7 +215,7 @@ export default {
     this.$nextTick(()=>{
       // 固定表头
       this.fixedHeader()
-      // 给表头追加滚动条的宽度
+      // 给表头追加滚动条的宽度，以免因为滚动条的宽度导致的表头错位
       this.addThGutter()
       // 计算操作列的宽度
       this.updateActionWidth()
@@ -235,14 +246,21 @@ export default {
       let tbodyWidth = this.$refs['table'].getBoundingClientRect().width
       // width - tbodyWidth = 滚动条的宽度
       if(wrapperWidth - tbodyWidth > 0){
-        this.$refs.gutter.style.width = wrapperWidth - tbodyWidth + 'px'
+        this.$refs.gutter.style.width = wrapperWidth - tbodyWidth - (this.$scopedSlots.action ? 0 : -1) + 'px'
       }else {
+        let tableEl = this.$refs.table
+        const tableTd = tableEl.querySelectorAll('td')
+        if(tableTd.length) {
+          tableTd.forEach((node)=>{
+            node.style.borderBottom = '1px solid #d5d5d5'
+          })
+        }
         this.$refs.gutter.style.display = 'none'
+        this.$refs.actionsHeader.style.borderRight = 'none'
       }
     },
     updateActionWidth(){
       if(this.$scopedSlots.action && this.dataSource.length) {
-        console.log(this.$refs.actions)
         let div = this.$refs.actions[0]
         let {width} = div.getBoundingClientRect()
         let parent = div.parentNode   // td
@@ -338,16 +356,50 @@ table {
 .koma-table-wrapper {
   position: relative;
   overflow: auto;
+  .no-data {
+    height: 100%;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: @input-holder-color;
+  }
+  &.border {
+    border: 1px solid @grey;
+  }
   .koma-table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    border-bottom: 1px solid @grey;
+    thead {
+      tr {
+        border-top: none;
+      }
+    }
+    tbody {
+      font-size: 14px;
+    }
     &.border {
-      border: 1px solid @grey;
       td, th {
         border: 1px solid @grey;
       }
+      th {
+        border-left: none;
+        border-top: none;
+        &.last{
+          border-right: none;
+        }
+      }
+      td {
+        border-left: none;
+        border-bottom: none;
+        &:last-child{
+          border-right: none;
+        }
+      }
+    }
+    th.gutter {
+      border-right: none;
     }
     &.compact {
       td, th {
@@ -356,8 +408,13 @@ table {
     }
     td, th {
       text-align: left;
+      border: none;
       border-bottom: 1px solid @grey;
       padding: 8px;
+    }
+    // 背景色
+    tr {
+      background: white;
     }
     &.striped {
       tbody {
@@ -366,7 +423,7 @@ table {
             background: white;
           }
           &:nth-child(even) {
-            background: lighten(@gray, 12%);
+            background: #f6f8fa;
           }
         }
       }
@@ -383,7 +440,7 @@ table {
           height: 8px;
           fill: @grey;
           &.active {
-            fill: red;
+            fill: @primary-color;
           }
         }
         display: inline-flex;
