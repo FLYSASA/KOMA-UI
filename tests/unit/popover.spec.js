@@ -47,7 +47,7 @@ describe('Popover', () => {
     })
     const vm = wrapper.vm
     expect(wrapper.find('.content-wrapper').element).to.not.exist
-    wrapper.find('.popover').trigger('mouseenter');
+    wrapper.find('.koma-popover').trigger('mouseenter');
     vm.$nextTick().then(()=>{
       expect(wrapper.find('.content-wrapper').element).to.exist
     })

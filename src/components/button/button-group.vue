@@ -1,5 +1,5 @@
 <template>
-  <div class="k-button-group">
+  <div class="koma-button-group">
     <slot></slot>
   </div>
 </template>
@@ -14,7 +14,7 @@
     mounted() {
       for (let node of this.$el.children) {
         if (node.nodeName.toLowerCase() === 'div') {
-          console.warn(`k-button-group 的子元素应该全是g-button, 但是你写的是 ${ node.nodeName }`)
+          console.warn(`koma-button-group 的子元素应该全是g-button, 但是你写的是 ${ node.nodeName }`)
         }
       }
     }
@@ -22,11 +22,11 @@
 </script>
 <style lang='less' scoped>
   @import '../../css/_var';
-  .k-button-group {
+  .koma-button-group {
     display: inline-flex;
     vertical-align: middle;
 
-    >.k-button {
+    >.koma-button {
       border-radius: 0;
 
       &:not(:first-child) {

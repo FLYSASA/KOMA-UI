@@ -24,7 +24,7 @@
         --color: #333;
         --border-color: #999;
         --border-color-hover: #666;
-            }
+    }
     ```
     IE15 及以上都支持此样式
 
@@ -33,7 +33,7 @@
  npm i --save koma-ui
 ```
 
-3. 引入 gulu
+3. 引入 koma
 ```
  import { Button } from 'koma-ui'
  import 'koma-ui/dist/index.css'
