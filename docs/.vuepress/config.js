@@ -18,6 +18,7 @@ module.exports = {
           title: '基础',
           collapsable: false,
           children: [
+            '/components/introduction',
             '/components/install',
             '/components/get-started',
           ]

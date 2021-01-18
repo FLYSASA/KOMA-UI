@@ -67,7 +67,9 @@
               <td>orderBy</td>
               <td class="des">排序规则</td>
               <td class="type">Object</td>
-              <td>可以传入需要排序的prop, 对应的值有 asc 和 desc</td>
+              <td>可以传入需要排序的prop, 
+              <br/>
+              对应的值有 asc 和 desc</td>
               <td>——</td>
             </tr>
             <tr>
