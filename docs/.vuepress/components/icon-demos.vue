@@ -8,7 +8,7 @@
       <template v-slot:code>
         <div class="icon-wrapper">
           <k-icon name="up"></k-icon>
-          <k-icon name="delete"></k-icon>
+          <k-icon name="double-right"></k-icon>
           <k-button icon="download">下载</k-button>
         </div>
       </template>
@@ -104,7 +104,7 @@ export default {
       codeStr1: 
       `
         <k-icon name="up"></k-icon>
-        <k-icon name="delete"></k-icon>
+        <k-icon name="double-right"></k-icon>
         <k-button icon="download">下载</k-button>
       `,
       description1: '基础的icon用法。',

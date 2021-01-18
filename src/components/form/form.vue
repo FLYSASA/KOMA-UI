@@ -1,5 +1,5 @@
 <template>
-  <form class="koma-form" @submit.prevent>
+  <form class="koma-form" @submit.prevent v-bind="$attrs">
     <slot></slot>
   </form>
 </template>
@@ -55,7 +55,7 @@ export default {
   // },
 
   created() {
-    console.log(this.model)
+    console.log(this.$attrs)
   },
 
   methods: {

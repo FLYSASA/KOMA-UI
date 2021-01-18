@@ -15,6 +15,7 @@ export default {
     },
     align: {
       type: String,
+      default: 'left',
       validator(val){
         return ['left', 'right', 'center'].indexOf(val) >= 0
       }

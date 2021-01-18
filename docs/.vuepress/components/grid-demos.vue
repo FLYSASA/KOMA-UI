@@ -67,7 +67,7 @@
       codedes="通过设置k-row属性align，接受三个属性：left, right, center，来定义子元素的排版方式。"
       :codeStr="codeStr3">
       <template v-slot:code>
-        <k-row class="demo-row" gutter="20" align="start">
+        <k-row class="demo-row" gutter="20" align="left">
           <k-col span="6" class="demo-col">
             <div class="demo-content"></div>
           </k-col>
@@ -251,7 +251,7 @@ export default {
         </style>
       `,
       codeStr3: `
-        <k-row class="demo-row" gutter="20" align="start">
+        <k-row class="demo-row" gutter="20" align="left">
           <k-col span="6" class="demo-col">
             <div class="demo-content"></div>
           </k-col>

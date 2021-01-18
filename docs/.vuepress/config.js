@@ -8,7 +8,6 @@ module.exports = {
     lastUpdated: 'Last Updated',
     nav: [
       { text: '首页', link: '/' },
-      { text: '指南', link: '/guide/' },
       { text: '组件', link: '/components/install' },
       { text: 'github', link: 'https://github.com/FLYSASA/KOMA-UI' },
     ],
@@ -27,25 +26,50 @@ module.exports = {
           title: '组件',
           collapsable: false,
           children: [
-            '/components/icon',
-            '/components/button',
-            '/components/tabs',
-            '/components/input',
-            '/components/grid',
-            '/components/layout',
-            '/components/toast',
-            '/components/popover',
-            '/components/collapse',
-            '/components/carousel',
-            '/components/cascader',
-            '/components/datePicker',
-            '/components/sticky',
-            '/components/pager',
-            '/components/nav',
-            '/components/uploader',
-            '/components/form',
-            '/components/scroll',
-            '/components/table',
+            {
+              title: 'Basic',
+              collapsable: false,
+              children: [
+                '/components/icon',
+                '/components/button',
+              ]
+            },
+            {
+              title: 'Layout',
+              collapsable: false,
+              children: [
+                '/components/grid',
+                '/components/layout',
+              ]
+            },
+            {
+              title: 'Data Entry',
+              collapsable: false,
+              children: [
+                '/components/input',
+                '/components/cascader',
+                '/components/datePicker',
+                '/components/nav',
+                '/components/uploader',
+                '/components/form',
+              ]
+            },
+            {
+              title: 'Data Display',
+              collapsable: false,
+              children: [
+                '/components/tabs',
+                '/components/toast',
+                '/components/popover',
+                '/components/collapse',
+                '/components/carousel',
+                '/components/sticky',
+                '/components/pager',
+                '/components/scroll',
+                '/components/table',
+              ]
+            },
+
           ]
         },
       ]

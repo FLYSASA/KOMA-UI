@@ -7,7 +7,7 @@
       :codeStr="codeStr1">
       <template v-slot:code>
         <div class="form-wrapper">
-          <k-form class="form" :model="model" :rules="rules" ref="form">
+          <k-form class="form" :model="model" :rules="rules" ref="form" autocomplete="off">
             <h1>登录</h1>
             <k-form-item label="邮箱" prop="email">
               <k-input type="text" v-model="model.email"></k-input>
