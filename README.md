@@ -13,24 +13,9 @@
     * ，*::before, *::after {boder-box: box-sizing;}
     ```
 
-    你还需要设置默认颜色等变量（后续会改为less变量）
-    ```
-    :root {
-        --button-height: 32px;
-        --font-size: 14px;
-        --button-bg: white;
-        --button-active-bg: #eee;
-        --border-radius: 4px;
-        --color: #333;
-        --border-color: #999;
-        --border-color-hover: #666;
-    }
-    ```
-    IE15 及以上都支持此样式
-
 2. 安装 koma-ui
 ```
- npm i --save koma-ui
+ npm i koma-ui -S
 ```
 
 3. 引入 koma

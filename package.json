@@ -8,8 +8,6 @@
     "build": "vue-cli-service build --target lib --name koma src/index.js",
     "test": "cross-env NODE_ENV=test karma start --single-run",
     "test:unit": "cross-env NODE_ENV=test karma start",
-    "test:unit:cli": "vue-cli-service test:unit",
-    "watch": "vue-cli-service test:unit --watch",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "d": "bash deploy.sh"
