@@ -106,6 +106,7 @@ export default {
   .left {
     height: 100%;
     overflow: auto;
+    min-width: 128px;
   }
   .right {
     height: 100%;

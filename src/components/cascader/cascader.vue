@@ -1,6 +1,7 @@
 <template>
   <div class="koma-cascader" ref="cascader" v-click-outside="close">
     <div class="trigger" @click="toggle">
+      <span v-if="!computedSelectedName" class="koma-place-holder">{{ placeHolder }}</span>
       {{ computedSelectedName }}
     </div>
     <div class="popover-wrapper" v-if="popoverVisible">
@@ -39,6 +40,10 @@ export default {
     },
     loadData: {
       type: Function,
+    },
+    placeHolder: {
+      type: String,
+      default: '请选择'
     }
   },
   data() {
@@ -131,6 +136,10 @@ export default {
     display: inline-block;
     position: relative;
     cursor: pointer;
+    .koma-place-holder {
+      font-size: @font-size;
+      color: @input-holder-color;
+    }
     .trigger {
       border: 1px solid @border-color;
       border-radius: @border-radius;
