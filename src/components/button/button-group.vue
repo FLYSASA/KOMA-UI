@@ -6,15 +6,15 @@
 
 <script>
   export default {
-    name: 'KomaButton',
+    name: 'KomaButtonGroup',
     props: {},
     data() {
       return {};
     },
     mounted() {
       for (let node of this.$el.children) {
-        if (node.nodeName.toLowerCase() === 'div') {
-          console.warn(`koma-button-group 的子元素应该全是g-button, 但是你写的是 ${ node.nodeName }`)
+        if (node.nodeName.toLowerCase() !== 'button') {
+          console.warn(`k-button-group 的子元素应该全是 k-button, 但是你写的是 ${ node.nodeName }`)
         }
       }
     }
