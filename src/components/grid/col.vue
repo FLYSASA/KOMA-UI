@@ -111,7 +111,7 @@ export default {
     .offset-loop(24)
   }
   @media (min-width: 577px) {
-    .col {
+    .koma-col {
       @class: col-ipad-;
       .col-loop(@n) when (@n>0){
         &.@{class}@{n}{
@@ -132,7 +132,7 @@ export default {
     }
   }
   @media (min-width: 769px) {
-    .col {
+    .koma-col {
       @class: col-narrow-pc-;
       .col-loop(@n) when (@n>0){
         &.@{class}@{n}{
@@ -153,7 +153,7 @@ export default {
     }
   }
   @media (min-width: 993px) {
-    .col {
+    .koma-col {
       @class: col-pc-;
       .col-loop(@n) when (@n>0){
         &.@{class}@{n}{
@@ -174,7 +174,7 @@ export default {
     }
   }
   @media (min-width: 1201px) {
-    .col {
+    .koma-col {
       @class: col-wide-pc-;
       .col-loop(@n) when (@n>0){
         &.@{class}@{n}{
