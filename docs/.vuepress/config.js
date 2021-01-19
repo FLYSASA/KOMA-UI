@@ -8,7 +8,7 @@ module.exports = {
     lastUpdated: 'Last Updated',
     nav: [
       { text: '首页', link: '/' },
-      { text: '组件', link: '/components/install' },
+      { text: '组件', link: '/components/introduction' },
       { text: 'github', link: 'https://github.com/FLYSASA/KOMA-UI' },
     ],
     sidebar: {
