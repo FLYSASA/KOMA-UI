@@ -12,7 +12,10 @@
       return {};
     },
     mounted() {
+      console.log(this.$el, this.$el.children)
+
       for (let node of this.$el.children) {
+        console.log(node)
         if (node.nodeName.toLowerCase() !== 'button') {
           console.warn(`k-button-group 的子元素应该全是 k-button, 但是你写的是 ${ node.nodeName }`)
         }

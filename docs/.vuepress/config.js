@@ -3,6 +3,10 @@ module.exports = {
   base: '/KOMA-UI/',
   title: 'KOMA-UI',
   description: '一个基于vue的UI框架',
+  // 标签icon
+  head: [
+    ['link', { rel: 'icon', href: '/logo.png' }]
+  ],
   themeConfig: {
     logo: '/logo.png',
     lastUpdated: 'Last Updated',
