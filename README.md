@@ -1,4 +1,4 @@
-# KOMA - 一个 vue 框架的组件库
+# KOMA - 一个基于vue框架的UI组件库
 # author: FLYSASA
 
 [![Build Status](https://travis-ci.org/FLYSASA/KOMA-UI.svg?branch=master)](https://travis-ci.org/github/FLYSASA/KOMA-UI) 
@@ -38,7 +38,7 @@
  export default {
     name: 'app',
     components: {
-        k-button: Button
+        'k-button': Button
     }
  }
 ```
