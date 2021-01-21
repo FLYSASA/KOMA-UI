@@ -10,7 +10,10 @@ title: 介绍
 ### 项目特点
 <br/>
 
-![Build Status](https://travis-ci.org/FLYSASA/KOMA-UI.svg?branch=master) ![license](https://img.shields.io/github/license/FLYSASA/KOMA-UI?color=blue) ![NPM](https://img.shields.io/npm/v/koma-ui) ![Vue](https://img.shields.io/npm/v/vue?label=vue)
+[![Build Status](https://travis-ci.org/FLYSASA/KOMA-UI.svg?branch=master)](https://travis-ci.org/github/FLYSASA/KOMA-UI) 
+[![license](https://img.shields.io/github/license/FLYSASA/KOMA-UI?color=blue)](https://github.com/FLYSASA/KOMA-UI/blob/master/LICENSE)
+[![NPM](https://img.shields.io/npm/v/koma-ui)](https://www.npmjs.com/package/koma-ui)
+[![Vue](https://img.shields.io/npm/v/vue?label=vue)](https://www.npmjs.com/package/vue/v/2.6.11)
   
 #### 1. 使用Karma作为测试运行器，Mocha、Sinon编写测试用例，Travis-ci自动持续化测试，保证库的代码质量。
 #### 2. 使用单向数据流、发布订阅模式、懒加载等技术概念。

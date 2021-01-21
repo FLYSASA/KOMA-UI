@@ -1,7 +1,10 @@
 # KOMA - 一个 vue 框架的组件库
 # author: FLYSASA
 
-![Build Status](https://travis-ci.org/FLYSASA/KOMA-UI.svg?branch=master) ![license](https://img.shields.io/github/license/FLYSASA/KOMA-UI?color=blue) ![NPM](https://img.shields.io/npm/v/koma-ui) ![Vue](https://img.shields.io/npm/v/vue?label=vue)
+[![Build Status](https://travis-ci.org/FLYSASA/KOMA-UI.svg?branch=master)](https://travis-ci.org/github/FLYSASA/KOMA-UI) 
+[![license](https://img.shields.io/github/license/FLYSASA/KOMA-UI?color=blue)](https://github.com/FLYSASA/KOMA-UI/blob/master/LICENSE)
+[![NPM](https://img.shields.io/npm/v/koma-ui)](https://www.npmjs.com/package/koma-ui)
+[![Vue](https://img.shields.io/npm/v/vue?label=vue)](https://www.npmjs.com/package/vue/v/2.6.11)
 
 ## 介绍
 这是一个基于vue的UI框架。
@@ -23,12 +26,12 @@
     ```
 
 2. 安装 koma-ui
-```
+```bash
  npm i koma-ui -S
 ```
 
 3. 引入 koma
-```
+```js
  import { Button } from 'koma-ui'
  import 'koma-ui/dist/index.css'
 
