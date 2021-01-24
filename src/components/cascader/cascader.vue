@@ -102,7 +102,6 @@ export default {
         // 为了找到要更新的item项, 把它更新成用户懒加载返回的数据，但这里为了不违反单向数据流，子组件直接修改传入的数据，所以这里浅拷贝
         let copy = JSON.parse(JSON.stringify(this.datas))
         let toUpdate = this.getTreeItemById(copy, lastItem.id)
-        console.log(toUpdate)
         toUpdate.children = res
         this.$emit('update:datas', copy)
       }
