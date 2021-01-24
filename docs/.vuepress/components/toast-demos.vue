@@ -6,7 +6,7 @@
       description="可以设定提示框的弹出方向。"
       :codeStr="codeStr1">
       <template v-slot:code>
-        <k-button @click="$toast('点击弹出提示', { position: 'top' })">上方弹出</k-button>
+        <k-button @click="$toast('点击弹出提示', { position: 'top', autoClose: false })">上方弹出</k-button>
         <k-button @click="$toast('点击弹出提示', { position: 'middle'})">中间弹出</k-button>
         <k-button @click="$toast('点击弹出提示', { position: 'bottom'})">下方弹出</k-button>
       </template>

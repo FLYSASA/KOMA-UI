@@ -101,6 +101,7 @@ export default {
 
     },
     onClickDocument (e) {
+      // 如果点击 popover 和 popover-content的话，就不关闭
       if (this.$refs.popover &&
         (this.$refs.popover === e.target || this.$refs.popover.contains(e.target))
       ) { return }

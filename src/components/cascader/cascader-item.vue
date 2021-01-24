@@ -58,7 +58,6 @@ export default {
   },
   data () {
     return {
-      leftSelected: null
     };
   },
   computed: {
@@ -74,7 +73,9 @@ export default {
       return null;
     },
   },
-  created () {},
+  created () {
+    console.log(this.level)
+  },
   methods: {
     rightArrowVisible(item) {
       return this.loadData ? !item.isLeaf : item.children;

@@ -11,6 +11,7 @@ let onClickDocument = (e)=>{
 }
 document.addEventListener('click', onClickDocument)
 let callbacks = []
+
 export default {
   bind: function(el, binding){
     callbacks.push({el, callback: binding.value})
