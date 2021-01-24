@@ -77,7 +77,7 @@ export default {
     },
     getTreeItemById(data, id) {
       let hasfound = false, result = null;
-      let fn = function(data, item) {
+      let fn = function(data, id) {
         if(Array.isArray(data) && !hasfound) {
           data.forEach((i) => {
             if(i.id === id) {
