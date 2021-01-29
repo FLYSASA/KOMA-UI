@@ -74,7 +74,7 @@ export default {
     },
   },
   created () {
-    console.log(this.level)
+    
   },
   methods: {
     rightArrowVisible(item) {

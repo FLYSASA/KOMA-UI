@@ -57,25 +57,22 @@ export default {
       timerId: null
     };
   },
-  updated: {
-    
-  },
   computed: {
     selectedIndex(){
       let index = this.names.indexOf(this.selected)
       return index === -1 ? 0 : index
     },
     names(){
-      return this.items.map(i => i.name) || []
+      return this.carouselItems.map(i => i.name) || []
     },
-    items(){
+    carouselItems(){
       return this.$children.filter(vm => vm.$options.name === 'KomaCarouselItem')
     }
   },
   mounted () {
     this.updateChildren()
     this.playAutomatically()
-    this.childrenLength = this.items.length
+    this.childrenLength = this.carouselItems.length
   },
   // 外面selected值更新后, 需要重新通知每一个子组件新的值
   updated(){
@@ -154,25 +151,27 @@ export default {
       this.timerId = null
     },
     getSelected(){
-      let first = this.items[0]
+      let first = this.carouselItems[0]
       return this.selected || first.name
     },
     updateChildren() {
       let selected = this.getSelected()
-      this.items.forEach((vm) =>{
+      // carouselItems是通过查找carousel的子组件name为KomaCarouselItem来的
+      this.carouselItems.forEach((vm) => {
         // 新选中的在现在的左边 就是反向的
+        // selectedIndex是计算属性，通过计算selected在names里的index值得来
         let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
         // 只有在自动播放的时候才去无缝轮播
         // 保证右向无缝轮播
-        if(this.lastSelectedIndex === this.items.length - 1 && this.selectedIndex === 0){
+        if(this.lastSelectedIndex === this.carouselItems.length - 1 && this.selectedIndex === 0){
           reverse = false;
         }
         // 保证左向无缝轮播
-        if(this.lastSelectedIndex === 0 && this.selectedIndex === this.items.length - 1) {
+        if(this.lastSelectedIndex === 0 && this.selectedIndex === this.carouselItems.length - 1) {
           reverse = true;
         }
         vm.reverse = reverse
-        // 这里加nextTick的原因是保证reverse 在新的选中时是对的
+        // 这里加nextTick的原因是保证 reverse 在新的选中时是对的
         this.$nextTick(()=>{
           vm.selected = selected
         })
