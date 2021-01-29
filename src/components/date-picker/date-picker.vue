@@ -49,13 +49,13 @@
                   </div>
                   <div :class="c('row')" v-for="i in helper.getRange(1, 6)" :key="i">
                     <span 
+                      v-for="j in helper.getRange(1, 7)" :key="j"
                       :class="[c('cell'), 
                         { currentMonth: isCurrentMonth(getVisibleDay(i, j)) }, 
                         { isSelected: isSelected(getVisibleDay(i, j)) },
                         { today: isToday(getVisibleDay(i, j)) }
                         ]" 
-                      @click="onClickCell(getVisibleDay(i, j))"
-                      v-for="j in helper.getRange(1, 7)" :key="j">
+                      @click="onClickCell(getVisibleDay(i, j))">
                         {{ getVisibleDay(i, j).getDate() }}
                     </span>
                   </div>
@@ -121,8 +121,7 @@ export default {
     },
     visibleDays(){
       // 验证正确性的时候，可以let date = new Date(2020, 0, 30)  随便写个日期去验证，比如这里的2020年1月（月要-1）30号
-      let date = new Date(this.display.year, this.display.month, 1)
-      let first = helper.firstDayOfMonth(date)
+      let first = new Date(this.display.year, this.display.month, 1)
       let arr = []
       // getDate() 返回1-31的整数值,  getDay() 返回 0-6 0代表星期日
       let weekDay = first.getDay()  // 算出当月第一天是星期几
@@ -161,6 +160,7 @@ export default {
       return y === y1 && m === m1 && d === d1
     },
     getVisibleDay (row, col) {
+      
       return this.visibleDays[(row-1)*7 + col - 1]
     },
     onchange(value) {
@@ -177,7 +177,7 @@ export default {
         year = year - 0; // 转成数值，不然判断是否当年当月无法全等
         this.display = { year, month }
         this.$emit('input', new Date(year, month, day))
-        console.log('符合')
+        
       }
     },
     onOpen() {

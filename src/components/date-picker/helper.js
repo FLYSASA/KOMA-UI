@@ -37,7 +37,7 @@ export default {
     }
     return ( number >= 10 ? '' : '0' ) + number
   },
-  getYearMonthDate
+  getYearMonthDate,
 }
 // 获取年月日
 function getYearMonthDate(date){

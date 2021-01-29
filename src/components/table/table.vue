@@ -205,9 +205,13 @@ export default {
     },
   },
   mounted() {
-    const filterArr = this.$slots.default.filter(i => i.tag)
-    this.columns = filterArr.map(node => {
-      // node.componentOptions.propsData 即挂载在插槽组件的prop上的
+    
+    // 我们需要知道如果slot内容有作用域，$slots是不会统计到的，如<template #action="scope"></template>
+    // 利用这个特点可以找出所有插槽内容为k-table-column的
+    // 因为会有tag undefined的值，将其过滤掉
+    const komaTableColumns = this.$slots.default.filter(i => i.tag)
+    this.columns = komaTableColumns.map(node => {
+      // 需要在k-table-column 组件里定义该prop才能拿到
       let { text, prop, width} = node.componentOptions.propsData
       let render = node.data.scopedSlots && node.data.scopedSlots.default
       return {text, prop, width, render}
@@ -226,12 +230,14 @@ export default {
   },
   methods: {
     fixedHeader(){
-      // clone 浅拷贝
+      // clone 浅拷贝 
+      // 复制table壳啦，里面的html并没有复制
       let cloneTable  = this.$refs.table.cloneNode(false)
       this.cloneTable = cloneTable
       // cloneTable.className = 'clone-table' // 这样做会把所有的class重置为一个
       cloneTable.classList.add('clone-table')
       // 找到表格thead
+      // this.$refs.table.children: HTMLCollection: [thead, tbody] 
       let thead = this.$refs.table.children[0]
       let {height} = thead.getBoundingClientRect()
       this.$refs.tableWrapper.style.marginTop = height + 'px';

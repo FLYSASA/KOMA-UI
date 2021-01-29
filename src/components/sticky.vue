@@ -1,7 +1,7 @@
 <template>
   <!-- wrapper加height，占位避免抖动 -->
   <div class="koma-sticky-wrapper" ref="wrapper" :style="{ height }">
-    <div class="koma-sticky" :class="computedClasses" :style="{ top, left, width,  }">
+    <div class="koma-sticky" :class="computedClasses" :style="{ top, left, width }">
       <slot></slot>
     </div>
   </div>
@@ -37,6 +37,7 @@ export default {
   },
   mounted() {
     // 这个值是元素距离页面顶部的距离，这个值是固定不变的，获取一次就行了
+    // 注意是页面顶部，而不是距窗口的顶部
     this.getOffsetTop()
     // 实际上这里可以不用处理，实际测试了下vue可能做了处理，并没有变成window
     // bind 是以防this的指向变为window
@@ -50,13 +51,14 @@ export default {
   methods: {
     getOffsetTop () {
       let {top} = this.$refs.wrapper.getBoundingClientRect()
+      // 因为只会在初始mounted时调用一次，所以这个值是不变的，是初始位置
       this.offsetTop = top + window.scrollY
     },
     _windowScrollHandler () {
       let stickyIt = ()=>{
         //  可以这样理解，元素即将滚出视窗范围的临界位置， 应该是 window.scrollY = this.offsetTop(元素距离页面顶部的位置) 超过这个距离即滚过了
         // 现在加上distance，相当于 多滚了一段距离
-        if( window.scrollY > this.offsetTop - this.distance){
+        if( window.scrollY + this.distance > this.offsetTop){
           // 改变状态时才去获取高度，保证图片加载时，时间过长获取高度不准确的问题
           let { height, left, width } = this.$refs.wrapper.getBoundingClientRect()
           this.height = height + 'px'

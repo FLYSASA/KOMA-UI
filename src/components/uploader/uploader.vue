@@ -86,6 +86,15 @@ export default {
         this.$emit('update:fileList', copy)
       }
     },
+    createInput(){
+      this.$refs.temp.innerHTML = ''
+      let input = document.createElement('input')
+      input.type = 'file'
+      input.accept = this.accept
+      input.multiple = this.multiple
+      this.$refs.temp.appendChild(input)
+      return input;
+    },
     // 点击上传
     onClickUpload(){
       // create input
@@ -153,7 +162,7 @@ export default {
     },
     uploadFile(rawFiles){
       let newNames = []
-      for(let i=0; i<rawFiles.length; i++){
+      for(let i=0; i < rawFiles.length; i++){
         let rawFile = rawFiles[i]
         let {name} = rawFile
         let newName = this.generateName(name)
@@ -195,15 +204,6 @@ export default {
         name = nameWithoutExtension + '(1)' + extension
       }
       return name;
-    },
-    createInput(){
-      this.$refs.temp.innerHTML = ''
-      let input = document.createElement('input')
-      input.type = 'file'
-      input.accept = this.accept
-      input.multiple = this.multiple
-      this.$refs.temp.appendChild(input)
-      return input;
     },
   },
 };
